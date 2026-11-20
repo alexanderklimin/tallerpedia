@@ -1,7 +1,7 @@
 ---
 // Simplified dashboard symbols drawn for Tallerpedia (inspired by the ISO 2575 pictograms, not copies of a brand's artwork).
-interface Props { name: string; size?: number; color?: 'rojo' | 'amarillo' | 'mixto' }
-const { name, size = 56, color = 'amarillo' } = Astro.props;
+interface Props { name: string; size?: number; color?: 'rojo' | 'amarillo' | 'mixto'; anim?: 'glow' | 'blink' }
+const { name, size = 56, color = 'amarillo', anim } = Astro.props;
 const paths: Record<string, string> = {
   engine: '<path d="M2.5 10.5v5M2.5 13h2.2M4.7 9.5h2V8h2.8V6.5h5V8h2.2l1.8 2h1.4V9h1.6v8h-1.6v-1.5h-1.4l-2.2 2.5H8.5L6.7 16H4.7z"/>',
   oil: '<path d="M2 10.5h3.5l2-1.5h6l1.5 1L21 8l-6.5 7.5H8.5L6.5 13.5H2z"/><path d="M10.5 9V7.2M8.8 7h3.4"/><path d="M21.5 13.2c0 .9-.6 1.6-1.3 1.6s-1.3-.7-1.3-1.6c0-.8 1.3-2.4 1.3-2.4s1.3 1.6 1.3 2.4z"/>',
@@ -14,7 +14,7 @@ const paths: Record<string, string> = {
 };
 const tone = color === 'rojo' ? 'sym-red' : color === 'amarillo' ? 'sym-amber' : 'sym-mixed';
 ---
-<span class={`sym ${tone}`} style={`--s:${size}px`} aria-hidden="true">
+<span class={`sym ${tone}${anim ? ` ${anim}` : ''}`} style={`--s:${size}px`} aria-hidden="true">
   <svg viewBox="0 0 24 24" width={Math.round(size * 0.62)} height={Math.round(size * 0.62)} fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" set:html={paths[name] ?? paths.amber} />
 </span>
 <style>
@@ -22,4 +22,10 @@ const tone = color === 'rojo' ? 'sym-red' : color === 'amarillo' ? 'sym-amber' :
   .sym-amber { color: #ffb020; }
   .sym-red { color: #ff4d3d; }
   .sym-mixed { color: #ffb020; box-shadow: inset 0 -4px 0 #ff4d3d; }
+  .sym svg { filter: drop-shadow(0 0 3px currentColor); }
+  .glow svg { animation: glow 2.8s ease-in-out infinite; }
+  .blink svg { animation: blink 1s steps(1) 8; }
+  @keyframes glow { 0%, 100% { opacity: 1; filter: drop-shadow(0 0 2px currentColor); } 50% { opacity: 0.8; filter: drop-shadow(0 0 7px currentColor); } }
+  @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.12; } }
+  @media (prefers-reduced-motion: reduce) { .glow svg, .blink svg { animation: none; } }
 </style>

@@ -1,0 +1,87 @@
+---
+// Scale drawing of a tire: side view with overall diameter, rim and sidewall, plus a cross-section with the width.
+import { dimensions, sizeLabel } from '../lib/tires.js';
+import { fmt } from '../lib/format.js';
+
+interface Props { size: { width: number; aspect: number; rim: number } }
+const { size } = Astro.props;
+const d = dimensions(size);
+// Side view: overall diameter drawn at 200 px.
+const scale = 200 / d.diameter;
+const R = 100;
+const r = (d.rimMm / 2) * scale;
+const cx = 125, cy = 140;
+// Cross-section: same scale, width and sidewall.
+const w = size.width * scale;
+const h = d.sidewall * scale;
+const sx = 275, sy = cy - R + 20; // top of tread
+---
+<figure class="td">
+  <svg viewBox="0 0 420 285" role="img" aria-label={`Dibujo a escala de la llanta ${sizeLabel(size)}: diámetro ${fmt(d.diameter, 0)} mm, rin ${size.rim} pulgadas, flanco ${fmt(d.sidewall)} mm, ancho ${size.width} mm`}>
+    <defs>
+      <pattern id="tread" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+        <rect width="8" height="8" fill="#1d232c" />
+        <rect width="3" height="8" fill="#262e39" />
+      </pattern>
+    </defs>
+    <!-- side view -->
+    <g class="spin" style={`transform-origin:${cx}px ${cy}px`}>
+      <circle cx={cx} cy={cy} r={R} fill="url(#tread)" />
+      <circle cx={cx} cy={cy} r={R - 3} fill="none" stroke="#3a4554" stroke-width="1.5" />
+      <circle cx={cx} cy={cy} r={r} fill="#c9d3df" stroke="#8fa0b5" stroke-width="2" />
+      <circle cx={cx} cy={cy} r={r * 0.72} fill="#aebbc9" />
+      {[0, 72, 144, 216, 288].map((a) => (
+        <path d={`M${cx} ${cy} L${cx + Math.cos((a * Math.PI) / 180) * r * 0.9} ${cy + Math.sin((a * Math.PI) / 180) * r * 0.9}`} stroke="#e7edf4" stroke-width={r * 0.18} stroke-linecap="round" />
+      ))}
+      <circle cx={cx} cy={cy} r={r * 0.2} fill="#6d7e93" />
+    </g>
+    <!-- overall diameter -->
+    <g class="dim">
+      <line x1={cx - R - 14} y1={cy - R} x2={cx - R - 14} y2={cy + R} />
+      <line x1={cx - R - 20} y1={cy - R} x2={cx - R - 8} y2={cy - R} />
+      <line x1={cx - R - 20} y1={cy + R} x2={cx - R - 8} y2={cy + R} />
+      <text x={cx - R - 20} y={cy} transform={`rotate(-90 ${cx - R - 20} ${cy})`} text-anchor="middle">{fmt(d.diameter, 0)} mm</text>
+    </g>
+    <!-- rim diameter -->
+    <g class="dim rim">
+      <line x1={cx - r} y1={cy + R + 14} x2={cx + r} y2={cy + R + 14} />
+      <line x1={cx - r} y1={cy + R + 8} x2={cx - r} y2={cy + R + 20} />
+      <line x1={cx + r} y1={cy + R + 8} x2={cx + r} y2={cy + R + 20} />
+      <text x={cx} y={cy + R + 30} text-anchor="middle">rin {size.rim}″</text>
+    </g>
+    <!-- cross-section -->
+    <g>
+      <path d={`M${sx} ${sy + 6} Q${sx} ${sy} ${sx + 6} ${sy} H${sx + w - 6} Q${sx + w} ${sy} ${sx + w} ${sy + 6} V${sy + h} H${sx + w - 6} V${sy + 8} H${sx + 6} V${sy + h} H${sx} Z`} fill="#1d232c" />
+      <rect x={sx - 4} y={sy + h} width={w + 8} height={10} rx="2" fill="#c9d3df" stroke="#8fa0b5" />
+      <g class="dim">
+        <line x1={sx} y1={sy - 12} x2={sx + w} y2={sy - 12} />
+        <line x1={sx} y1={sy - 18} x2={sx} y2={sy - 6} />
+        <line x1={sx + w} y1={sy - 18} x2={sx + w} y2={sy - 6} />
+        <text x={sx + w / 2} y={sy - 22} text-anchor="middle">{size.width} mm</text>
+      </g>
+      <g class="dim side">
+        <line x1={sx + w + 12} y1={sy} x2={sx + w + 12} y2={sy + h} />
+        <line x1={sx + w + 6} y1={sy} x2={sx + w + 18} y2={sy} />
+        <line x1={sx + w + 6} y1={sy + h} x2={sx + w + 18} y2={sy + h} />
+        <text x={sx + w + 22} y={sy + h / 2 + 4}>{fmt(d.sidewall, 0)} mm</text>
+      </g>
+      <text class="cap" x={sx + w / 2} y={sy + h + 30} text-anchor="middle">sección</text>
+    </g>
+    <line x1="20" y1={cy + R} x2="250" y2={cy + R} stroke="#c3ccd7" stroke-dasharray="3 4" />
+  </svg>
+  <figcaption>{sizeLabel(size)} dibujada a escala: diámetro total, rin y, a la derecha, el ancho y la altura del flanco ({size.aspect} % del ancho).</figcaption>
+</figure>
+
+<style>
+  .td { margin: 1.25rem 0; padding: 0.75rem; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); }
+  .td svg { display: block; width: 100%; height: auto; max-height: 20rem; }
+  .td figcaption { font-size: 0.875rem; color: var(--muted); margin-top: 0.4rem; }
+  .dim line { stroke: var(--accent); stroke-width: 1.5; }
+  .dim text { fill: var(--accent); font: 700 12px system-ui, sans-serif; }
+  .dim.side line { stroke: var(--amber); } .dim.side text { fill: var(--amber); }
+  .dim.rim line { stroke: #6d7e93; } .dim.rim text { fill: #4d5b6d; }
+  .cap { fill: var(--muted); font: 600 11px system-ui, sans-serif; }
+  .spin { animation: spin 14s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  @media (prefers-reduced-motion: reduce) { .spin { animation: none; } }
+</style>

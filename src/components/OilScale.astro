@@ -1,0 +1,39 @@
+---
+// Visual scale: where a grade sits among SAE cold (W) and hot grades. Markers slide in on load.
+interface Props { winter: number; hot: number }
+const { winter, hot } = Astro.props;
+const cold = [0, 5, 10, 15, 20, 25];
+const hots = [20, 30, 40, 50, 60];
+const pos = (list: number[], v: number) => (list.indexOf(v) / (list.length - 1)) * 100;
+---
+<figure class="os" aria-label={`Escala SAE: ${winter}W en frío y ${hot} en caliente`}>
+  <div class="os-row">
+    <span class="os-k">En frío<em>fluye mejor ← → más espeso</em></span>
+    <div class="os-track cold">
+      {cold.map((v) => <span class="os-tick" style={`left:${pos(cold, v)}%`}>{v}W</span>)}
+      <span class="os-mark" style={`--x:${pos(cold, winter)}%`}>{winter}W</span>
+    </div>
+  </div>
+  <div class="os-row">
+    <span class="os-k">En caliente<em>más fino ← → más espeso</em></span>
+    <div class="os-track hot">
+      {hots.map((v) => <span class="os-tick" style={`left:${pos(hots, v)}%`}>{v}</span>)}
+      <span class="os-mark" style={`--x:${pos(hots, hot)}%`}>{hot}</span>
+    </div>
+  </div>
+</figure>
+
+<style>
+  .os { margin: 1rem 0; padding: 1rem 1.1rem 0.6rem; border-radius: var(--radius); background: var(--surface); border: 1px solid var(--line); }
+  .os-row { display: grid; grid-template-columns: 7.5rem 1fr; gap: 1rem; align-items: center; margin-bottom: 1.4rem; }
+  @media (max-width: 30rem) { .os-row { grid-template-columns: 1fr; gap: 0.4rem; } }
+  .os-k { font-weight: 700; font-size: 0.95rem; display: flex; flex-direction: column; }
+  .os-k em { font-style: normal; font-weight: 500; font-size: 0.75rem; color: var(--muted); }
+  .os-track { position: relative; height: 0.7rem; border-radius: 999px; margin: 0 1rem 0.9rem; }
+  .os-track.cold { background: linear-gradient(90deg, #7cc4ff, #2f6fb3 60%, #1d3d66); }
+  .os-track.hot { background: linear-gradient(90deg, #ffd27a, #e08a1e 60%, #9a4a00); }
+  .os-tick { position: absolute; top: 1rem; transform: translateX(-50%); font-size: 0.72rem; color: var(--muted); font-weight: 600; }
+  .os-mark { position: absolute; top: 50%; left: var(--x); transform: translate(-50%, -50%); padding: 0.15rem 0.5rem; border-radius: 999px; background: var(--navy); color: var(--amber-bright); font: 800 0.85rem var(--head); box-shadow: 0 4px 12px rgb(14 33 56 / 30%); animation: slide 1.1s cubic-bezier(.3,1.3,.5,1) both; }
+  @keyframes slide { from { left: 0; opacity: 0; } }
+  @media (prefers-reduced-motion: reduce) { .os-mark { animation: none; } }
+</style>

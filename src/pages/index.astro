@@ -3,52 +3,70 @@ import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import Icon from '../components/Icon.astro';
 import Symbol from '../components/Symbol.astro';
+import Dashboard from '../components/Dashboard.astro';
+import CodeSearch from '../components/CodeSearch.astro';
+import TirePicker from '../components/TirePicker.astro';
 import published from '../data/tires/published.json';
-import { parseSize, sizeLabel, sizePath } from '../lib/tires.js';
-import { codePath } from '../data/systems.js';
+import { parseSize, sizeLabel, sizePath, dimensions } from '../lib/tires.js';
+import { fmt } from '../lib/format.js';
+import { codePath, SEVERITY } from '../data/systems.js';
 import { SITE_NAME } from '../data/site.js';
 
 const lights = (await getCollection('lights')).sort((a, b) => a.data.order - b.data.order);
+const oils = (await getCollection('oils')).sort((a, b) => a.data.order - b.data.order);
 const codes = (await getCollection('codes')).sort((a, b) => a.data.code.localeCompare(b.data.code));
-const topCodes = ['P0420', 'P0171', 'P0300', 'P0455', 'P0128', 'P0340'].map((c) => codes.find((e) => e.data.code === c)).filter(Boolean);
+const topCodes = ['P0420', 'P0171', 'P0300', 'P0455', 'P0128', 'P0340'].map((c) => codes.find((e) => e.data.code === c)!).filter(Boolean);
 const topSizes = published.slice(0, 8).map((s) => parseSize(s.replace(/-/g, ' '))!);
 const jsonLd = [{ '@context': 'https://schema.org', '@type': 'WebSite', name: SITE_NAME, url: Astro.site?.href, inLanguage: 'es' }];
+const entries = [
+  { href: '/testigos/', icon: 'triangle-alert', t: 'Se encendió una luz', s: 'Qué significa cada testigo y si puedes seguir.' },
+  { href: '/codigos-obd/', icon: 'scan-line', t: 'El escáner me dio un código', s: 'Causas, diagnóstico y gravedad.' },
+  { href: '/llantas/', icon: 'circle-dot', t: 'Voy a cambiar llantas', s: 'Medidas, equivalencias y velocímetro.' },
+  { href: '/aceite/', icon: 'droplet', t: '¿Qué aceite le pongo?', s: 'Viscosidades y especificaciones.' },
+];
 ---
-<Base title="Tallerpedia: códigos OBD, llantas y guía práctica para tu auto" description="Qué significa cada código OBD, medidas y equivalencias de llantas y qué revisar en tu auto, explicado en español y con la seguridad primero." jsonLd={jsonLd}>
+<Base title="Tallerpedia: códigos OBD, llantas y guía práctica para tu auto" description="Qué significa cada código OBD y cada luz del tablero, medidas y equivalencias de llantas y qué aceite usar, explicado en español y con la seguridad primero." jsonLd={jsonLd}>
   <section class="hero">
-    <h1>Entiende qué le pasa a tu auto</h1>
-    <p class="lead">Códigos de falla, medidas de llantas y qué revisar, explicado claro y con la seguridad primero.</p>
-    <div class="quick">
-      <form action="/codigos-obd/" class="q" data-go="code">
-        <label for="hc"><Icon name="scan-line" size={18} /> Código OBD</label>
-        <div><input id="hc" placeholder="P0420" maxlength="5" autocomplete="off" required /><button class="button" type="submit">Ver</button></div>
-      </form>
-      <form action="/herramientas/equivalencia-de-llantas/" class="q" data-go="tire">
-        <label for="ht"><Icon name="circle-dot" size={18} /> Medida de llanta</label>
-        <div><input id="ht" placeholder="205/55 R16" autocomplete="off" required /><button class="button" type="submit">Ver</button></div>
-      </form>
+    <div class="hero-in">
+      <div class="hero-text">
+        <p class="kicker">Guía práctica para tu auto</p>
+        <h1>Entiende qué le pasa a tu auto</h1>
+        <p class="hero-lead">Códigos de falla, luces del tablero, llantas y aceite. Explicado claro, con fuentes y la seguridad primero.</p>
+        <CodeSearch title="¿Qué código te salió?" compact />
+      </div>
+      <div class="hero-art"><Dashboard /></div>
     </div>
   </section>
 
+  <h2 class="sr-title">¿Qué te pasa?</h2>
+  <ul class="entries">
+    {entries.map((e) => (
+      <li><a href={e.href}><span class="ic"><Icon name={e.icon as never} size={22} /></span><strong>{e.t}</strong><span>{e.s}</span></a></li>
+    ))}
+  </ul>
+
   <h2>Códigos más consultados</h2>
   <ul class="tile-grid">
-    {topCodes.map((c) => <li><a class="tile" href={codePath(c!.data.code)}><strong>{c!.data.code}</strong><span>{c!.data.title}</span></a></li>)}
+    {topCodes.map((c) => <li><a class="tile code-tile" href={codePath(c.data.code)}><strong class="mono">{c.data.code}</strong><span>{c.data.title}</span><em class={`sev-dot ${c.data.severity}`}>{SEVERITY[c.data.severity].label}</em></a></li>)}
   </ul>
-  <p><a href="/codigos-obd/">Todos los códigos <Icon name="arrow-right" size={16} /></a></p>
+  <p class="more"><a href="/codigos-obd/">Todos los códigos <Icon name="arrow-right" size={16} /></a></p>
 
   <h2>Luces del tablero</h2>
   <ul class="tile-grid">
-    {lights.map((l) => <li><a class="tile lt" href={`/testigos/${l.id}/`}><Symbol name={l.data.symbol} color={l.data.color} size={40} /><div><strong>{l.data.name}</strong><span>{l.data.short}</span></div></a></li>)}
+    {lights.map((l) => <li><a class="tile lt" href={`/testigos/${l.id}/`}><Symbol name={l.data.symbol} color={l.data.color} size={44} /><div><strong>{l.data.name}</strong><span>{l.data.short}</span></div></a></li>)}
   </ul>
 
   <h2>Medidas de llantas</h2>
+  <div class="tp-wrap"><TirePicker /></div>
   <ul class="tile-grid">
-    {topSizes.map((s) => <li><a class="tile" href={sizePath(s)}><strong>{sizeLabel(s)}</strong><span>Rin {s.rim} · equivalencias</span></a></li>)}
+    {topSizes.map((s) => <li><a class="tile" href={sizePath(s)}><strong>{sizeLabel(s)}</strong><span>Rin {s.rim} · {fmt(dimensions(s).diameter, 0)} mm de diámetro</span></a></li>)}
   </ul>
-  <p><a href="/llantas/">Todas las medidas <Icon name="arrow-right" size={16} /></a> · <a href="/herramientas/equivalencia-de-llantas/">Calculadora de equivalencias</a></p>
+  <p class="more"><a href="/llantas/">Todas las medidas <Icon name="arrow-right" size={16} /></a> · <a href="/herramientas/equivalencia-de-llantas/">Calculadora de equivalencias</a></p>
 
   <h2>Aceite de motor</h2>
-  <p>Qué significan <a href="/aceite/5w30/">5W-30</a>, <a href="/aceite/10w40/">10W-40</a>, <a href="/aceite/15w40/">15W-40</a> y <a href="/aceite/20w50/">20W-50</a>, y <a href="/aceite/aceite-sintetico-vs-mineral/">sintético vs. mineral</a>. <a href="/aceite/">Guía de aceite</a></p>
+  <ul class="tile-grid">
+    {oils.map((o) => <li><a class="tile" href={`/aceite/${o.id}/`}><strong>{o.data.grade ?? o.data.name}</strong><span>{o.data.short}</span></a></li>)}
+  </ul>
 
   <div class="alert" role="note">
     <Icon name="shield-alert" size={24} />
@@ -57,40 +75,31 @@ const jsonLd = [{ '@context': 'https://schema.org', '@type': 'WebSite', name: SI
       <p>Frenos que no responden, dirección dura o con juego, temperatura en rojo, olor a gasolina o la luz de check engine parpadeando: detente en un lugar seguro y acude a un taller o pide una grúa.</p>
     </div>
   </div>
-  <script type="application/json" id="home-codes" set:html={JSON.stringify(codes.map((c) => c.data.code))} />
 </Base>
 
-<script>
-  import { parseSize, sizeSlug } from '../lib/tires.js';
-  import published from '../data/tires/published.json';
-  const codes: string[] = JSON.parse(document.getElementById('home-codes')?.textContent || '[]');
-  document.querySelectorAll<HTMLFormElement>('[data-go]').forEach((form) => {
-    form.addEventListener('submit', (event) => {
-      event.preventDefault();
-      const value = form.querySelector('input')!.value.trim();
-      if (form.dataset.go === 'code') {
-        const code = value.toUpperCase();
-        location.href = codes.includes(code) ? `/codigos-obd/${code.toLowerCase()}/` : '/codigos-obd/';
-      } else {
-        const size = parseSize(value);
-        if (!size) { location.href = '/llantas/'; return; }
-        const slug = sizeSlug(size);
-        location.href = published.includes(slug) ? `/llantas/${slug}/` : `/herramientas/equivalencia-de-llantas/?de=${slug}`;
-      }
-    });
-  });
-</script>
-
 <style>
-  .hero { padding: 1.5rem 0 0.5rem; }
-  .hero h1 { max-width: 18ch; }
-  .quick { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr)); gap: 0.75rem; margin-top: 1.25rem; }
-  .q { padding: 1rem 1.1rem; border-radius: var(--radius); background: var(--navy); color: #fff; }
-  .q label { display: flex; align-items: center; gap: 0.4rem; font-weight: 700; margin-bottom: 0.45rem; }
-  .q label .icon { color: var(--amber-bright); }
-  .q div { display: flex; gap: 0.5rem; }
-  .q input { flex: 1; min-width: 0; min-height: 3rem; padding: 0 0.85rem; border: 0; border-radius: 10px; font: 600 1.15rem system-ui, sans-serif; }
+  .hero { margin: -1rem calc(50% - 50vw) 0; padding: 2rem 0 2.5rem; color: #fff; background: radial-gradient(120% 90% at 85% 10%, #234a78 0%, transparent 55%), linear-gradient(160deg, #16304f 0%, #0b1a2c 70%); }
+  .hero-in { width: min(100%, 68rem); margin-inline: auto; padding-inline: 1rem; display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 2rem; align-items: center; }
+  @media (max-width: 52rem) { .hero-in { grid-template-columns: 1fr; } .hero-art { order: -1; max-width: 24rem; margin-inline: auto; width: 100%; } }
+  .kicker { margin: 0; color: var(--amber-bright); font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; font-size: 0.8rem; }
+  .hero h1 { color: #fff; max-width: 16ch; margin-top: 0.3rem; }
+  .hero-lead { font-size: 1.15rem; color: #c9d6e6; max-width: 36rem; }
+  .hero :global(.cs) { background: rgb(255 255 255 / 7%); border: 1px solid rgb(255 255 255 / 12%); box-shadow: none; margin: 1.25rem 0 0.75rem; }
+  .sr-title { margin-top: 2rem; }
+  .entries { list-style: none; padding: 0; margin: 1rem 0 0; display: grid; gap: 0.75rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr)); }
+  @media (max-width: 36rem) { .entries { grid-template-columns: 1fr 1fr; gap: 0.5rem; } .entries a { padding: 0.8rem; } .entries strong { font-size: 1rem; } .entries span:last-child { font-size: 0.85rem; } }
+  .entries a { display: flex; flex-direction: column; gap: 0.2rem; height: 100%; padding: 1rem 1.1rem; border-radius: var(--radius); background: var(--surface); border: 1px solid var(--line); color: var(--ink); text-decoration: none; box-shadow: 0 1px 2px rgb(14 33 56 / 4%); transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease; }
+  .entries a:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgb(14 33 56 / 10%); border-color: transparent; }
+  .entries .ic { display: inline-grid; place-items: center; width: 2.6rem; height: 2.6rem; border-radius: 12px; background: var(--navy); color: var(--amber-bright); margin-bottom: 0.4rem; }
+  .entries strong { font-family: var(--head); font-size: 1.15rem; }
+  .entries span:last-child { color: var(--muted); font-size: 0.95rem; }
   .tile.lt { flex-direction: row; align-items: center; gap: 0.75rem; }
   .tile.lt div { display: flex; flex-direction: column; }
-  .q .button { background: var(--amber-bright); color: var(--navy-dark); }
+  .code-tile strong { color: var(--navy); }
+  .sev-dot { font-style: normal; font-size: 0.8rem; font-weight: 700; margin-top: 0.35rem; display: inline-flex; align-items: center; gap: 0.35rem; }
+  .sev-dot::before { content: ''; width: 0.55rem; height: 0.55rem; border-radius: 50%; background: currentColor; }
+  .sev-dot.low { color: var(--green); } .sev-dot.medium { color: var(--amber); } .sev-dot.high { color: var(--red); }
+  .more { margin-top: 0.75rem; }
+  .tp-wrap { max-width: 38rem; padding: 0.25rem; border-radius: calc(var(--radius) + 4px); background: linear-gradient(160deg, #16304f, #0b1a2c); }
+  @media (prefers-reduced-motion: reduce) { .entries a { transition: none; } }
 </style>

@@ -29,7 +29,7 @@ const LEVEL = { low: 'Informativo o revisar cuando puedas', medium: 'Revisar pro
 <Base title={l.title} description={description} crumbs={crumbs} jsonLd={jsonLd} ogType="article">
   <article class="light">
     <div class="head">
-      <Symbol name={l.symbol} color={l.color} size={72} />
+      <Symbol name={l.symbol} color={l.color} size={72} anim={l.severity === 'high' ? 'blink' : 'glow'} />
       <div>
         <span class="eyebrow">Testigo del tablero</span>
         <h1>{l.h1}</h1>

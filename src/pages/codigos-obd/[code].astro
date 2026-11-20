@@ -2,6 +2,8 @@
 import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import Icon from '../../components/Icon.astro';
+import CodeSearch from '../../components/CodeSearch.astro';
+import Symbol from '../../components/Symbol.astro';
 import { SYSTEM_LABELS, SEVERITY, COST, codePath } from '../../data/systems.js';
 import { article, absolute, faqPage } from '../../lib/seo.js';
 
@@ -28,8 +30,16 @@ const crumbs = [{ name: 'Inicio', path: '/' }, { name: 'Códigos OBD', path: '/c
 ---
 <Base title={title} description={description} crumbs={crumbs} jsonLd={jsonLd} ogType="article">
   <article class="code-page">
-    <span class="eyebrow">{SYSTEM_LABELS[c.system]}</span>
-    <h1><span class="code">{c.code}</span> {c.title}</h1>
+    <div class="head">
+      <div>
+        <span class="eyebrow">{SYSTEM_LABELS[c.system]}</span>
+        <h1><span class="code">{c.code}</span> {c.title}</h1>
+      </div>
+      <a class="mil" href="/testigos/check-engine/" title="Luz de check engine">
+        <Symbol name="engine" color="amarillo" size={64} anim={c.system === 'encendido' ? 'blink' : 'glow'} />
+        <span>{c.system === 'encendido' ? 'Puede parpadear' : 'Luz fija'}</span>
+      </a>
+    </div>
     <p class="std"><span class="muted">Descripción estándar (SAE J2012):</span> <span lang="en">{c.sae}</span></p>
     <p class="lead">{c.summary}</p>
 
@@ -92,6 +102,8 @@ const crumbs = [{ name: 'Inicio', path: '/' }, { name: 'Códigos OBD', path: '/c
 
     <p class="small">¿Se encendió la luz de motor? Lee <a href="/testigos/check-engine/">qué significa la luz de check engine fija o parpadeando</a>.</p>
 
+    <CodeSearch title="¿Tienes otro código? Búscalo" compact />
+
     <h2>Preguntas frecuentes</h2>
     {c.faq.map(({ q, a }) => <details class="faq"><summary>{q}</summary><p>{a}</p></details>)}
 
@@ -105,6 +117,9 @@ const crumbs = [{ name: 'Inicio', path: '/' }, { name: 'Códigos OBD', path: '/c
 
 <style>
   .code-page { max-width: 50rem; }
+  .head { display: flex; gap: 1rem; align-items: flex-start; justify-content: space-between; }
+  .mil { display: flex; flex-direction: column; align-items: center; gap: 0.25rem; text-decoration: none; color: var(--muted); font-size: 0.75rem; font-weight: 600; margin-top: 1.2rem; text-align: center; }
+  @media (max-width: 30rem) { .mil :global(.sym) { width: 48px !important; height: 48px !important; } }
   h1 .code { display: inline-block; padding: 0 0.35em; margin-right: 0.15em; border-radius: 10px; background: var(--navy); color: var(--amber-bright); font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace; font-weight: 700; }
   .std { font-size: 0.95rem; margin-bottom: 1rem; }
   .verdict { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 1rem 1.15rem; margin: 1.25rem 0; }

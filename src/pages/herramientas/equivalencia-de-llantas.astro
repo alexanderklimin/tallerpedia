@@ -2,6 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import { article, absolute, faqPage } from '../../lib/seo.js';
 import { DEFAULT_TOLERANCE } from '../../lib/tires.js';
+import TireTool from '../../components/TireTool.astro';
 
 const title = 'Calculadora de equivalencias de llantas';
 const description = 'Compara dos medidas de llanta (neumático): diámetro, altura del flanco, diferencia en porcentaje y velocidad real con el velocímetro. Lista de medidas equivalentes.';
@@ -20,39 +21,9 @@ const crumbs = [{ name: 'Inicio', path: '/' }, { name: 'Herramientas', path: '/h
 <Base title={title} description={description} crumbs={crumbs} jsonLd={jsonLd}>
   <article class="tool">
     <h1>Calculadora de equivalencias de llantas</h1>
-    <p class="lead">Escribe la medida actual de tus llantas (neumáticos, cubiertas) y, si quieres, la que piensas poner. Verás la diferencia de diámetro, cómo cambia el velocímetro y qué medidas comunes son equivalentes.</p>
+    <p class="lead">Elige la medida actual de tus llantas (neumáticos, cubiertas) y la que piensas poner. Verás la diferencia de diámetro, cómo cambia el velocímetro y qué medidas comunes son equivalentes.</p>
 
-    <form class="calc" data-calc>
-      <div class="field">
-        <label for="from">Medida actual</label>
-        <input id="from" name="de" placeholder="205/55 R16" autocomplete="off" required />
-      </div>
-      <div class="field">
-        <label for="to">Medida nueva <span class="muted">(opcional)</span></label>
-        <input id="to" name="a" placeholder="225/45 R17" autocomplete="off" />
-      </div>
-      <button class="button" type="submit">Calcular</button>
-      <p class="error" role="alert" hidden>Escribe la medida como 205/55 R16 (ancho/perfil R rin).</p>
-    </form>
-
-    <noscript><p class="note">La calculadora necesita JavaScript. Puedes ver las medidas y equivalencias en la <a href="/llantas/">página de cada medida</a>.</p></noscript>
-
-    <section class="result" aria-live="polite" hidden>
-      <div class="table-scroll">
-        <table>
-          <thead><tr><th scope="col"></th><th scope="col" class="num" data-col-a></th><th scope="col" class="num" data-col-b></th><th scope="col" class="num">Diferencia</th></tr></thead>
-          <tbody data-compare></tbody>
-        </table>
-      </div>
-      <p class="verdict" data-verdict></p>
-      <h2 data-eq-title></h2>
-      <div class="table-scroll">
-        <table>
-          <thead><tr><th scope="col">Medida</th><th scope="col" class="num">Diámetro</th><th scope="col" class="num">Diferencia</th><th scope="col" class="num">A 100 km/h</th></tr></thead>
-          <tbody data-eq></tbody>
-        </table>
-      </div>
-    </section>
+    <TireTool from="205-55-r16" to="225-45-r17" equivalents title="Elige las dos medidas" />
 
     <div class="note">
       <p><strong>Antes de cambiar de medida.</strong> Que el diámetro coincida no basta: la llanta debe caber sin rozar al girar y con la suspensión comprimida, el rin debe tener el ancho y el bombeo (offset) adecuados, y los índices de carga y velocidad deben ser iguales o mayores que los originales. En algunos países el cambio debe figurar en la ficha técnica o pasar una inspección (en España, la ITV).</p>
@@ -68,88 +39,8 @@ const crumbs = [{ name: 'Inicio', path: '/' }, { name: 'Herramientas', path: '/h
   </article>
 </Base>
 
-<script>
-  import { parseSize, sizeLabel, sizeSlug, dimensions, compare, equivalents, DEFAULT_TOLERANCE } from '../../lib/tires.js';
-  import { fmt, signed } from '../../lib/format.js';
-  import catalog from '../../data/tires/common.json';
-  import published from '../../data/tires/published.json';
 
-  const form = document.querySelector<HTMLFormElement>('[data-calc]')!;
-  const from = form.querySelector<HTMLInputElement>('#from')!;
-  const to = form.querySelector<HTMLInputElement>('#to')!;
-  const error = form.querySelector<HTMLElement>('.error')!;
-  const result = document.querySelector<HTMLElement>('.result')!;
-  const $ = (sel: string) => document.querySelector<HTMLElement>(sel)!;
-  const link = (s: any) => published.includes(sizeSlug(s)) ? `<a href="/llantas/${sizeSlug(s)}/">${sizeLabel(s)}</a>` : sizeLabel(s);
-
-  function render() {
-    const a = parseSize(from.value);
-    const b = to.value.trim() ? parseSize(to.value) : null;
-    const bad = !a || (to.value.trim() && !b);
-    error.hidden = !bad;
-    if (bad || !a) { result.hidden = true; return; }
-    const da = dimensions(a);
-    $('[data-col-a]').textContent = sizeLabel(a);
-    $('[data-col-b]').textContent = b ? sizeLabel(b) : '';
-    let rows: [string, string, string, string][] = [
-      ['Ancho', `${a.width} mm`, '', ''],
-      ['Altura del flanco', `${fmt(da.sidewall)} mm`, '', ''],
-      ['Diámetro total', `${fmt(da.diameter, 0)} mm (${fmt(da.diameterIn)}″)`, '', ''],
-      ['Circunferencia', `${fmt(da.circumference, 0)} mm`, '', ''],
-      ['Vueltas por km', String(da.revsPerKm), '', ''],
-    ];
-    if (b) {
-      const db = dimensions(b);
-      const c = compare(a, b);
-      rows = [
-        ['Ancho', `${a.width} mm`, `${b.width} mm`, `${signed(b.width - a.width, 0)} mm`],
-        ['Altura del flanco', `${fmt(da.sidewall)} mm`, `${fmt(db.sidewall)} mm`, `${signed(c.sidewallDiff, 1)} mm`],
-        ['Diámetro total', `${fmt(da.diameter, 0)} mm`, `${fmt(db.diameter, 0)} mm`, `${signed(c.diffPct)} %`],
-        ['Circunferencia', `${fmt(da.circumference, 0)} mm`, `${fmt(db.circumference, 0)} mm`, `${signed(db.circumference - da.circumference, 0)} mm`],
-        ['Vueltas por km', String(da.revsPerKm), String(db.revsPerKm), signed(db.revsPerKm - da.revsPerKm, 0)],
-        ['Velocímetro marca 100 km/h', '100 km/h', `${fmt(c.realAt100)} km/h reales`, ''],
-      ];
-      const ok = Math.abs(c.diffPct) <= DEFAULT_TOLERANCE;
-      $('[data-verdict]').className = `verdict ${ok ? 'ok' : 'bad'}`;
-      $('[data-verdict]').textContent = ok
-        ? `La diferencia de diámetro es de ${signed(c.diffPct)} %, dentro del margen práctico de ±${DEFAULT_TOLERANCE} %. Comprueba aun así que la medida quepa y esté permitida para tu auto.`
-        : `La diferencia de diámetro es de ${signed(c.diffPct)} %, fuera del margen práctico de ±${DEFAULT_TOLERANCE} %. Afectaría al velocímetro y a sistemas como el ABS o el control de estabilidad; no es una medida equivalente.`;
-    } else {
-      $('[data-verdict]').className = 'verdict';
-      $('[data-verdict]').textContent = '';
-    }
-    $('[data-compare]').innerHTML = rows.map((r) => `<tr><th scope="row">${r[0]}</th><td class="num">${r[1]}</td><td class="num">${r[2]}</td><td class="num">${r[3]}</td></tr>`).join('');
-    const eq = equivalents(a, catalog as [number, number, number][], { perRim: 8 });
-    $('[data-eq-title]').textContent = `Medidas equivalentes a ${sizeLabel(a)} (±${DEFAULT_TOLERANCE} %)`;
-    $('[data-eq]').innerHTML = eq.length
-      ? eq.map((e) => `<tr><th scope="row">${link(e.size)}</th><td class="num">${fmt(dimensions(e.size).diameter, 0)} mm</td><td class="num">${signed(e.diffPct)} %</td><td class="num">${fmt(e.realAt100)} km/h</td></tr>`).join('')
-      : `<tr><td colspan="4">No hay medidas comunes dentro de ese margen.</td></tr>`;
-    result.hidden = false;
-    const params = new URLSearchParams({ de: sizeSlug(a), ...(b ? { a: sizeSlug(b) } : {}) });
-    history.replaceState(null, '', `?${params}`);
-  }
-
-  const params = new URLSearchParams(location.search);
-  const de = params.get('de'); const aa = params.get('a');
-  const pa = de ? parseSize(de.replace(/-/g, ' ')) : null;
-  const pb = aa ? parseSize(aa.replace(/-/g, ' ')) : null;
-  if (pa) from.value = sizeLabel(pa);
-  if (pb) to.value = sizeLabel(pb);
-  form.addEventListener('submit', (event) => { event.preventDefault(); render(); });
-  if (pa) render();
-</script>
 
 <style>
   .tool { max-width: 50rem; }
-  .calc { display: grid; grid-template-columns: 1fr 1fr auto; gap: 0.75rem; align-items: end; padding: 1rem 1.15rem; border-radius: var(--radius); background: var(--navy); color: #fff; margin: 1.25rem 0; }
-  @media (max-width: 36rem) { .calc { grid-template-columns: 1fr; } }
-  .field label { display: block; font-weight: 700; margin-bottom: 0.3rem; }
-  .field .muted { color: #b9c6d8; font-weight: 400; }
-  .calc input { width: 100%; min-height: 3rem; padding: 0 0.85rem; border: 0; border-radius: 10px; font: 600 1.1rem system-ui, sans-serif; }
-  .calc .button { background: var(--amber-bright); color: var(--navy-dark); }
-  .error { grid-column: 1 / -1; margin: 0; color: #ffd7d2; }
-  .verdict { padding: 0.8rem 1rem; border-radius: 12px; margin: 1rem 0; }
-  .verdict:empty { display: none; }
-  .verdict.ok { background: var(--green-soft); color: #0b4a29; }
-  .verdict.bad { background: var(--red-soft); color: #5c1410; }
 </style>

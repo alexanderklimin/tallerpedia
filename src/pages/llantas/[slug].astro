@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
-import Icon from '../../components/Icon.astro';
+import TireTool from '../../components/TireTool.astro';
+import TireDiagram from '../../components/TireDiagram.astro';
 import catalog from '../../data/tires/common.json';
 import published from '../../data/tires/published.json';
 import { parseSize, sizeLabel, sizePath, sizeSlug, dimensions, equivalents, compare, DEFAULT_TOLERANCE } from '../../lib/tires.js';
@@ -73,6 +74,10 @@ const crumbs = [{ name: 'Inicio', path: '/' }, { name: 'Llantas', path: '/llanta
       <div><span>Vueltas por km</span><strong>{d.revsPerKm}</strong><em>teóricas</em></div>
     </div>
 
+    <TireDiagram size={size} />
+
+    <TireTool from={sizeSlug(size)} to={closest ? sizeSlug(closest.size) : undefined} lockFrom />
+
     <h2>Qué significa {label}</h2>
     <figure class="decode" aria-label={`Lectura de la medida ${label}`}>
       <div><b>{size.width}</b><span>ancho en mm</span></div>
@@ -105,7 +110,6 @@ const crumbs = [{ name: 'Inicio', path: '/' }, { name: 'Llantas', path: '/llanta
     <div class="note">
       <p><strong>Antes de cambiar de medida.</strong> Que el diámetro coincida no basta: la llanta tiene que caber sin rozar en la suspensión ni en la carrocería al girar, el rin debe tener el ancho y el bombeo (offset) adecuados, y los índices de carga y velocidad deben ser iguales o mayores. Algunos países exigen que la medida figure en la ficha técnica o la homologación del vehículo (en España, por ejemplo, se revisa en la ITV). Si tienes dudas, consulta en una tienda de llantas o en el taller.</p>
     </div>
-    <p><a class="button" href={`/herramientas/equivalencia-de-llantas/?de=${sizeSlug(size)}`}><Icon name="calculator" size={18} /> Comparar con otra medida</a></p>
 
     <h2>Presión de inflado</h2>
     <p>La medida {label} no tiene una presión «propia»: la misma llanta puede ir a presiones distintas según el auto, el peso y el eje. La correcta para tu vehículo está en la etiqueta del marco de la puerta del conductor (a veces en la tapa del tanque o la guantera) y en el manual del propietario. Mídela con las llantas frías. La cifra que aparece en el flanco (<em>max. press.</em>) es el máximo que soporta la llanta, no la presión recomendada.</p>

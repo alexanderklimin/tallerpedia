@@ -173,7 +173,7 @@ if (crumbs.length > 1) {
   .skip:focus { left: 1rem; top: 0.5rem; background: var(--surface); padding: 0.5rem 0.75rem; z-index: 10; }
   :focus-visible { outline: 3px solid var(--amber-bright); outline-offset: 2px; }
 
-  .site-header { position: sticky; top: 0; z-index: 5; background: var(--navy); color: #fff; }
+  .site-header { position: sticky; top: 0; z-index: 5; background: rgb(22 48 79 / 96%); backdrop-filter: blur(8px); color: #fff; box-shadow: 0 1px 0 rgb(255 255 255 / 6%); }
   .bar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: 3.75rem; }
   .brand { display: inline-flex; align-items: center; gap: 0.5rem; font-family: var(--head); font-weight: 800; font-size: 1.35rem; color: #fff; text-decoration: none; }
   .brand-accent { color: var(--amber-bright); }
@@ -217,8 +217,9 @@ if (crumbs.length > 1) {
   td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
 
   .tile-grid { display: grid; gap: 0.6rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 14rem), 1fr)); list-style: none; padding: 0; margin: 1rem 0 0; }
-  .tile { display: flex; flex-direction: column; gap: 0.1rem; height: 100%; padding: 0.8rem 0.95rem; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; color: var(--ink); text-decoration: none; }
-  .tile:hover { border-color: var(--accent); }
+  .tile { display: flex; flex-direction: column; gap: 0.1rem; height: 100%; padding: 0.85rem 1rem; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; color: var(--ink); text-decoration: none; box-shadow: 0 1px 2px rgb(14 33 56 / 4%); transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease; }
+  .tile:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgb(14 33 56 / 10%); border-color: transparent; }
+  @media (prefers-reduced-motion: reduce) { .tile { transition: none; } .tile:hover { transform: none; } }
   .tile strong { font-family: var(--head); font-size: 1.1rem; font-weight: 750; line-height: 1.2; }
   .tile span { color: var(--muted); font-size: 0.9rem; line-height: 1.35; }
 

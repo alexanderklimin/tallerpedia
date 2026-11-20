@@ -1,7 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
-import Icon from '../../components/Icon.astro';
+import OilScale from '../../components/OilScale.astro';
 import { parseGrade, gradeLabel, gradeSlug, gradeSpecs } from '../../lib/oils.js';
 import { fmt } from '../../lib/format.js';
 import { article, absolute, faqPage } from '../../lib/seo.js';
@@ -44,6 +44,7 @@ const crumbs = [{ name: 'Inicio', path: '/' }, { name: 'Aceite de motor', path: 
           <div><b>{grade.winter}W</b><span>grado en frío (W = winter): fluye en el arranque en frío</span></div>
           <div><b>{grade.hot}</b><span>viscosidad con el motor caliente, a 100 °C</span></div>
         </figure>
+        <OilScale winter={grade.winter} hot={grade.hot} />
         <div class="specs">
           <div><span>Prueba de arranque en frío</span><strong>{specs.crankC} °C</strong><em>viscosidad máxima de arranque (CCS)</em></div>
           <div><span>Prueba de bombeo en frío</span><strong>{specs.pumpC} °C</strong><em>sin bloqueo de bombeo (MRV)</em></div>

@@ -3,6 +3,8 @@ import Base from '../../layouts/Base.astro';
 import published from '../../data/tires/published.json';
 import { parseSize, sizeLabel, sizePath, dimensions } from '../../lib/tires.js';
 import { fmt } from '../../lib/format.js';
+import TireTool from '../../components/TireTool.astro';
+import TirePicker from '../../components/TirePicker.astro';
 
 const sizes = published.map((slug) => parseSize(slug.replace(/-/g, ' '))!).sort((a, b) => a.rim - b.rim || a.width - b.width || a.aspect - b.aspect);
 const rims = [...new Set(sizes.map((s) => s.rim))];
@@ -11,7 +13,9 @@ const crumbs = [{ name: 'Inicio', path: '/' }, { name: 'Llantas', path: '/llanta
 <Base title="Medidas de llantas: cómo leerlas y equivalencias" description="Cómo leer la medida de una llanta (neumático), qué significa cada número y tablas de medidas por rin con diámetro y equivalencias calculadas." crumbs={crumbs}>
   <h1>Medidas de llantas</h1>
   <p class="lead">La medida de la llanta (neumático o cubierta) está en el flanco, por ejemplo <code>205/55 R16 91V</code>. Elige tu medida para ver sus dimensiones reales, las medidas equivalentes y qué cambia en el velocímetro.</p>
-  <p><a class="button" href="/herramientas/equivalencia-de-llantas/">Calculadora de equivalencias</a></p>
+  <div class="tp-wrap"><TirePicker /></div>
+
+  <TireTool from="205-55-r16" to="225-45-r17" title="Compara dos medidas" />
 
   <h2>Cómo leer la medida</h2>
   <ul>
@@ -33,3 +37,7 @@ const crumbs = [{ name: 'Inicio', path: '/' }, { name: 'Llantas', path: '/llanta
     </>
   ))}
 </Base>
+
+<style>
+  .tp-wrap { max-width: 38rem; margin: 1.25rem 0; padding: 0.25rem; border-radius: calc(var(--radius) + 4px); background: linear-gradient(160deg, #16304f, #0b1a2c); }
+</style>

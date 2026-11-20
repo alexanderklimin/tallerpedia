@@ -1,0 +1,56 @@
+---
+// Decorative instrument cluster for the home hero: on load the needles sweep and the warning lights
+// do a bulb check, like turning the key. CSS only; still for prefers-reduced-motion.
+const ticks = Array.from({ length: 11 }, (_, i) => -120 + i * 24);
+const lights = [
+  { x: 112, c: '#ffb020', d: 'M-9 -1v5M-9 1.5h2.2M-6.8 -2h2V-3.5h2.8V-5h5v1.5h2.2l1.8 2h1.4V-2.5h1.6v8h-1.6V4h-1.4l-2.2 2.5H-1L-2.8 4.5h-4z' },
+  { x: 152, c: '#ff4d3d', d: 'M-10 -1h3.5l2-1.5h6l1.5 1L9 -3.5l-6.5 7.5H-3.5L-5.5 2H-10z' },
+  { x: 192, c: '#ff4d3d', d: 'M-9 -5h18v10h-18zM-6 -5v-2h3v2M3 -5v-2h3v2M-6 0h3.5M3 0h3.5M4.75 -1.75v3.5' },
+  { x: 232, c: '#ffb020', d: 'M-4.5 6.5a7.5 7.5 0 0 1-2.2-10.3L-5.2 -6.5h10.4l1.5 2.7A7.5 7.5 0 0 1 4.5 6.5M0 -3v4.5M0 4v.3' },
+  { x: 272, c: '#ff4d3d', d: 'M0 -6.5a6.5 6.5 0 1 0 0.01 0zM-8.5 -5.5a9.5 9.5 0 0 0 0 11M8.5 -5.5a9.5 9.5 0 0 1 0 11M0 -3v3.5M0 2.8v.3' },
+];
+---
+<svg class="dash" viewBox="0 0 384 210" role="img" aria-label="Tablero de un auto con los testigos encendiéndose al arrancar">
+  <defs>
+    <radialGradient id="dial" cx="50%" cy="45%" r="60%">
+      <stop offset="0" stop-color="#1c2a3d" />
+      <stop offset="1" stop-color="#0a121d" />
+    </radialGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2.2" result="b" /><feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge></filter>
+  </defs>
+  <rect x="2" y="2" width="380" height="206" rx="38" fill="#070d15" stroke="#24364d" stroke-width="2" />
+  {[{ cx: 102, label: 'x1000 rpm', cls: 'n1' }, { cx: 282, label: 'km/h', cls: 'n2' }].map((g) => (
+    <g transform={`translate(${g.cx} 96)`}>
+      <circle r="76" fill="url(#dial)" stroke="#2c4462" stroke-width="2" />
+      {ticks.map((a, i) => (
+        <line x1="0" y1="-66" x2="0" y2={i % 2 ? -60 : -56} stroke={i > 8 && g.cls === 'n1' ? '#ff4d3d' : '#9fb3cc'} stroke-width={i % 2 ? 1.5 : 2.5} transform={`rotate(${a})`} />
+      ))}
+      <text y="40" text-anchor="middle" fill="#6f87a6" font-size="9" font-family="system-ui, sans-serif">{g.label}</text>
+      <g class={`needle ${g.cls}`}>
+        <path d="M-2.2 6 L0 -60 L2.2 6 Z" fill="#ffb020" filter="url(#glow)" />
+      </g>
+      <circle r="7" fill="#1c2a3d" stroke="#ffb020" stroke-width="2" />
+    </g>
+  ))}
+  <g transform="translate(0 190)">
+    {lights.map((l, i) => (
+      <path class="tl" style={`--i:${i}`} d={l.d} transform={`translate(${l.x} 0)`} fill="none" stroke={l.c} stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow)" />
+    ))}
+  </g>
+</svg>
+
+<style>
+  .dash { display: block; width: 100%; height: auto; max-width: 30rem; filter: drop-shadow(0 20px 40px rgb(0 0 0 / 35%)); }
+  .needle { transform: rotate(-120deg); animation: sweep 2.6s cubic-bezier(.45,.05,.3,1) 0.3s forwards; }
+  .n1 { --idle: -96deg; }
+  .n2 { --idle: -120deg; animation-delay: 0.45s; }
+  @keyframes sweep { 0% { transform: rotate(-120deg); } 45% { transform: rotate(120deg); } 100% { transform: rotate(var(--idle)); } }
+  .n1.needle { animation: sweep 2.6s cubic-bezier(.45,.05,.3,1) 0.3s forwards, idle 3s ease-in-out 3s infinite; }
+  @keyframes idle { 0%, 100% { transform: rotate(-96deg); } 50% { transform: rotate(-92deg); } }
+  .tl { opacity: 0.12; animation: bulb 3.2s ease calc(0.2s + var(--i) * 0.12s) forwards; }
+  @keyframes bulb { 0% { opacity: 0.12; } 12% { opacity: 1; } 70% { opacity: 1; } 100% { opacity: 0.12; } }
+  @media (prefers-reduced-motion: reduce) {
+    .needle, .n1.needle { animation: none; transform: rotate(var(--idle)); }
+    .tl { animation: none; }
+  }
+</style>

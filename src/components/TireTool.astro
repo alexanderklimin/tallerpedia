@@ -1,0 +1,206 @@
+---
+// Interactive tire size comparison: two sizes picked with selects, results update on every change.
+// Used on tire size pages (current size preset), the tire index and the calculator page (with equivalents).
+import catalog from '../data/tires/common.json';
+import { parseSize, sizeLabel } from '../lib/tires.js';
+
+interface Props { from?: string; to?: string; equivalents?: boolean; title?: string; lockFrom?: boolean }
+const { from = '205-55-r16', to, equivalents = false, title, lockFrom = false } = Astro.props;
+const a = parseSize(from.replace(/-/g, ' '))!;
+const b = to ? parseSize(to.replace(/-/g, ' ')) : null;
+const cat = catalog as [number, number, number][];
+const widths = [...new Set(cat.map((s) => s[0]))].sort((x, y) => x - y);
+const aspects = [...new Set(cat.map((s) => s[1]))].sort((x, y) => x - y);
+const rims = [...new Set(cat.map((s) => s[2]))].sort((x, y) => x - y);
+const id = `tt${Math.random().toString(36).slice(2, 7)}`;
+const pick = (prefix: string, size: { width: number; aspect: number; rim: number } | null, fallback: { width: number; aspect: number; rim: number }) => {
+  const s = size ?? fallback;
+  return [
+    { name: `${prefix}w`, label: 'Ancho', options: widths, value: s.width, fmt: (v: number) => `${v}` },
+    { name: `${prefix}a`, label: 'Perfil', options: aspects, value: s.aspect, fmt: (v: number) => `${v}` },
+    { name: `${prefix}r`, label: 'Rin', options: rims, value: s.rim, fmt: (v: number) => `R${v}` },
+  ];
+};
+// A sensible default "new" size: the same rim + 1 with the closest common size (falls back to the same size).
+const defaultTo = b ?? (() => {
+  const target = a.rim * 25.4 + (2 * a.width * a.aspect) / 100;
+  const pool = cat.filter((s) => s[2] === a.rim + 1);
+  const best = pool.sort((x, y) => Math.abs(x[2] * 25.4 + (2 * x[0] * x[1]) / 100 - target) - Math.abs(y[2] * 25.4 + (2 * y[0] * y[1]) / 100 - target))[0];
+  return best ? { width: best[0], aspect: best[1], rim: best[2] } : a;
+})();
+---
+<section class="tt" data-tire-tool data-equivalents={equivalents ? '1' : undefined} aria-labelledby={`${id}-h`}>
+  <h2 id={`${id}-h`} class="tt-title">{title ?? `Compara ${sizeLabel(a)} con otra medida`}</h2>
+  <form class="tt-form" onsubmit="return false">
+    <fieldset>
+      <legend>Medida actual</legend>
+      <div class="tt-row">
+        {pick('f', a, a).map((f) => (
+          <label><span>{f.label}</span>
+            <select name={f.name} disabled={lockFrom}>{f.options.map((o) => <option value={o} selected={o === f.value}>{f.fmt(o)}</option>)}</select>
+          </label>
+        ))}
+      </div>
+    </fieldset>
+    <fieldset>
+      <legend>Medida nueva</legend>
+      <div class="tt-row">
+        {pick('t', defaultTo, a).map((f) => (
+          <label><span>{f.label}</span>
+            <select name={f.name}>{f.options.map((o) => <option value={o} selected={o === f.value}>{f.fmt(o)}</option>)}</select>
+          </label>
+        ))}
+      </div>
+    </fieldset>
+  </form>
+  <div class="tt-out" aria-live="polite">
+    <div class="tt-vis" aria-hidden="true">
+      <svg viewBox="0 0 320 220">
+        <line x1="10" y1="205" x2="310" y2="205" class="ground" />
+        <g data-wheel-b>
+          <circle class="tb" cx="110" r="90" cy="115" />
+          <circle class="rb" cx="110" r="50" cy="115" />
+        </g>
+        <circle class="ta" cx="110" r="90" cy="115" data-wheel-a />
+        <g transform="translate(225 0)">
+          <rect class="sb" data-sec-b x="0" y="40" width="40" height="40" rx="5" />
+          <rect class="sa" data-sec-a x="0" y="40" width="40" height="40" rx="5" />
+          <text x="35" y="128" text-anchor="middle" class="cap">sección</text>
+        </g>
+      </svg>
+      <div class="legend"><span class="la">— — actual</span><span class="lb">■ nueva</span></div>
+    </div>
+    <p class="tt-verdict" data-verdict></p>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th scope="col"></th><th scope="col" class="num" data-col-a></th><th scope="col" class="num" data-col-b></th><th scope="col" class="num">Dif.</th></tr></thead>
+        <tbody data-compare></tbody>
+      </table>
+    </div>
+    {equivalents && (
+      <>
+        <h3 data-eq-title></h3>
+        <div class="table-scroll">
+          <table>
+            <thead><tr><th scope="col">Medida</th><th scope="col" class="num">Diámetro</th><th scope="col" class="num">Diferencia</th><th scope="col" class="num">A 100 km/h</th></tr></thead>
+            <tbody data-eq></tbody>
+          </table>
+        </div>
+      </>
+    )}
+  </div>
+  <noscript><p class="small">Activa JavaScript para comparar medidas.</p></noscript>
+</section>
+
+<script>
+  import { sizeLabel, sizeSlug, dimensions, compare, equivalents, DEFAULT_TOLERANCE } from '../lib/tires.js';
+  import { fmt, signed } from '../lib/format.js';
+  import catalog from '../data/tires/common.json';
+  import published from '../data/tires/published.json';
+
+  type Size = { width: number; aspect: number; rim: number };
+  const link = (s: Size) => (published.includes(sizeSlug(s)) ? `<a href="/llantas/${sizeSlug(s)}/">${sizeLabel(s)}</a>` : sizeLabel(s));
+
+  document.querySelectorAll<HTMLElement>('[data-tire-tool]').forEach((root) => {
+    const form = root.querySelector('form')!;
+    const val = (n: string) => Number((form.elements.namedItem(n) as HTMLSelectElement).value);
+    const $ = (sel: string) => root.querySelector<HTMLElement>(sel);
+
+    function render() {
+      const a: Size = { width: val('fw'), aspect: val('fa'), rim: val('fr') };
+      const b: Size = { width: val('tw'), aspect: val('ta'), rim: val('tr') };
+      const da = dimensions(a);
+      const db = dimensions(b);
+      const c = compare(a, b);
+      $('[data-col-a]')!.textContent = sizeLabel(a);
+      $('[data-col-b]')!.textContent = sizeLabel(b);
+      const rows: [string, string, string, string][] = [
+        ['Ancho, mm', `${a.width}`, `${b.width}`, `${signed(b.width - a.width, 0)} mm`],
+        ['Flanco, mm', `${fmt(da.sidewall)}`, `${fmt(db.sidewall)}`, `${signed(c.sidewallDiff, 1)} mm`],
+        ['Diámetro, mm', `${fmt(da.diameter, 0)}`, `${fmt(db.diameter, 0)}`, `${signed(c.diffPct)} %`],
+        ['Vueltas/km', String(da.revsPerKm), String(db.revsPerKm), signed(db.revsPerKm - da.revsPerKm, 0)],
+        ['Velocímetro 100 = real, km/h', '100', `${fmt(c.realAt100)}`, signed(c.realAt100 - 100, 1)],
+      ];
+      // Scale drawing: both wheels on the same ground line, cross-sections side by side.
+      const big = Math.max(da.diameter, db.diameter);
+      const k = 190 / big;
+      const place = (el: SVGCircleElement | null, dia: number) => { if (!el) return; el.style.r = String((dia * k) / 2); el.style.cy = String(205 - (dia * k) / 2); };
+      place(root.querySelector('[data-wheel-a]'), da.diameter);
+      place(root.querySelector('.tb'), db.diameter);
+      place(root.querySelector('.rb'), db.rimMm);
+      const sec = (el: SVGRectElement | null, s: Size, sw: number) => { if (!el) return; const w = s.width * k; const h = sw * k; el.style.width = `${w}px`; el.style.height = `${h}px`; el.style.x = `${35 - w / 2}px`; el.style.y = `${110 - h}px`; };
+      sec(root.querySelector('[data-sec-b]'), b, db.sidewall);
+      sec(root.querySelector('[data-sec-a]'), a, da.sidewall);
+      $('[data-compare]')!.innerHTML = rows.map((r) => `<tr><th scope="row">${r[0]}</th><td class="num">${r[1]}</td><td class="num">${r[2]}</td><td class="num">${r[3]}</td></tr>`).join('');
+      const verdict = $('[data-verdict]')!;
+      const same = c.diffMm === 0 && a.width === b.width;
+      const ok = Math.abs(c.diffPct) <= DEFAULT_TOLERANCE;
+      verdict.className = `tt-verdict ${same ? '' : ok ? 'ok' : 'bad'}`;
+      verdict.textContent = same
+        ? 'Elige una medida nueva para compararla.'
+        : ok
+          ? `${sizeLabel(b)} difiere ${signed(c.diffPct)} % en diámetro: dentro del margen práctico de ±${DEFAULT_TOLERANCE} %. Comprueba que quepa y que esté permitida para tu auto.`
+          : `${sizeLabel(b)} difiere ${signed(c.diffPct)} % en diámetro: fuera del margen de ±${DEFAULT_TOLERANCE} %. No es una medida equivalente.`;
+      if (root.dataset.equivalents) {
+        const eq = equivalents(a, catalog as [number, number, number][], { perRim: 8 });
+        $('[data-eq-title]')!.textContent = `Medidas equivalentes a ${sizeLabel(a)} (±${DEFAULT_TOLERANCE} %)`;
+        $('[data-eq]')!.innerHTML = eq.length
+          ? eq.map((e) => `<tr><th scope="row">${link(e.size)}</th><td class="num">${fmt(dimensions(e.size).diameter, 0)} mm</td><td class="num">${signed(e.diffPct)} %</td><td class="num">${fmt(e.realAt100)} km/h</td></tr>`).join('')
+          : '<tr><td colspan="4">No hay medidas comunes dentro de ese margen.</td></tr>';
+        history.replaceState(null, '', `?de=${sizeSlug(a)}&a=${sizeSlug(b)}`);
+      }
+    }
+
+    if (root.dataset.equivalents) {
+      // Calculator page: sizes can come from the URL (?de=205-55-r16&a=225-45-r17).
+      const params = new URLSearchParams(location.search);
+      const setSize = (prefix: string, slug: string | null) => {
+        const m = slug && /^(\d{3})-(\d{2})-r(\d{2})$/.exec(slug);
+        if (!m) return;
+        ['w', 'a', 'r'].forEach((k, i) => {
+          const el = form.elements.namedItem(prefix + k) as HTMLSelectElement;
+          if ([...el.options].some((o) => o.value === String(Number(m[i + 1])))) el.value = String(Number(m[i + 1]));
+        });
+      };
+      setSize('f', params.get('de'));
+      setSize('t', params.get('a'));
+    }
+    form.addEventListener('change', render);
+    render();
+  });
+</script>
+
+<style>
+  .tt { margin: 1.5rem 0; padding: 1rem 1.1rem 1.15rem; border-radius: var(--radius); background: var(--navy); color: #fff; }
+  .tt-title { margin: 0 0 0.75rem; color: #fff; font-size: 1.3rem; }
+  .tt-form { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+  @media (max-width: 36rem) { .tt-form { grid-template-columns: 1fr; } }
+  fieldset { margin: 0; padding: 0; border: 0; min-width: 0; }
+  legend { font-weight: 700; margin-bottom: 0.35rem; color: var(--amber-bright); }
+  .tt-row { display: grid; grid-template-columns: 1.1fr 1fr 1fr; gap: 0.4rem; }
+  .tt-row label span { display: block; font-size: 0.78rem; color: #b9c6d8; margin-bottom: 0.15rem; }
+  select { width: 100%; min-height: 3rem; padding: 0 0.5rem; border: 0; border-radius: 10px; background: #fff; color: var(--ink); font: 700 1.1rem system-ui, sans-serif; }
+  select:disabled { opacity: 1; background: #dfe6ef; color: var(--ink); }
+  .tt-out { margin-top: 0.9rem; }
+  .tt-vis { background: rgb(255 255 255 / 6%); border-radius: 12px; padding: 0.5rem; margin-bottom: 0.75rem; }
+  .tt-vis svg { display: block; width: 100%; max-height: 15rem; }
+  .tt-vis circle, .tt-vis rect { transition: r 0.45s ease, cy 0.45s ease, width 0.45s ease, height 0.45s ease, x 0.45s ease, y 0.45s ease; }
+  .ground { stroke: #5f7391; stroke-dasharray: 3 4; }
+  .tb { fill: #0b1522; stroke: var(--amber-bright); stroke-width: 3; }
+  .rb { fill: #c9d3df; }
+  .ta { fill: none; stroke: #fff; stroke-width: 2; stroke-dasharray: 6 5; }
+  .sb { fill: #0b1522; stroke: var(--amber-bright); stroke-width: 2; }
+  .sa { fill: none; stroke: #fff; stroke-width: 1.5; stroke-dasharray: 4 3; }
+  .cap { fill: #b9c6d8; font: 600 11px system-ui, sans-serif; }
+  .legend { display: flex; gap: 1rem; justify-content: center; font-size: 0.85rem; }
+  .la { color: #fff; } .lb { color: var(--amber-bright); }
+  @media (prefers-reduced-motion: reduce) { .tt-vis circle, .tt-vis rect { transition: none; } }
+  .tt-out .table-scroll { color: var(--ink); }
+  .tt-out table { font-size: 0.9rem; }
+  .tt-out th, .tt-out td { padding: 0.5rem 0.55rem; }
+  .tt-out thead th { text-transform: none; letter-spacing: 0; font-size: 0.8rem; }
+  .tt-out h3 { color: #fff; margin-top: 1.1rem; }
+  .tt-verdict { margin: 0 0 0.75rem; padding: 0.7rem 0.9rem; border-radius: 10px; background: rgb(255 255 255 / 10%); }
+  .tt-verdict.ok { background: var(--green-soft); color: #0b4a29; }
+  .tt-verdict.bad { background: var(--red-soft); color: #5c1410; }
+</style>

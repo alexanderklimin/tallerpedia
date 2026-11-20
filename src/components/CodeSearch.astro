@@ -1,0 +1,61 @@
+---
+// Live OBD code search: suggestions appear while typing (code or words of the description).
+import { getCollection } from 'astro:content';
+interface Props { title?: string; compact?: boolean }
+const { title = 'Busca tu código', compact = false } = Astro.props;
+const codes = (await getCollection('codes')).sort((a, b) => a.data.code.localeCompare(b.data.code)).map((c) => [c.data.code, c.data.title]);
+const id = `cs${Math.random().toString(36).slice(2, 7)}`;
+---
+<div class:list={['cs', { compact }]} data-code-search>
+  <label for={id}>{title}</label>
+  <div class="cs-box">
+    <span class="cs-chip" aria-hidden="true">OBD</span>
+    <input id={id} type="search" inputmode="text" autocomplete="off" spellcheck="false" placeholder="P0420 o «catalizador»" aria-controls={`${id}-list`} />
+  </div>
+  <ul id={`${id}-list`} class="cs-list" role="list"></ul>
+  <p class="cs-msg" role="status" aria-live="polite"></p>
+  <script type="application/json" set:html={JSON.stringify(codes)} />
+</div>
+
+<script>
+  const norm = (s: string) => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+  document.querySelectorAll<HTMLElement>('[data-code-search]').forEach((root) => {
+    const input = root.querySelector('input')!;
+    const list = root.querySelector<HTMLElement>('.cs-list')!;
+    const msg = root.querySelector<HTMLElement>('.cs-msg')!;
+    const codes: [string, string][] = JSON.parse(root.querySelector('script[type="application/json"]')!.textContent || '[]');
+    const esc = (s: string) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]!));
+    function update() {
+      const q = norm(input.value.trim());
+      if (!q) { list.innerHTML = ''; msg.textContent = ''; return; }
+      const words = q.split(/\s+/);
+      const hits = codes.filter(([c, t]) => norm(c).startsWith(q) || words.every((w) => norm(t).includes(w))).slice(0, 6);
+      list.innerHTML = hits.map(([c, t]) => `<li><a href="/codigos-obd/${c.toLowerCase()}/"><b>${c}</b><span>${esc(t)}</span></a></li>`).join('');
+      msg.textContent = hits.length ? '' : /^[pbcu][0-9a-f]{4}$/.test(q) ? `Aún no tenemos ${q.toUpperCase()}. Añadimos códigos cada semana.` : 'Sin resultados. Prueba con el código, por ejemplo P0300.';
+    }
+    input.addEventListener('input', update);
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') { const first = list.querySelector('a'); if (first) location.href = first.getAttribute('href')!; }
+    });
+  });
+</script>
+
+<style>
+  .cs { position: relative; padding: 1rem 1.1rem; border-radius: var(--radius); background: var(--navy); color: #fff; margin: 1.25rem 0; max-width: 38rem; box-shadow: 0 12px 30px rgb(14 33 56 / 18%); }
+  .cs.compact { padding: 0.85rem 1rem; }
+  .cs label { display: block; font-weight: 700; margin-bottom: 0.45rem; }
+  .cs-box { display: flex; align-items: center; background: #fff; border-radius: 12px; padding-left: 0.5rem; }
+  .cs-chip { font: 700 0.72rem ui-monospace, Menlo, monospace; color: var(--navy); background: var(--amber-bright); border-radius: 6px; padding: 0.2rem 0.35rem; }
+  .cs input { flex: 1; min-width: 0; min-height: 3.1rem; padding: 0 0.75rem; border: 0; background: transparent; font: 600 1.15rem system-ui, sans-serif; color: var(--ink); outline: none; }
+  .cs-box:focus-within { box-shadow: 0 0 0 3px var(--amber-bright); }
+  .cs-list { list-style: none; margin: 0.5rem 0 0; padding: 0; display: grid; gap: 0.3rem; }
+  .cs-list:empty { display: none; }
+  .cs-list a { display: flex; gap: 0.75rem; align-items: baseline; padding: 0.55rem 0.75rem; border-radius: 10px; background: rgb(255 255 255 / 8%); color: #fff; text-decoration: none; animation: in 0.18s ease both; }
+  .cs-list a:hover, .cs-list a:focus { background: rgb(255 255 255 / 16%); }
+  .cs-list b { font-family: ui-monospace, Menlo, monospace; color: var(--amber-bright); }
+  .cs-list span { font-size: 0.92rem; line-height: 1.35; color: #d6dfeb; }
+  .cs-msg { margin: 0.4rem 0 0; font-size: 0.92rem; color: #d6dfeb; }
+  .cs-msg:empty { display: none; }
+  @keyframes in { from { opacity: 0; transform: translateY(-3px); } }
+  @media (prefers-reduced-motion: reduce) { .cs-list a { animation: none; } }
+</style>
