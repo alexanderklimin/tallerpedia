@@ -1,0 +1,136 @@
+{
+ "order": 4,
+ "name": "Luces amarillas",
+ "h1": "Luces amarillas del tablero: qué significa cada una",
+ "title": "Luces amarillas del tablero: qué significa cada una",
+ "aka": [
+  "testigos ámbar",
+  "luz naranja en el tablero"
+ ],
+ "short": "Ámbar: avisos de falla o de algo que conviene revisar pronto.",
+ "color": "amarillo",
+ "symbol": "amber",
+ "severity": "medium",
+ "summary": "Las luces amarillas o ámbar del tablero avisan de una falla o de algo que conviene revisar pronto, pero normalmente no exigen detenerse de inmediato. Aquí tienes las más comunes, qué indican y qué hacer con cada una.",
+ "drive": "En general sí, con precaución, hasta revisar la causa. La excepción es una luz amarilla que parpadea (check engine) o que aparece junto con síntomas como pérdida de potencia, ruidos o un testigo rojo.",
+ "sections": [
+  {
+   "heading": "Qué significa el color ámbar",
+   "paragraphs": [
+    "Los fabricantes siguen un código de colores parecido al de un semáforo, recogido en la norma ISO 2575: rojo indica peligro o una falla grave; amarillo o ámbar, precaución o una falla que hay que revisar; verde y azul, que un sistema está funcionando (luces, intermitentes, control de crucero).",
+    "Los símbolos varían entre marcas. Si no reconoces uno, búscalo en la sección de testigos del manual del propietario."
+   ]
+  },
+  {
+   "heading": "Las luces amarillas más comunes",
+   "paragraphs": []
+  }
+ ],
+ "table": [
+  {
+   "light": "Check engine",
+   "symbol": "engine",
+   "meaning": "Falla del motor o de las emisiones con código guardado.",
+   "action": "Fija: lee el código pronto. Parpadeando: reduce la velocidad y ve al taller.",
+   "level": "medium"
+  },
+  {
+   "light": "Presión de llantas (TPMS)",
+   "symbol": "tpms",
+   "meaning": "Una o más llantas con presión baja; si parpadea al arrancar, falla del sistema.",
+   "action": "Revisa la presión e infla según la etiqueta de la puerta.",
+   "level": "medium"
+  },
+  {
+   "light": "ABS",
+   "meaning": "El antibloqueo de frenos está desactivado por una falla. Los frenos normales siguen funcionando.",
+   "action": "Frena con más distancia y llévalo al taller. Si también se enciende el testigo rojo de frenos, detente.",
+   "level": "medium"
+  },
+  {
+   "light": "Control de estabilidad o tracción (auto con líneas onduladas)",
+   "meaning": "Parpadeando mientras manejas: el sistema está actuando por falta de adherencia. Fijo: está desactivado o tiene una falla.",
+   "action": "Si parpadea, reduce la velocidad. Si queda fijo, revisa si lo apagaste con el botón; si no, al taller.",
+   "level": "medium"
+  },
+  {
+   "light": "Dirección asistida (volante con «!»)",
+   "meaning": "Falla de la asistencia eléctrica de la dirección. En algunos autos es roja.",
+   "action": "El volante puede ponerse muy duro. Maneja con cuidado al taller o, si es roja o la dirección está muy dura, detente.",
+   "level": "medium"
+  },
+  {
+   "light": "Nivel de aceite bajo (en algunos autos)",
+   "meaning": "Sensor de nivel de aceite. Distinta de la aceitera roja de presión.",
+   "action": "Revisa y completa el nivel con el aceite del manual.",
+   "level": "medium"
+  },
+  {
+   "light": "Bujías de precalentamiento (espiral, motores diésel)",
+   "meaning": "Encendida unos segundos al girar la llave: normal. Parpadeando con el motor en marcha: falla del motor en muchos modelos.",
+   "action": "Espera a que se apague antes de arrancar. Si parpadea en marcha, revisa el manual y ve al taller.",
+   "level": "low"
+  },
+  {
+   "light": "Filtro de partículas (DPF, diésel)",
+   "meaning": "El filtro de partículas está saturado y necesita regenerarse.",
+   "action": "Sigue lo que indique el manual: a menudo, manejar un rato en carretera a velocidad constante.",
+   "level": "low"
+  },
+  {
+   "light": "Reserva de combustible",
+   "meaning": "Queda poco combustible.",
+   "action": "Carga combustible pronto; quedarse sin él puede dañar la bomba en algunos autos.",
+   "level": "low"
+  },
+  {
+   "light": "Desgaste de pastillas de freno (en algunos autos)",
+   "meaning": "Un sensor detecta que las pastillas están llegando al límite.",
+   "action": "Programa el cambio de pastillas pronto.",
+   "level": "medium"
+  }
+ ],
+ "stop": [
+  "Una luz amarilla aparece junto con un testigo rojo: atiende primero el rojo.",
+  "La luz de check engine parpadea: reduce la velocidad y ve al taller.",
+  "Se encienden a la vez ABS y el testigo rojo de frenos: puede haber una falla del sistema de frenos. Detente.",
+  "La dirección se pone muy dura de repente: detente en un lugar seguro."
+ ],
+ "relatedCodes": [
+  "P0420",
+  "P0300",
+  "P0455"
+ ],
+ "relatedLights": [
+  "check-engine",
+  "testigo-presion-de-llantas",
+  "luz-roja-tablero"
+ ],
+ "faq": [
+  {
+   "q": "¿Una luz amarilla es grave?",
+   "a": "Normalmente no exige detenerse de inmediato, pero sí revisar pronto. Una falla que se deja crecer suele terminar costando más."
+  },
+  {
+   "q": "¿Por qué se encienden todas las luces al arrancar?",
+   "a": "Es una prueba: al girar la llave, el auto enciende los testigos unos segundos para comprobar que funcionan. Deben apagarse al arrancar el motor."
+  },
+  {
+   "q": "¿Qué hago si no reconozco el símbolo?",
+   "a": "Búscalo en el manual del propietario, en la sección de testigos e indicadores. Los símbolos y colores pueden variar entre marcas y modelos."
+  }
+ ],
+ "sources": [
+  {
+   "name": "ISO 2575: Road vehicles — Symbols for controls, indicators and tell-tales (símbolos y colores de los testigos)"
+  },
+  {
+   "name": "49 CFR 571.101, FMVSS 101: Controls and displays (EE. UU.)",
+   "url": "https://www.ecfr.gov/current/title-49/subtitle-B/chapter-V/part-571/subpart-B/section-571.101"
+  },
+  {
+   "name": "Manuales del propietario de los fabricantes: sección de testigos e indicadores del tablero"
+  }
+ ],
+ "reviewed": "2026-11-20"
+}

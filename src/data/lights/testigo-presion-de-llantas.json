@@ -1,0 +1,86 @@
+{
+ "order": 3,
+ "name": "Presión de llantas (TPMS)",
+ "h1": "Testigo de presión de llantas: qué significa y qué hacer",
+ "title": "Testigo de presión de llantas (TPMS): qué significa",
+ "aka": [
+  "TPMS",
+  "testigo de presión de neumáticos",
+  "luz de llanta baja"
+ ],
+ "short": "Ámbar. Una o más llantas con presión baja, o falla del sistema si parpadea.",
+ "color": "amarillo",
+ "symbol": "tpms",
+ "severity": "medium",
+ "summary": "El testigo de presión de llantas (TPMS), con forma de herradura y un signo de exclamación, avisa de que una o más llantas tienen la presión bastante por debajo de la recomendada. Si parpadea al arrancar y luego queda fijo, el sistema de vigilancia tiene una falla.",
+ "drive": "Sí, con precaución y despacio hasta un lugar donde revisar la presión, siempre que ninguna llanta esté visiblemente desinflada y el auto no tire hacia un lado ni vibre. Manejar con una llanta baja la calienta, desgasta y puede dañarla.",
+ "sections": [
+  {
+   "heading": "Fijo o parpadeando",
+   "paragraphs": [
+    "Fijo: al menos una llanta está baja. En Estados Unidos, la norma FMVSS 138 exige que el testigo se encienda cuando la presión cae un 25 % o más por debajo de la recomendada en frío, así que cuando lo ves la llanta ya está bastante baja.",
+    "Parpadea alrededor de un minuto al arrancar y luego queda fijo: el sistema no funciona bien (sensor sin batería, sensor dañado o llanta de refacción sin sensor). Mientras tanto no te avisará de una llanta baja, así que revisa la presión a mano."
+   ]
+  },
+  {
+   "heading": "Qué hacer",
+   "ordered": true,
+   "list": [
+    "Mira las cuatro llantas. Si una está visiblemente baja, no sigas manejando: cambia a la llanta de refacción o pide asistencia.",
+    "Ve despacio a una gasolinera o a un taller y mide la presión con un manómetro, mejor con las llantas frías.",
+    "Infla a la presión que indica la etiqueta del marco de la puerta del conductor (o la tapa del tanque, o el manual). No uses la cifra del flanco: es la máxima de la llanta.",
+    "Revisa si hay un clavo o daño. Si una llanta pierde aire otra vez, llévala a reparar.",
+    "En muchos autos el testigo se apaga solo tras unos minutos de manejo. Otros requieren un procedimiento de reinicio: consúltalo en el manual."
+   ]
+  },
+  {
+   "heading": "Por qué se enciende con el frío",
+   "paragraphs": [
+    "La presión del aire baja con la temperatura. Una mañana fría puede hacer que llantas con la presión justa bajen lo suficiente para encender el testigo. Aunque al calentarse se apague, conviene ajustar la presión.",
+    "Mantener la presión correcta también ahorra combustible y alarga la vida de las llantas."
+   ]
+  }
+ ],
+ "stop": [
+  "Una llanta está visiblemente desinflada o se oye un golpeteo: no sigas manejando sobre ella.",
+  "El auto tira hacia un lado, vibra o la dirección se siente rara.",
+  "Ves un bulto o una cortadura en el flanco: la llanta puede reventar. Cámbiala por la de refacción."
+ ],
+ "relatedCodes": [],
+ "relatedLights": [
+  "luz-amarilla-tablero",
+  "check-engine"
+ ],
+ "faq": [
+  {
+   "q": "¿Qué presión deben tener mis llantas?",
+   "a": "La que indica el fabricante del auto en la etiqueta del marco de la puerta del conductor o en el manual. Depende del modelo, la medida de llanta y la carga, y a veces es distinta adelante y atrás."
+  },
+  {
+   "q": "¿Por qué sigue encendido si ya inflé las llantas?",
+   "a": "Algunos sistemas tardan unos minutos de manejo en apagarlo; otros necesitan reiniciarse con un botón o desde el menú. Si parpadea al arrancar, el problema es un sensor del sistema."
+  },
+  {
+   "q": "¿Cuánto dura la batería de un sensor TPMS?",
+   "a": "Los sensores directos llevan una pila que no suele cambiarse por separado; cuando se agota, se sustituye el sensor. Su duración depende del fabricante y del uso."
+  },
+  {
+   "q": "¿Todos los autos tienen TPMS?",
+   "a": "No. En Estados Unidos es obligatorio en autos nuevos desde 2007 y en la Unión Europea desde 2014; en América Latina depende del país y del modelo."
+  }
+ ],
+ "sources": [
+  {
+   "name": "49 CFR 571.138, FMVSS 138: Tire pressure monitoring systems (EE. UU.)",
+   "url": "https://www.ecfr.gov/current/title-49/subtitle-B/chapter-V/part-571/subpart-B/section-571.138"
+  },
+  {
+   "name": "FuelEconomy.gov (Departamento de Energía de EE. UU.): Keeping your vehicle in shape",
+   "url": "https://www.fueleconomy.gov/feg/maintain.jsp"
+  },
+  {
+   "name": "Manuales del propietario de los fabricantes: sección de testigos e indicadores del tablero"
+  }
+ ],
+ "reviewed": "2026-11-20"
+}

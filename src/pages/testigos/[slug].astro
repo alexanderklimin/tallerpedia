@@ -1,0 +1,132 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Icon from '../../components/Icon.astro';
+import Symbol from '../../components/Symbol.astro';
+import { SEVERITY, codePath } from '../../data/systems.js';
+import { article, absolute, faqPage } from '../../lib/seo.js';
+
+export async function getStaticPaths() {
+  const lights = await getCollection('lights');
+  return lights.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const l = entry.data;
+const codes = await getCollection('codes');
+const lights = await getCollection('lights');
+const relatedCodes = l.relatedCodes.map((c) => codes.find((e) => e.data.code === c)).filter(Boolean);
+const relatedLights = l.relatedLights.map((s) => lights.find((e) => e.id === s)).filter(Boolean);
+const path = `/testigos/${entry.id}/`;
+const description = l.summary.length > 155 ? l.summary.slice(0, l.summary.lastIndexOf(' ', 152)) + '…' : l.summary;
+const jsonLd = [
+  article({ headline: l.h1, description, url: absolute(path), reviewed: l.reviewed, citation: l.sources.map((s) => s.name) }),
+  faqPage(l.faq),
+].filter(Boolean) as Record<string, unknown>[];
+const crumbs = [{ name: 'Inicio', path: '/' }, { name: 'Testigos del tablero', path: '/testigos/' }, { name: l.name, path }];
+const LEVEL = { low: 'Informativo o revisar cuando puedas', medium: 'Revisar pronto', high: 'Urgente' };
+---
+<Base title={l.title} description={description} crumbs={crumbs} jsonLd={jsonLd} ogType="article">
+  <article class="light">
+    <div class="head">
+      <Symbol name={l.symbol} color={l.color} size={72} />
+      <div>
+        <span class="eyebrow">Testigo del tablero</span>
+        <h1>{l.h1}</h1>
+      </div>
+    </div>
+    {l.aka.length > 0 && <p class="muted small">También llamado: {l.aka.join(', ')}.</p>}
+    <p class="lead">{l.summary}</p>
+
+    <div class="verdict">
+      <div class={`sev ${l.severity}`}>
+        <Icon name={l.severity === 'high' ? 'octagon-alert' : l.severity === 'medium' ? 'triangle-alert' : 'info'} size={22} />
+        <div><span>{SEVERITY[l.severity].label}</span><strong>¿Puedo seguir manejando?</strong></div>
+      </div>
+      <p>{l.drive}</p>
+    </div>
+
+    {l.sections.map((s) => (
+      <>
+        <h2>{s.heading}</h2>
+        {s.paragraphs.map((p) => <p>{p}</p>)}
+        {s.list && (s.ordered ? <ol class="steps">{s.list.map((i) => <li>{i}</li>)}</ol> : <ul>{s.list.map((i) => <li>{i}</li>)}</ul>)}
+      </>
+    ))}
+
+    {l.table.length > 0 && (
+      <ul class="lights">
+        {l.table.map((r) => (
+          <li class={`row ${r.level}`}>
+            <div class="row-head">
+              {r.symbol ? <Symbol name={r.symbol} color={l.color === 'mixto' ? 'amarillo' : l.color} size={40} /> : <span class="dot" aria-hidden="true"></span>}
+              <h3>{r.light}</h3>
+            </div>
+            <p>{r.meaning}</p>
+            <p class="act"><span class={`pill ${r.level}`}>{LEVEL[r.level]}</span> {r.action}</p>
+          </li>
+        ))}
+      </ul>
+    )}
+
+    <div class="alert" role="note">
+      <Icon name="shield-alert" size={24} />
+      <div>
+        <strong>Cuándo no conducir y acudir al taller</strong>
+        <ul>{l.stop.map((s) => <li>{s}</li>)}</ul>
+      </div>
+    </div>
+
+    {relatedCodes.length > 0 && (
+      <>
+        <h2>Códigos relacionados</h2>
+        <ul class="tile-grid">
+          {relatedCodes.map((c) => <li><a class="tile" href={codePath(c!.data.code)}><strong>{c!.data.code}</strong><span>{c!.data.title}</span></a></li>)}
+        </ul>
+      </>
+    )}
+
+    <h2>Preguntas frecuentes</h2>
+    {l.faq.map(({ q, a }) => <details class="faq"><summary>{q}</summary><p>{a}</p></details>)}
+
+    {relatedLights.length > 0 && (
+      <>
+        <h2>Otros testigos</h2>
+        <ul class="tile-grid">
+          {relatedLights.map((r) => <li><a class="tile lt" href={`/testigos/${r!.id}/`}><Symbol name={r!.data.symbol} color={r!.data.color} size={40} /><div><strong>{r!.data.name}</strong><span>{r!.data.short}</span></div></a></li>)}
+        </ul>
+      </>
+    )}
+
+    <section class="sources">
+      <h2>Fuentes</h2>
+      <ul>{l.sources.map((s) => <li>{s.url ? <a href={s.url} rel="noopener">{s.name}</a> : s.name}</li>)}</ul>
+      <p>El símbolo, el color y el comportamiento exactos de cada testigo los define el fabricante: confírmalos en el manual del propietario de tu auto. Revisado: {l.reviewed}.</p>
+    </section>
+  </article>
+</Base>
+
+<style>
+  .light { max-width: 50rem; }
+  .head { display: flex; align-items: center; gap: 1rem; }
+  .head h1 { margin-top: 0.15rem; }
+  .verdict { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 1rem 1.15rem; margin: 1.25rem 0; }
+  .verdict p { margin: 0.6rem 0 0; }
+  .sev { display: flex; align-items: center; gap: 0.6rem; }
+  .sev div { display: flex; flex-direction: column; line-height: 1.25; }
+  .sev span { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
+  .sev strong { font-family: var(--head); font-size: 1.15rem; color: var(--ink); }
+  .sev.low { color: var(--green); } .sev.medium { color: var(--amber); } .sev.high { color: var(--red); }
+  .steps { padding-left: 1.4rem; display: grid; gap: 0.45rem; }
+  .lights { list-style: none; padding: 0; margin: 1rem 0; display: grid; gap: 0.6rem; }
+  .row { background: var(--surface); border: 1px solid var(--line); border-left: 5px solid var(--amber-bright); border-radius: 12px; padding: 0.85rem 1rem; }
+  .row.high { border-left-color: var(--red); } .row.low { border-left-color: #8fa0b5; }
+  .row-head { display: flex; align-items: center; gap: 0.7rem; }
+  .row h3 { margin: 0; font-size: 1.08rem; }
+  .row p { margin: 0.5rem 0 0; }
+  .act .pill { white-space: normal; margin-right: 0.25rem; }
+  .dot { width: 40px; height: 40px; border-radius: 12px; background: #11161d; flex: none; }
+  @media (max-width: 30rem) { .head { flex-direction: column; align-items: flex-start; gap: 0.5rem; } }
+  .tile.lt { flex-direction: row; align-items: center; gap: 0.75rem; }
+  .tile.lt div { display: flex; flex-direction: column; }
+</style>

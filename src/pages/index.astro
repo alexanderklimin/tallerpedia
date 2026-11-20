@@ -2,11 +2,13 @@
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import Icon from '../components/Icon.astro';
+import Symbol from '../components/Symbol.astro';
 import published from '../data/tires/published.json';
 import { parseSize, sizeLabel, sizePath } from '../lib/tires.js';
 import { codePath } from '../data/systems.js';
 import { SITE_NAME } from '../data/site.js';
 
+const lights = (await getCollection('lights')).sort((a, b) => a.data.order - b.data.order);
 const codes = (await getCollection('codes')).sort((a, b) => a.data.code.localeCompare(b.data.code));
 const topCodes = ['P0420', 'P0171', 'P0300', 'P0455', 'P0128', 'P0340'].map((c) => codes.find((e) => e.data.code === c)).filter(Boolean);
 const topSizes = published.slice(0, 8).map((s) => parseSize(s.replace(/-/g, ' '))!);
@@ -33,6 +35,11 @@ const jsonLd = [{ '@context': 'https://schema.org', '@type': 'WebSite', name: SI
     {topCodes.map((c) => <li><a class="tile" href={codePath(c!.data.code)}><strong>{c!.data.code}</strong><span>{c!.data.title}</span></a></li>)}
   </ul>
   <p><a href="/codigos-obd/">Todos los códigos <Icon name="arrow-right" size={16} /></a></p>
+
+  <h2>Luces del tablero</h2>
+  <ul class="tile-grid">
+    {lights.map((l) => <li><a class="tile lt" href={`/testigos/${l.id}/`}><Symbol name={l.data.symbol} color={l.data.color} size={40} /><div><strong>{l.data.name}</strong><span>{l.data.short}</span></div></a></li>)}
+  </ul>
 
   <h2>Medidas de llantas</h2>
   <ul class="tile-grid">
@@ -80,5 +87,7 @@ const jsonLd = [{ '@context': 'https://schema.org', '@type': 'WebSite', name: SI
   .q label .icon { color: var(--amber-bright); }
   .q div { display: flex; gap: 0.5rem; }
   .q input { flex: 1; min-width: 0; min-height: 3rem; padding: 0 0.85rem; border: 0; border-radius: 10px; font: 600 1.15rem system-ui, sans-serif; }
+  .tile.lt { flex-direction: row; align-items: center; gap: 0.75rem; }
+  .tile.lt div { display: flex; flex-direction: column; }
   .q .button { background: var(--amber-bright); color: var(--navy-dark); }
 </style>

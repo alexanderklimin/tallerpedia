@@ -1,0 +1,93 @@
+{
+ "order": 2,
+ "name": "Testigo de aceite",
+ "h1": "Testigo de aceite: qué significa y qué hacer",
+ "title": "Testigo de aceite encendido: qué significa y qué hacer",
+ "aka": [
+  "luz de presión de aceite",
+  "aceitera roja",
+  "testigo de nivel de aceite"
+ ],
+ "short": "Rojo: presión de aceite baja. Detén el motor cuanto antes.",
+ "color": "rojo",
+ "symbol": "oil",
+ "severity": "high",
+ "summary": "El testigo rojo con forma de aceitera indica presión de aceite baja: el motor no se está lubricando bien. Es de las luces más graves del tablero. Seguir manejando unos minutos puede dañar el motor de forma irreparable.",
+ "drive": "No. Si la aceitera roja se enciende con el motor en marcha, detente en cuanto sea seguro y apaga el motor. Solo vuelve a arrancarlo si el nivel de aceite estaba bajo, lo completaste y la luz se apaga en unos segundos.",
+ "sections": [
+  {
+   "heading": "Rojo o ámbar: dos avisos distintos",
+   "paragraphs": [
+    "Aceitera roja: presión de aceite baja. La bomba no consigue mandar aceite a presión suficiente al motor, ya sea porque falta aceite, porque la bomba falla o porque hay una obstrucción. Es una alarma de «detente ya».",
+    "Aceitera ámbar o amarilla, a veces con una línea ondulada debajo (en algunos autos): nivel de aceite bajo según un sensor de nivel. Es un aviso para completar el nivel pronto. Qué símbolo usa tu auto lo indica el manual."
+   ]
+  },
+  {
+   "heading": "Qué hacer si se enciende",
+   "ordered": true,
+   "list": [
+    "Detente en un lugar seguro, fuera de la circulación, y apaga el motor.",
+    "Espera unos minutos para que el aceite baje al cárter y revisa el nivel con la varilla, con el auto en terreno plano.",
+    "Si el nivel está bajo, completa con el aceite que indica el manual (viscosidad y especificación) hasta la marca máxima, sin pasarte.",
+    "Arranca: si la luz se apaga en unos segundos, puedes ir con calma al taller para buscar la causa de la pérdida o el consumo.",
+    "Si el nivel estaba bien o la luz no se apaga, no vuelvas a arrancar el motor. Pide una grúa."
+   ]
+  },
+  {
+   "heading": "Causas habituales",
+   "list": [
+    "Nivel de aceite bajo por consumo o fuga (juntas, retenes, tapón del cárter, filtro mal apretado).",
+    "Bomba de aceite desgastada o colador de aspiración obstruido por lodos.",
+    "Aceite muy degradado o de viscosidad incorrecta.",
+    "Sensor (bulbo) de presión de aceite defectuoso o cable dañado: la causa más barata, pero solo se confirma midiendo la presión real con manómetro.",
+    "Desgaste interno del motor (cojinetes) en motores con mucho kilometraje."
+   ]
+  }
+ ],
+ "stop": [
+  "La aceitera roja se enciende con el motor en marcha: detente y apaga el motor.",
+  "Oyes golpeteo o ruido metálico del motor.",
+  "Ves humo o una mancha grande de aceite bajo el auto.",
+  "El nivel de aceite era correcto y la luz sigue encendida: no arranques; usa grúa."
+ ],
+ "relatedCodes": [
+  "P0011",
+  "P0016"
+ ],
+ "relatedLights": [
+  "luz-roja-tablero",
+  "check-engine",
+  "luz-amarilla-tablero"
+ ],
+ "faq": [
+  {
+   "q": "¿Puedo manejar hasta el taller con el testigo de aceite encendido?",
+   "a": "Con la aceitera roja encendida, no. Sin presión de aceite, el motor puede griparse en pocos minutos. Si el nivel estaba bajo, complétalo y verifica que la luz se apague antes de continuar."
+  },
+  {
+   "q": "¿Por qué parpadea en las curvas o al frenar?",
+   "a": "Suele indicar que el nivel de aceite está en el mínimo: con el movimiento, la bomba aspira aire por momentos. Revisa y completa el nivel cuanto antes."
+  },
+  {
+   "q": "¿El testigo de aceite avisa del cambio de aceite?",
+   "a": "No. El recordatorio de cambio de aceite es otro indicador (a menudo una llave o un mensaje en la pantalla). La aceitera roja avisa de presión baja."
+  },
+  {
+   "q": "¿Qué aceite le pongo?",
+   "a": "El que indica el manual del propietario: viscosidad SAE (por ejemplo 5W-30) y especificación API, ACEA o del fabricante. En una emergencia, es mejor completar con un aceite de motor adecuado que manejar sin aceite."
+  }
+ ],
+ "sources": [
+  {
+   "name": "ISO 2575: Road vehicles — Symbols for controls, indicators and tell-tales (símbolos y colores de los testigos)"
+  },
+  {
+   "name": "Manuales del propietario de los fabricantes: sección de testigos e indicadores del tablero"
+  },
+  {
+   "name": "49 CFR 571.101, FMVSS 101: Controls and displays (EE. UU.)",
+   "url": "https://www.ecfr.gov/current/title-49/subtitle-B/chapter-V/part-571/subpart-B/section-571.101"
+  }
+ ],
+ "reviewed": "2026-11-20"
+}

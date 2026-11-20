@@ -1,0 +1,125 @@
+{
+ "order": 5,
+ "name": "Luces rojas",
+ "h1": "Luces rojas del tablero: qué significa cada una",
+ "title": "Luces rojas del tablero: qué significa cada una",
+ "aka": [
+  "testigos rojos",
+  "luz roja en el tablero"
+ ],
+ "short": "Rojo: falla grave o de seguridad. Detente en cuanto sea seguro.",
+ "color": "rojo",
+ "symbol": "red",
+ "severity": "high",
+ "summary": "Una luz roja en el tablero indica una falla grave o un riesgo de seguridad: frenos, temperatura del motor, presión de aceite, carga de la batería o bolsas de aire. Con la mayoría, lo correcto es detenerse en cuanto sea seguro y revisar.",
+ "drive": "En la mayoría de los casos, no. Busca un lugar seguro para detenerte y revisa qué testigo es. Las excepciones son avisos simples como el cinturón sin abrochar, una puerta abierta o el freno de mano puesto, que se corrigen al momento.",
+ "sections": [
+  {
+   "heading": "Qué significa el color rojo",
+   "paragraphs": [
+    "Según el código de colores que siguen los fabricantes (norma ISO 2575), el rojo indica peligro o una falla que requiere atención inmediata. Ámbar indica precaución y verde o azul, que un sistema está funcionando.",
+    "Si se encienden varias luces a la vez mientras manejas, por ejemplo batería y dirección asistida, la causa puede ser una sola (como el alternador o la banda de accesorios)."
+   ]
+  },
+  {
+   "heading": "Las luces rojas más comunes",
+   "paragraphs": []
+  }
+ ],
+ "table": [
+  {
+   "light": "Frenos (círculo con «!» o «BRAKE»)",
+   "symbol": "brake",
+   "meaning": "Freno de mano puesto, nivel bajo de líquido de frenos o falla del sistema de frenos.",
+   "action": "Si el freno de mano está quitado y sigue encendida, detente con cuidado y no sigas manejando. Revisa el nivel del líquido.",
+   "level": "high"
+  },
+  {
+   "light": "Temperatura del motor (termómetro)",
+   "symbol": "temp",
+   "meaning": "El motor se está sobrecalentando.",
+   "action": "Detente y apaga el motor. No abras el tapón del radiador ni del depósito en caliente: el líquido sale a presión y quema.",
+   "level": "high"
+  },
+  {
+   "light": "Presión de aceite (aceitera)",
+   "symbol": "oil",
+   "meaning": "Presión de aceite baja; el motor no se lubrica bien.",
+   "action": "Detente y apaga el motor. Revisa el nivel; si no se apaga, grúa.",
+   "level": "high"
+  },
+  {
+   "light": "Batería o carga (batería)",
+   "symbol": "battery",
+   "meaning": "El alternador no está cargando la batería; puede ser la banda o el alternador.",
+   "action": "Apaga accesorios y ve a un lugar seguro o al taller cercano: el auto funcionará solo mientras dure la batería. Si también sube la temperatura, detente: la misma banda puede mover la bomba de agua.",
+   "level": "high"
+  },
+  {
+   "light": "Bolsas de aire (airbag)",
+   "meaning": "Falla en el sistema de bolsas de aire o de pretensores; pueden no activarse en un choque.",
+   "action": "Lleva el auto al taller pronto. No manipules el sistema ni sus conectores.",
+   "level": "high"
+  },
+  {
+   "light": "Dirección asistida (en algunos autos)",
+   "meaning": "Falla de la dirección asistida.",
+   "action": "El volante puede ponerse muy duro: detente en un lugar seguro.",
+   "level": "high"
+  },
+  {
+   "light": "Cinturón de seguridad",
+   "meaning": "Algún ocupante no lleva el cinturón abrochado.",
+   "action": "Abróchalo.",
+   "level": "low"
+  },
+  {
+   "light": "Puerta, cofre o cajuela abiertos",
+   "meaning": "Algo no está bien cerrado.",
+   "action": "Detente y ciérralo.",
+   "level": "low"
+  }
+ ],
+ "stop": [
+  "El testigo de frenos sigue encendido con el freno de mano quitado, o el pedal se siente blando o baja más de lo normal.",
+  "La temperatura llega a rojo o sale vapor del cofre.",
+  "La aceitera roja se enciende con el motor en marcha.",
+  "Se encienden varias luces rojas a la vez o el auto pierde potencia.",
+  "En caso de duda con un testigo rojo, detente: es más barato una grúa que un motor o un accidente."
+ ],
+ "relatedCodes": [
+  "P0128"
+ ],
+ "relatedLights": [
+  "testigo-de-aceite",
+  "luz-amarilla-tablero",
+  "check-engine"
+ ],
+ "faq": [
+  {
+   "q": "¿Puedo seguir manejando con una luz roja?",
+   "a": "Con las de frenos, temperatura, aceite o dirección, no: detente en cuanto sea seguro. Con la de batería tienes poco margen. Cinturón y puertas se corrigen al momento."
+  },
+  {
+   "q": "¿Por qué se enciende la luz de frenos si el freno de mano está quitado?",
+   "a": "Lo más común es que el nivel de líquido de frenos esté bajo, por desgaste de las pastillas o por una fuga. Una fuga es peligrosa: no manejes hasta revisarlo."
+  },
+  {
+   "q": "¿La luz de la batería significa que debo cambiar la batería?",
+   "a": "No necesariamente. Indica que el sistema de carga no funciona: suele ser el alternador o la banda que lo mueve. La batería puede estar bien."
+  }
+ ],
+ "sources": [
+  {
+   "name": "ISO 2575: Road vehicles — Symbols for controls, indicators and tell-tales (símbolos y colores de los testigos)"
+  },
+  {
+   "name": "49 CFR 571.101, FMVSS 101: Controls and displays (EE. UU.)",
+   "url": "https://www.ecfr.gov/current/title-49/subtitle-B/chapter-V/part-571/subpart-B/section-571.101"
+  },
+  {
+   "name": "Manuales del propietario de los fabricantes: sección de testigos e indicadores del tablero"
+  }
+ ],
+ "reviewed": "2026-11-20"
+}

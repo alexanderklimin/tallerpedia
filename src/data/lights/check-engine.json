@@ -1,0 +1,101 @@
+{
+ "order": 1,
+ "name": "Check engine",
+ "h1": "Luz de check engine: qué significa y qué hacer",
+ "title": "Luz de check engine: qué significa y qué hacer",
+ "aka": [
+  "testigo de motor",
+  "luz de avería del motor",
+  "MIL",
+  "service engine soon"
+ ],
+ "short": "Ámbar. Fija: revisa pronto. Parpadeando: reduce velocidad y ve al taller.",
+ "color": "amarillo",
+ "symbol": "engine",
+ "severity": "medium",
+ "summary": "La luz de check engine (testigo de motor) se enciende cuando la computadora del auto detecta una falla que afecta al motor o a las emisiones y guarda un código OBD. Fija significa «revisa pronto»; parpadeando significa una falla de encendido seria que puede dañar el catalizador.",
+ "drive": "Si está fija y el auto se comporta con normalidad, puedes seguir manejando con calma y leer el código en los próximos días. Si parpadea, o va acompañada de pérdida de potencia, ruidos, olor a gasolina o temperatura alta, reduce la velocidad, evita cargas y llévalo al taller lo antes posible.",
+ "sections": [
+  {
+   "heading": "Fija o parpadeando: la diferencia importa",
+   "paragraphs": [
+    "Al girar la llave, la luz se enciende unos segundos como prueba y se apaga al arrancar el motor. Si se queda encendida, la computadora detectó una falla y guardó al menos un código.",
+    "Fija: hay una falla que conviene diagnosticar pronto, pero no suele ser una emergencia. Parpadeando: el motor tiene fallas de encendido tan frecuentes que el combustible sin quemar puede sobrecalentar el catalizador. En ese caso, reduce la carga del motor y no lo fuerces."
+   ]
+  },
+  {
+   "heading": "Causas más comunes",
+   "paragraphs": [
+    "La luz no dice qué está mal: solo avisa de que hay un código guardado. Las causas más frecuentes son:"
+   ],
+   "list": [
+    "Tapa del tanque de gasolina floja o dañada (códigos EVAP como P0455 o P0456).",
+    "Bujías o bobinas en mal estado (fallas de encendido, P0300–P0308).",
+    "Sonda de oxígeno o catalizador (P0420, P0135).",
+    "Fuga de vacío o sensor MAF sucio (mezcla pobre, P0171).",
+    "Termostato o sensores del motor (P0128, P0113)."
+   ]
+  },
+  {
+   "heading": "Qué hacer paso a paso",
+   "ordered": true,
+   "list": [
+    "Observa si la luz está fija o parpadea y si el auto se comporta distinto: potencia, ruidos, olor, temperatura.",
+    "Revisa la tapa del tanque: ciérrala hasta el clic. Si era eso, la luz se apaga sola tras varios días de manejo.",
+    "Lee el código con un escáner OBD-II. El conector suele estar bajo el tablero, del lado del conductor. Muchas tiendas de refacciones y talleres lo leen.",
+    "Busca el código en Tallerpedia para saber qué significa y si puedes seguir manejando.",
+    "No borres el código sin reparar la causa: volverá, y en una verificación de emisiones los monitores aparecerán como «no listos»."
+   ]
+  }
+ ],
+ "stop": [
+  "La luz parpadea: reduce la velocidad, evita subir pendientes con carga y ve al taller.",
+  "Además de la luz, el motor pierde potencia, hace ruidos metálicos o la aguja de temperatura sube.",
+  "Hueles a gasolina: puede haber una fuga. No enciendas el motor.",
+  "Se enciende también un testigo rojo (aceite, temperatura, frenos): atiende primero el rojo."
+ ],
+ "relatedCodes": [
+  "P0420",
+  "P0300",
+  "P0455",
+  "P0171",
+  "P0128",
+  "P0442"
+ ],
+ "relatedLights": [
+  "luz-amarilla-tablero",
+  "testigo-de-aceite",
+  "luz-roja-tablero"
+ ],
+ "faq": [
+  {
+   "q": "¿La luz de check engine se apaga sola?",
+   "a": "Sí, si la falla deja de detectarse durante varios ciclos de manejo, como ocurre al apretar bien la tapa del tanque. El código queda guardado en el historial durante un tiempo."
+  },
+  {
+   "q": "¿Puedo pasar la verificación o la ITV con la luz encendida?",
+   "a": "En general no. La mayoría de los programas de verificación de emisiones rechazan el vehículo si la luz de check engine está encendida o hay códigos de emisiones activos."
+  },
+  {
+   "q": "¿Qué escáner necesito?",
+   "a": "Cualquier lector OBD-II genérico lee los códigos de motor de autos de gasolina fabricados para Estados Unidos desde 1996, para Europa desde 2001 y, en muchos otros países, desde años similares. Los modelos más completos también muestran datos en vivo."
+  },
+  {
+   "q": "¿Es lo mismo que el aviso de servicio o mantenimiento?",
+   "a": "No. El aviso de servicio (a menudo una llave o «maint reqd») es solo un recordatorio de mantenimiento por kilometraje. El check engine indica una falla detectada."
+  }
+ ],
+ "sources": [
+  {
+   "name": "California Air Resources Board: On-Board Diagnostic II (OBD II) Systems Fact Sheet",
+   "url": "https://ww2.arb.ca.gov/resources/fact-sheets/board-diagnostic-ii-obd-ii-systems-fact-sheet"
+  },
+  {
+   "name": "ISO 2575: Road vehicles — Symbols for controls, indicators and tell-tales (símbolos y colores de los testigos)"
+  },
+  {
+   "name": "Manuales del propietario de los fabricantes: sección de testigos e indicadores del tablero"
+  }
+ ],
+ "reviewed": "2026-11-20"
+}

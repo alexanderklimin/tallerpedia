@@ -6,6 +6,7 @@ import { parseSize, sizeLabel, sizePath } from '../lib/tires.js';
 
 export const GET: APIRoute = async ({ site }) => {
   const abs = (p: string) => new URL(p, site).href;
+  const lights = (await getCollection('lights')).sort((a, b) => a.data.order - b.data.order);
   const codes = (await getCollection('codes')).sort((a, b) => a.data.code.localeCompare(b.data.code));
   const lines = [
     '# Tallerpedia',
@@ -16,6 +17,10 @@ export const GET: APIRoute = async ({ site }) => {
     '',
     '## Códigos OBD-II',
     ...codes.map((c) => `- [${c.data.code}: ${c.data.title}](${abs(`/codigos-obd/${c.id}/`)})`),
+    '',
+    '## Testigos del tablero',
+    `- [Testigos del tablero: qué significa cada color](${abs('/testigos/')})`,
+    ...lights.map((l) => `- [${l.data.h1}](${abs(`/testigos/${l.id}/`)}): ${l.data.short}`),
     '',
     '## Medidas de llantas',
     ...published.map((s) => { const size = parseSize(s.replace(/-/g, ' '))!; return `- [${sizeLabel(size)}](${abs(sizePath(size))})`; }),

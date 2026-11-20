@@ -1,0 +1,44 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Icon from '../../components/Icon.astro';
+import Symbol from '../../components/Symbol.astro';
+
+const lights = (await getCollection('lights')).sort((a, b) => a.data.order - b.data.order);
+const crumbs = [{ name: 'Inicio', path: '/' }, { name: 'Testigos del tablero', path: '/testigos/' }];
+---
+<Base title="Testigos del tablero: qué significa cada luz" description="Qué significan las luces del tablero de tu auto según su color y símbolo, cuáles obligan a detenerse y qué hacer con cada una." crumbs={crumbs}>
+  <h1>Testigos del tablero</h1>
+  <p class="lead">Las luces del tablero (salpicadero) siguen un código de colores parecido al de un semáforo. Antes de buscar el símbolo, fíjate en el color: te dice cuánta prisa hay.</p>
+
+  <div class="colors">
+    <div class="c red"><strong>Rojo</strong><span>Falla grave o de seguridad. Detente en cuanto sea seguro.</span></div>
+    <div class="c amber"><strong>Amarillo o ámbar</strong><span>Falla o aviso. Revisa pronto; si parpadea o hay síntomas, ve al taller.</span></div>
+    <div class="c green"><strong>Verde o azul</strong><span>Un sistema está funcionando: luces, intermitentes, crucero.</span></div>
+  </div>
+
+  <h2>Guías por testigo</h2>
+  <ul class="tile-grid">
+    {lights.map((l) => (
+      <li><a class="tile lt" href={`/testigos/${l.id}/`}><Symbol name={l.data.symbol} color={l.data.color} size={44} /><div><strong>{l.data.name}</strong><span>{l.data.short}</span></div></a></li>
+    ))}
+  </ul>
+
+  <div class="alert" role="note">
+    <Icon name="shield-alert" size={24} />
+    <div>
+      <strong>Si no reconoces un testigo rojo, detente</strong>
+      <p>Los símbolos cambian entre marcas. Ante un testigo rojo desconocido, detente en un lugar seguro y búscalo en la sección de testigos del manual del propietario antes de seguir.</p>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .colors { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr)); gap: 0.6rem; margin: 1.25rem 0; }
+  .c { display: flex; flex-direction: column; padding: 0.9rem 1rem; border-radius: 12px; background: #11161d; color: #e8edf3; }
+  .c strong { font-family: var(--head); font-size: 1.15rem; }
+  .c span { font-size: 0.95rem; line-height: 1.4; }
+  .c.red strong { color: #ff6a5c; } .c.amber strong { color: #ffb020; } .c.green strong { color: #4cd38a; }
+  .tile.lt { flex-direction: row; align-items: center; gap: 0.75rem; }
+  .tile.lt div { display: flex; flex-direction: column; }
+</style>

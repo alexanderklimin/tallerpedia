@@ -26,6 +26,7 @@ const fullTitle = current === '/' || branded.length > 65 ? title : branded;
 
 const nav = [
   { href: '/codigos-obd/', label: 'Códigos', icon: 'scan-line' },
+  { href: '/testigos/', label: 'Testigos', icon: 'triangle-alert' },
   { href: '/llantas/', label: 'Llantas', icon: 'circle-dot' },
   { href: '/herramientas/', label: 'Herramientas', icon: 'calculator' },
 ];
@@ -112,6 +113,7 @@ if (crumbs.length > 1) {
         </div>
         <nav class="footer-links" aria-label="Secciones">
           <a href="/codigos-obd/">Códigos OBD</a>
+          <a href="/testigos/">Testigos del tablero</a>
           <a href="/llantas/">Llantas</a>
           <a href="/herramientas/">Herramientas</a>
           <a href="/sobre-tallerpedia/">Sobre Tallerpedia</a>
@@ -181,7 +183,7 @@ if (crumbs.length > 1) {
   @media (max-width: 44rem) {
     .bar { flex-direction: column; align-items: stretch; gap: 0.2rem; padding-block: 0.5rem 0.35rem; }
     .bar .brand { align-self: center; }
-    .bar nav { display: grid; grid-template-columns: repeat(3, 1fr); }
+    .bar nav { display: grid; grid-template-columns: repeat(4, 1fr); }
     .bar nav a { flex-direction: column; gap: 0.1rem; padding: 0.25rem 0.05rem; font-size: 0.72rem; min-height: 3rem; justify-content: center; }
   }
 

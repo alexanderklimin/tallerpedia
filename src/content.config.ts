@@ -38,4 +38,37 @@ const codes = defineCollection({
   }),
 });
 
-export const collections = { codes };
+// Dashboard warning lights (hub + guide pages) in src/data/lights/. Each needs a "can I drive" verdict,
+// safety block, FAQ and at least two sources.
+const section = z.object({
+  heading: z.string(),
+  paragraphs: z.array(z.string()).default([]),
+  list: z.array(z.string()).optional(),
+  ordered: z.boolean().default(false),
+});
+const lights = defineCollection({
+  loader: glob({ pattern: '*.json', base: './src/data/lights' }),
+  schema: z.object({
+    order: z.number(),
+    name: z.string(),
+    h1: z.string(),
+    title: z.string().max(65),
+    aka: z.array(z.string()).default([]),
+    short: z.string().max(90),
+    color: z.enum(['rojo', 'amarillo', 'mixto']),
+    symbol: z.enum(['engine', 'oil', 'tpms', 'battery', 'temp', 'brake', 'amber', 'red']),
+    severity: z.enum(['low', 'medium', 'high']),
+    summary: z.string().min(80),
+    drive: z.string().min(40),
+    sections: z.array(section).min(2),
+    table: z.array(z.object({ light: z.string(), symbol: z.string().optional(), meaning: z.string(), action: z.string(), level: z.enum(['low', 'medium', 'high']) })).default([]),
+    stop: z.array(z.string()).min(1),
+    relatedCodes: z.array(codeId).default([]),
+    relatedLights: z.array(z.string()).default([]),
+    faq: z.array(z.object({ q: z.string(), a: z.string() })).min(2),
+    sources: z.array(source).min(2),
+    reviewed: isoDate,
+  }),
+});
+
+export const collections = { codes, lights };
