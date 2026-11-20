@@ -154,7 +154,8 @@ if (crumbs.length > 1) {
     --head: 'Archivo Variable', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
   }
   *, *::before, *::after { box-sizing: border-box; }
-  html { -webkit-text-size-adjust: 100%; scroll-padding-top: 5rem; }
+  html { -webkit-text-size-adjust: 100%; scroll-padding-top: 5rem; overflow-x: hidden; overflow-x: clip; }
+  body { overflow-x: hidden; overflow-x: clip; }
   body { margin: 0; background: var(--bg); color: var(--ink); font: 1.0625rem/1.65 system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif; }
   .wrap { width: min(100%, 68rem); margin-inline: auto; padding-inline: 1rem; }
   a { color: var(--accent); text-underline-offset: 0.18em; text-decoration-thickness: 1px; }
@@ -223,6 +224,7 @@ if (crumbs.length > 1) {
   .tile strong { font-family: var(--head); font-size: 1.1rem; font-weight: 750; line-height: 1.2; }
   .tile span { color: var(--muted); font-size: 0.9rem; line-height: 1.35; }
 
+  .tile-grid + .lead, .tile-grid + p { margin-top: 1.25rem; }
   .faq { border-bottom: 1px solid var(--line); padding: 0.85rem 0; }
   .faq summary { font-weight: 650; cursor: pointer; list-style: none; display: flex; justify-content: space-between; gap: 1rem; }
   .faq summary::-webkit-details-marker { display: none; }

@@ -28,23 +28,18 @@ const LEVEL = { low: 'Informativo o revisar cuando puedas', medium: 'Revisar pro
 ---
 <Base title={l.title} description={description} crumbs={crumbs} jsonLd={jsonLd} ogType="article">
   <article class="light">
-    <div class="head">
-      <Symbol name={l.symbol} color={l.color} size={72} anim={l.severity === 'high' ? 'blink' : 'glow'} />
-      <div>
-        <span class="eyebrow">Testigo del tablero</span>
-        <h1>{l.h1}</h1>
+    <section class={`panel ${l.color}`}>
+      <div class="lamp"><Symbol name={l.symbol} color={l.color} size={96} anim={l.severity === 'high' ? 'blink' : 'glow'} /></div>
+      <span class="p-color">{l.color === 'rojo' ? 'Testigo rojo' : l.color === 'amarillo' ? 'Testigo ámbar' : 'Rojo o ámbar según el caso'}</span>
+      <h1>{l.h1}</h1>
+      <div class="drive">
+        <strong><Icon name={l.severity === 'high' ? 'octagon-alert' : l.severity === 'medium' ? 'triangle-alert' : 'info'} size={18} /> ¿Puedo seguir manejando?</strong>
+        <p>{l.drive}</p>
       </div>
-    </div>
-    {l.aka.length > 0 && <p class="muted small">También llamado: {l.aka.join(', ')}.</p>}
-    <p class="lead">{l.summary}</p>
+    </section>
 
-    <div class="verdict">
-      <div class={`sev ${l.severity}`}>
-        <Icon name={l.severity === 'high' ? 'octagon-alert' : l.severity === 'medium' ? 'triangle-alert' : 'info'} size={22} />
-        <div><span>{SEVERITY[l.severity].label}</span><strong>¿Puedo seguir manejando?</strong></div>
-      </div>
-      <p>{l.drive}</p>
-    </div>
+    <p class="lead">{l.summary}</p>
+    {l.aka.length > 0 && <p class="muted small">También llamado: {l.aka.join(', ')}.</p>}
 
     {l.sections.map((s) => (
       <>
@@ -108,15 +103,16 @@ const LEVEL = { low: 'Informativo o revisar cuando puedas', medium: 'Revisar pro
 
 <style>
   .light { max-width: 50rem; }
-  .head { display: flex; align-items: center; gap: 1rem; }
-  .head h1 { margin-top: 0.15rem; }
-  .verdict { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 1rem 1.15rem; margin: 1.25rem 0; }
-  .verdict p { margin: 0.6rem 0 0; }
-  .sev { display: flex; align-items: center; gap: 0.6rem; }
-  .sev div { display: flex; flex-direction: column; line-height: 1.25; }
-  .sev span { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
-  .sev strong { font-family: var(--head); font-size: 1.15rem; color: var(--ink); }
-  .sev.low { color: var(--green); } .sev.medium { color: var(--amber); } .sev.high { color: var(--red); }
+  .panel { position: relative; margin: 0.25rem 0 1.25rem; padding: 1.25rem 1.1rem 1.1rem; border-radius: 22px; color: #fff; text-align: center; background: radial-gradient(70% 60% at 50% 18%, rgb(255 176 32 / 22%), transparent 70%), linear-gradient(180deg, #0d1622, #070d15); box-shadow: inset 0 0 0 2px #24364d, 0 14px 34px rgb(14 33 56 / 25%); }
+  .panel.rojo { background: radial-gradient(70% 60% at 50% 18%, rgb(255 77 61 / 24%), transparent 70%), linear-gradient(180deg, #0d1622, #070d15); }
+  .lamp { display: flex; justify-content: center; }
+  .lamp :global(.sym) { background: transparent; }
+  .p-color { display: block; margin-top: 0.4rem; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #ffb020; }
+  .panel.rojo .p-color { color: #ff7a6c; }
+  .panel h1 { color: #fff; margin: 0.3rem auto 0.8rem; font-size: clamp(1.55rem, 5.5vw, 2.4rem); max-width: 22ch; }
+  .drive { text-align: left; padding: 0.75rem 0.9rem; border-radius: 12px; background: rgb(255 255 255 / 8%); }
+  .drive strong { display: flex; align-items: center; gap: 0.4rem; font-family: var(--head); }
+  .drive p { margin: 0.35rem 0 0; color: #dbe4ef; font-size: 0.98rem; }
   .steps { padding-left: 1.4rem; display: grid; gap: 0.45rem; }
   .lights { list-style: none; padding: 0; margin: 1rem 0; display: grid; gap: 0.6rem; }
   .row { background: var(--surface); border: 1px solid var(--line); border-left: 5px solid var(--amber-bright); border-radius: 12px; padding: 0.85rem 1rem; }
@@ -126,7 +122,6 @@ const LEVEL = { low: 'Informativo o revisar cuando puedas', medium: 'Revisar pro
   .row p { margin: 0.5rem 0 0; }
   .act .pill { white-space: normal; margin-right: 0.25rem; }
   .dot { width: 40px; height: 40px; border-radius: 12px; background: #11161d; flex: none; }
-  @media (max-width: 30rem) { .head { flex-direction: column; align-items: flex-start; gap: 0.5rem; } }
   .tile.lt { flex-direction: row; align-items: center; gap: 0.75rem; }
   .tile.lt div { display: flex; flex-direction: column; }
 </style>

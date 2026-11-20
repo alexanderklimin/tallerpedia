@@ -30,26 +30,29 @@ const crumbs = [{ name: 'Inicio', path: '/' }, { name: 'Códigos OBD', path: '/c
 ---
 <Base title={title} description={description} crumbs={crumbs} jsonLd={jsonLd} ogType="article">
   <article class="code-page">
-    <div class="head">
-      <div>
-        <span class="eyebrow">{SYSTEM_LABELS[c.system]}</span>
-        <h1><span class="code">{c.code}</span> {c.title}</h1>
+    <section class="hero-card">
+      <div class="hc-top">
+        <a class="mil" href="/testigos/check-engine/" title="Luz de check engine">
+          <Symbol name="engine" color="amarillo" size={58} anim={c.system === 'encendido' ? 'blink' : 'glow'} />
+        </a>
+        <div class="hc-meta">
+          <span class="hc-sys">{SYSTEM_LABELS[c.system]}</span>
+          <span class="hc-mil">Check engine: {c.system === 'encendido' ? 'fija o parpadeando' : 'fija'}</span>
+        </div>
       </div>
-      <a class="mil" href="/testigos/check-engine/" title="Luz de check engine">
-        <Symbol name="engine" color="amarillo" size={64} anim={c.system === 'encendido' ? 'blink' : 'glow'} />
-        <span>{c.system === 'encendido' ? 'Puede parpadear' : 'Luz fija'}</span>
-      </a>
-    </div>
-    <p class="std"><span class="muted">Descripción estándar (SAE J2012):</span> <span lang="en">{c.sae}</span></p>
-    <p class="lead">{c.summary}</p>
+      <h1><span class="code">{c.code}</span><span class="t">{c.title}</span></h1>
+      <div class={`meter ${c.severity}`} aria-label={SEVERITY[c.severity].label}>
+        <span></span><span></span><span></span>
+        <b>{SEVERITY[c.severity].label}</b>
+      </div>
+      <div class="drive">
+        <strong><Icon name={c.severity === 'high' ? 'octagon-alert' : c.severity === 'medium' ? 'triangle-alert' : 'info'} size={18} /> ¿Puedo seguir manejando?</strong>
+        <p>{c.drive}</p>
+      </div>
+    </section>
 
-    <div class="verdict">
-      <div class={`sev ${c.severity}`}>
-        <Icon name={c.severity === 'high' ? 'octagon-alert' : c.severity === 'medium' ? 'triangle-alert' : 'info'} size={22} />
-        <div><span>{SEVERITY[c.severity].label}</span><strong>¿Puedo seguir manejando?</strong></div>
-      </div>
-      <p>{c.drive}</p>
-    </div>
+    <p class="lead">{c.summary}</p>
+    <p class="std"><span class="muted">Descripción estándar (SAE J2012):</span> <span lang="en">{c.sae}</span></p>
 
     <h2>Qué significa el código {c.code}</h2>
     {c.meaning.map((p) => <p>{p}</p>)}
@@ -117,19 +120,24 @@ const crumbs = [{ name: 'Inicio', path: '/' }, { name: 'Códigos OBD', path: '/c
 
 <style>
   .code-page { max-width: 50rem; }
-  .head { display: flex; gap: 1rem; align-items: flex-start; justify-content: space-between; }
-  .mil { display: flex; flex-direction: column; align-items: center; gap: 0.25rem; text-decoration: none; color: var(--muted); font-size: 0.75rem; font-weight: 600; margin-top: 1.2rem; text-align: center; }
-  @media (max-width: 30rem) { .mil :global(.sym) { width: 48px !important; height: 48px !important; } }
-  h1 .code { display: inline-block; padding: 0 0.35em; margin-right: 0.15em; border-radius: 10px; background: var(--navy); color: var(--amber-bright); font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace; font-weight: 700; }
-  .std { font-size: 0.95rem; margin-bottom: 1rem; }
-  .verdict { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 1rem 1.15rem; margin: 1.25rem 0; }
-  .verdict p { margin: 0.6rem 0 0; }
-  .sev { display: flex; align-items: center; gap: 0.6rem; }
-  .sev div { display: flex; flex-direction: column; line-height: 1.25; }
-  .sev span { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
-  .sev strong { font-family: var(--head); font-size: 1.15rem; }
-  .sev.low { color: var(--green); } .sev.medium { color: var(--amber); } .sev.high { color: var(--red); }
-  .sev strong { color: var(--ink); }
+  .std { font-size: 0.95rem; }
+  .hero-card { margin: 0.25rem 0 1.25rem; padding: 1rem 1.1rem 1.1rem; border-radius: 18px; color: #fff; background: radial-gradient(120% 80% at 90% 0%, #234a78 0%, transparent 60%), linear-gradient(160deg, #16304f, #0b1a2c); box-shadow: 0 14px 34px rgb(14 33 56 / 22%); }
+  .hc-top { display: flex; align-items: center; gap: 0.75rem; }
+  .hc-meta { display: flex; flex-direction: column; line-height: 1.3; }
+  .hc-sys { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--amber-bright); }
+  .hc-mil { font-size: 0.85rem; color: #b9c6d8; }
+  .hero-card h1 { color: #fff; margin: 0.75rem 0 0.6rem; font-size: clamp(1.55rem, 5.5vw, 2.4rem); }
+  .hero-card h1 .code { display: block; font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace; font-size: 1.55em; font-weight: 800; color: var(--amber-bright); letter-spacing: 0.02em; line-height: 1.05; }
+  .meter { display: flex; align-items: center; gap: 0.3rem; margin-bottom: 0.75rem; }
+  .meter span { width: 2.2rem; height: 0.5rem; border-radius: 999px; background: rgb(255 255 255 / 14%); }
+  .meter b { margin-left: 0.4rem; font-size: 0.9rem; }
+  .meter.low span:nth-child(1) { background: #4cd38a; }
+  .meter.medium span:nth-child(-n+2) { background: #ffb020; }
+  .meter.high span:nth-child(-n+3) { background: #ff5a4a; }
+  .meter.low b { color: #4cd38a; } .meter.medium b { color: #ffb020; } .meter.high b { color: #ff7a6c; }
+  .drive { padding: 0.75rem 0.9rem; border-radius: 12px; background: rgb(255 255 255 / 8%); }
+  .drive strong { display: flex; align-items: center; gap: 0.4rem; font-family: var(--head); }
+  .drive p { margin: 0.35rem 0 0; color: #dbe4ef; font-size: 0.98rem; }
   .checks { padding-left: 1.2rem; }
   .steps { padding-left: 1.4rem; display: grid; gap: 0.45rem; }
   abbr { text-decoration: none; font-weight: 700; color: var(--amber); }

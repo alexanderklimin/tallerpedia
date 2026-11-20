@@ -63,7 +63,7 @@ const crumbs = [{ name: 'Inicio', path: '/' }, { name: 'Llantas', path: '/llanta
   <article class="tire">
     <span class="eyebrow">Medida de llanta · rin {size.rim}</span>
     <h1>Llanta {label}</h1>
-    <p class="lead">Una llanta (neumático, cubierta) {label} mide {size.width} mm de ancho y {fmt(d.diameter, 0)} mm de diámetro total, y va en un rin (aro) de {size.rim} pulgadas. Abajo tienes sus medidas reales, las medidas equivalentes y cómo cambia el velocímetro si cambias de medida.</p>
+    <TireDiagram size={size} />
 
     <div class="specs">
       <div><span>Ancho</span><strong>{size.width} mm</strong><em>{fmt(d.widthIn)}″</em></div>
@@ -74,7 +74,8 @@ const crumbs = [{ name: 'Inicio', path: '/' }, { name: 'Llantas', path: '/llanta
       <div><span>Vueltas por km</span><strong>{d.revsPerKm}</strong><em>teóricas</em></div>
     </div>
 
-    <TireDiagram size={size} />
+
+    <p class="lead">Una llanta (neumático, cubierta) {label} mide {size.width} mm de ancho y {fmt(d.diameter, 0)} mm de diámetro total, y va en un rin (aro) de {size.rim} pulgadas. Arriba la tienes dibujada a escala; abajo puedes compararla con otra medida y ver sus equivalencias.</p>
 
     <TireTool from={sizeSlug(size)} to={closest ? sizeSlug(closest.size) : undefined} lockFrom />
 

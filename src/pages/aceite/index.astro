@@ -10,6 +10,10 @@ const crumbs = [{ name: 'Inicio', path: '/' }, { name: 'Aceite de motor', path: 
 ---
 <Base title="Aceite de motor: viscosidades y cómo elegir" description="Qué significan 5W-30, 10W-40 y las demás viscosidades, qué son las categorías API y ACEA y cómo elegir el aceite que pide tu auto." crumbs={crumbs}>
   <h1>Aceite de motor</h1>
+  <ul class="tile-grid">
+    {grades.map((o) => <li><a class="tile can" href={`/aceite/${o.id}/`}><OilCan grade={o.data.grade} size={54} label="SAE" /><div><strong>{o.data.grade}</strong><span>{o.data.short}</span></div></a></li>)}
+  </ul>
+
   <p class="lead">Para elegir aceite necesitas dos datos del manual de tu auto: la <strong>viscosidad</strong> (por ejemplo 5W-30) y la <strong>especificación</strong> de calidad (API, ACEA o la del fabricante). Aquí te explicamos qué significa cada uno.</p>
 
   <h2>Cómo se lee la etiqueta</h2>
@@ -20,10 +24,6 @@ const crumbs = [{ name: 'Inicio', path: '/' }, { name: 'Aceite de motor', path: 
     <li><strong>Homologaciones de marca</strong> (dexos, VW 504 00, MB 229.51…): si tu manual pide una, busca ese código exacto en el envase.</li>
   </ul>
 
-  <h2>Viscosidades</h2>
-  <ul class="tile-grid">
-    {grades.map((o) => <li><a class="tile can" href={`/aceite/${o.id}/`}><OilCan grade={o.data.grade} size={54} label="SAE" /><div><strong>{o.data.grade}</strong><span>{o.data.short}</span></div></a></li>)}
-  </ul>
 
   <h2>Guías</h2>
   <ul class="tile-grid">

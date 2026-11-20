@@ -42,7 +42,6 @@ const crumbs = [{ name: 'Inicio', path: '/' }, { name: 'Aceite de motor', path: 
       </div>
       <OilCan grade={o.grade} size={110} label={o.kind === 'grade' ? 'SAE' : 'Aceite'} />
     </div>
-    <p class="lead">{o.summary}</p>
 
 
     {grade && specs && (
@@ -52,6 +51,13 @@ const crumbs = [{ name: 'Inicio', path: '/' }, { name: 'Aceite de motor', path: 
           <div><b>{grade.hot}</b><span>viscosidad con el motor caliente, a 100 °C</span></div>
         </figure>
         <OilScale winter={grade.winter} hot={grade.hot} />
+      </>
+    )}
+
+    <p class="lead">{o.summary}</p>
+
+    {grade && specs && (
+      <>
         <div class="specs">
           <div><span>Prueba de arranque en frío</span><strong>{specs.crankC} °C</strong><em>viscosidad máxima de arranque (CCS)</em></div>
           <div><span>Prueba de bombeo en frío</span><strong>{specs.pumpC} °C</strong><em>sin bloqueo de bombeo (MRV)</em></div>

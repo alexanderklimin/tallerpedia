@@ -9,6 +9,12 @@ const crumbs = [{ name: 'Inicio', path: '/' }, { name: 'Testigos del tablero', p
 ---
 <Base title="Testigos del tablero: qué significa cada luz" description="Qué significan las luces del tablero de tu auto según su color y símbolo, cuáles obligan a detenerse y qué hacer con cada una." crumbs={crumbs}>
   <h1>Testigos del tablero</h1>
+  <ul class="tile-grid">
+    {lights.map((l) => (
+      <li><a class="tile lt" href={`/testigos/${l.id}/`}><Symbol name={l.data.symbol} color={l.data.color} size={44} /><div><strong>{l.data.name}</strong><span>{l.data.short}</span></div></a></li>
+    ))}
+  </ul>
+
   <p class="lead">Las luces del tablero (salpicadero) siguen un código de colores parecido al de un semáforo. Antes de buscar el símbolo, fíjate en el color: te dice cuánta prisa hay.</p>
 
   <div class="colors">
@@ -17,12 +23,6 @@ const crumbs = [{ name: 'Inicio', path: '/' }, { name: 'Testigos del tablero', p
     <div class="c green"><strong>Verde o azul</strong><span>Un sistema está funcionando: luces, intermitentes, crucero.</span></div>
   </div>
 
-  <h2>Guías por testigo</h2>
-  <ul class="tile-grid">
-    {lights.map((l) => (
-      <li><a class="tile lt" href={`/testigos/${l.id}/`}><Symbol name={l.data.symbol} color={l.data.color} size={44} /><div><strong>{l.data.name}</strong><span>{l.data.short}</span></div></a></li>
-    ))}
-  </ul>
 
   <div class="alert" role="note">
     <Icon name="shield-alert" size={24} />
