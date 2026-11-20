@@ -1,0 +1,84 @@
+{
+ "code": "P0016",
+ "sae": "Crankshaft Position - Camshaft Position Correlation (Bank 1 Sensor A)",
+ "title": "Correlación entre posición del cigüeñal y del árbol de levas (banco 1, sensor A)",
+ "system": "distribucion",
+ "severity": "high",
+ "drive": "Con precaución y lo mínimo posible. Si la causa es una cadena o banda de distribución estirada o saltada, seguir manejando puede romperla y causar un daño grave al motor. Si oyes traqueteo metálico, no lo manejes y llévalo en grúa.",
+ "summary": "El código P0016 indica que las señales del sensor del cigüeñal y del árbol de levas no coinciden como deberían: el motor parece «fuera de tiempo». Puede ser algo sencillo, como aceite bajo o un sensor, pero también una cadena o banda de distribución estirada o saltada.",
+ "meaning": [
+  "La computadora compara constantemente la posición del cigüeñal con la del árbol de levas. Si la diferencia queda fuera del margen esperado, registra P0016. Con distribución variable, también puede deberse a que el fasor no vuelve a su posición de reposo."
+ ],
+ "symptoms": [
+  "Luz de check engine.",
+  "Arranque difícil o el motor se apaga.",
+  "Pérdida de potencia y ralentí irregular.",
+  "Traqueteo de la cadena al arrancar, en algunos motores."
+ ],
+ "causes": [
+  {
+   "name": "Cadena de distribución estirada o guías gastadas",
+   "detail": "Común en motores con mucho kilometraje o con cambios de aceite espaciados.",
+   "cost": "alto"
+  },
+  {
+   "name": "Banda o cadena saltada un diente",
+   "detail": "Tras una reparación o por tensor defectuoso.",
+   "cost": "alto"
+  },
+  {
+   "name": "Nivel o calidad del aceite",
+   "detail": "Afecta al tensor hidráulico y al sistema VVT.",
+   "cost": "bajo"
+  },
+  {
+   "name": "Válvula solenoide o fasor del árbol de levas",
+   "detail": "No regresan a la posición correcta.",
+   "cost": "medio"
+  },
+  {
+   "name": "Sensor de leva o de cigüeñal",
+   "detail": "Una señal defectuosa puede simular un desfase.",
+   "cost": "bajo"
+  }
+ ],
+ "checks": [
+  "Revisar nivel y estado del aceite.",
+  "Ver en el escáner el ángulo de leva y la correlación, si el auto lo ofrece.",
+  "Comprobar las señales de leva y cigüeñal con osciloscopio.",
+  "Revisar la válvula solenoide de la leva.",
+  "Verificar la puesta a tiempo de la distribución (marcas) según el manual. Puede requerir desmontar tapas."
+ ],
+ "stop": [
+  "Traqueteo o golpeteo metálico del motor: puede ser la cadena. No lo manejes; llévalo en grúa.",
+  "El motor se apaga en marcha o no arranca."
+ ],
+ "related": [
+  "P0011",
+  "P0014",
+  "P0017",
+  "P0335",
+  "P0340"
+ ],
+ "faq": [
+  {
+   "q": "¿El P0016 siempre es la cadena de distribución?",
+   "a": "No. A veces es el aceite, un sensor o la válvula del VVT. Pero como la cadena es una causa posible y grave, conviene diagnosticarlo pronto."
+  },
+  {
+   "q": "¿Qué pasa si se rompe la cadena o la banda?",
+   "a": "El motor se apaga. En muchos motores, llamados de interferencia, las válvulas chocan con los pistones y la reparación es muy cara."
+  }
+ ],
+ "brandNotes": [],
+ "sources": [
+  {
+   "name": "SAE J2012: Diagnostic Trouble Code Definitions (SAE International), definiciones genéricas de códigos OBD-II"
+  },
+  {
+   "name": "California Air Resources Board: On-Board Diagnostic II (OBD II) Systems Fact Sheet",
+   "url": "https://ww2.arb.ca.gov/resources/fact-sheets/board-diagnostic-ii-obd-ii-systems-fact-sheet"
+  }
+ ],
+ "reviewed": "2026-11-20"
+}

@@ -1,0 +1,56 @@
+---
+import Base from '../layouts/Base.astro';
+import { CONTACT_EMAIL, GA_ID, LEGAL_UPDATED, OWNER_COUNTRY, OWNER_NAME } from '../data/site.js';
+---
+<Base
+  title="Política de privacidad y cookies"
+  description="Qué datos trata Tallerpedia, qué cookies de análisis usa con tu consentimiento y qué derechos tienes."
+  crumbs={[{ name: 'Inicio', path: '/' }, { name: 'Privacidad', path: '/privacidad/' }]}
+>
+  <article class="legal">
+    <h1>Política de privacidad y cookies</h1>
+    <p class="lead">Usamos el mínimo de datos posible.</p>
+
+    <h2>Resumen</h2>
+    <p>Tallerpedia no te pide registrarte. {GA_ID ? 'Usamos Google Analytics, con tu consentimiento, para saber qué páginas resultan útiles.' : 'No usa cookies ni herramientas de analítica.'} Las calculadoras y el buscador de códigos funcionan en tu navegador y no envían lo que escribes a nuestros servidores.</p>
+
+    <h2>Responsable</h2>
+    <p>El responsable del tratamiento es {OWNER_NAME}{OWNER_COUNTRY && `, con residencia en ${OWNER_COUNTRY}`}. Puedes escribir a <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.</p>
+
+    <h2>Datos que tratamos</h2>
+    <h3>Datos técnicos de la conexión</h3>
+    <p>Al visitar el sitio, nuestro proveedor de alojamiento, Cloudflare, Inc., trata datos técnicos como la dirección IP y el tipo de navegador para entregar las páginas y proteger el servicio. La base legal es nuestro interés legítimo en mantener el sitio seguro y en funcionamiento. Cloudflare puede tratar estos datos fuera de tu país, incluido Estados Unidos, conforme a sus propias garantías de protección de datos.</p>
+    <h3>Mensajes que nos envías</h3>
+    <p>Si nos escribes por correo electrónico, usamos tu dirección y tu mensaje solo para responderte. Los conservamos mientras sea necesario para atender tu consulta. La base legal es tu consentimiento al escribirnos.</p>
+    <h3>Recursos</h3>
+    <p>Las imágenes y las fuentes tipográficas se sirven desde nuestro propio dominio. El único servicio de terceros que puede cargarse es Google Analytics, en las condiciones descritas abajo.</p>
+
+    <h2>Cookies</h2>
+    {GA_ID ? (
+      <>
+        <p>Utilizamos Google Analytics 4, un servicio de Google Ireland Limited, para conocer de forma agregada qué páginas se visitan y cuánto se usan las herramientas. La base legal es tu consentimiento. Google puede tratar estos datos fuera de tu país, incluido Estados Unidos. No usamos cookies de publicidad.</p>
+        <p>Si visitas el sitio desde Europa, Google Analytics no se carga hasta que pulsas «Aceptar» en el aviso de cookies. Puedes cambiar tu elección en cualquier momento desde el enlace «Cookies» al pie de cada página.</p>
+        <div class="table-scroll">
+          <table>
+            <thead><tr><th scope="col">Nombre</th><th scope="col">Finalidad</th><th scope="col">Duración</th></tr></thead>
+            <tbody>
+              <tr><td><code>_ga</code></td><td>Distinguir visitantes de forma estadística</td><td>Hasta 2 años</td></tr>
+              <tr><td><code>_ga_*</code></td><td>Mantener el estado de la sesión</td><td>Hasta 2 años</td></tr>
+              <tr><td><code>tp_consent</code></td><td>Recordar tu elección sobre las cookies (almacenamiento local del navegador)</td><td>Hasta que la borres</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>Más información en <a href="https://policies.google.com/technologies/partner-sites" rel="noopener">cómo usa Google los datos de los sitios que utilizan sus servicios</a>.</p>
+      </>
+    ) : (
+      <p>Este sitio no instala cookies propias ni de terceros y no guarda información en tu dispositivo.</p>
+    )}
+    <p>Si en el futuro incorporamos publicidad o enlaces de afiliados, actualizaremos esta página y te pediremos el consentimiento cuando la ley lo exija.</p>
+
+    <h2>Tus derechos</h2>
+    <p>Puedes solicitar el acceso, la rectificación, la supresión, la limitación o la portabilidad de tus datos, y oponerte a su tratamiento, escribiendo a <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>. También puedes presentar una reclamación ante la autoridad de protección de datos de tu país. En España es la Agencia Española de Protección de Datos.</p>
+
+    <p class="sources">Última actualización: {LEGAL_UPDATED}.</p>
+  </article>
+</Base>
+<style>.legal { max-width: 46rem; }</style>

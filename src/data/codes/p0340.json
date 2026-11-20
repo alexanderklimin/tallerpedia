@@ -1,0 +1,83 @@
+{
+ "code": "P0340",
+ "sae": "Camshaft Position Sensor \"A\" Circuit (Bank 1 or Single Sensor)",
+ "title": "Sensor de posición del árbol de levas «A»: falla de circuito (banco 1)",
+ "system": "sensores",
+ "severity": "high",
+ "drive": "Con precaución: el motor puede arrancar con dificultad, apagarse en marcha o no volver a encender. Si se apaga mientras manejas, perderás la asistencia de la dirección y del freno. Lo más prudente es ir directamente al taller o usar grúa si se apaga.",
+ "summary": "El código P0340 indica que la computadora no recibe una señal correcta del sensor de posición del árbol de levas (CMP). Sin esa señal, el motor puede tardar en arrancar, apagarse o no encender. Las causas habituales son el sensor, su conector o cableado, y con menos frecuencia la rueda reluctora o la distribución.",
+ "meaning": [
+  "El sensor del árbol de levas le dice a la computadora en qué fase está cada cilindro, para sincronizar la inyección y la chispa. Junto con el sensor del cigüeñal (CKP), permite que el motor funcione a tiempo.",
+  "«A» se refiere al sensor de la leva de admisión en motores con dos sensores por banco. El significado exacto puede variar según el fabricante."
+ ],
+ "symptoms": [
+  "Arranque largo o el motor no arranca.",
+  "Se apaga en marcha o tironea.",
+  "Pérdida de potencia.",
+  "Luz de check engine."
+ ],
+ "causes": [
+  {
+   "name": "Sensor de árbol de levas defectuoso",
+   "detail": "Falla por calor o por edad.",
+   "cost": "bajo"
+  },
+  {
+   "name": "Conector o cableado",
+   "detail": "Corrosión, aceite en el conector o cables rozados.",
+   "cost": "bajo"
+  },
+  {
+   "name": "Rueda reluctora dañada",
+   "detail": "El anillo que lee el sensor está dañado o suelto.",
+   "cost": "medio"
+  },
+  {
+   "name": "Distribución saltada",
+   "detail": "Cadena o banda fuera de tiempo (a menudo con P0016).",
+   "cost": "alto"
+  },
+  {
+   "name": "Batería o alternador débiles",
+   "detail": "Voltaje bajo durante el arranque que afecta la señal.",
+   "cost": "medio"
+  }
+ ],
+ "checks": [
+  "Revisar el estado de la batería y las conexiones a masa.",
+  "Inspeccionar el conector del sensor: aceite, corrosión o pines doblados.",
+  "Medir alimentación, masa y señal del sensor con multímetro u osciloscopio según el manual.",
+  "Comparar la señal de leva y cigüeñal con osciloscopio para descartar distribución.",
+  "Sustituir el sensor solo después de confirmar la falla."
+ ],
+ "stop": [
+  "El motor se apaga mientras manejas: sin motor, la dirección y el freno pierden asistencia y requieren mucha más fuerza. Detente en un lugar seguro.",
+  "No arranca después de apagarse: usa grúa en lugar de intentar arrancar repetidamente."
+ ],
+ "related": [
+  "P0335",
+  "P0016",
+  "P0011"
+ ],
+ "faq": [
+  {
+   "q": "¿Puedo manejar con el código P0340?",
+   "a": "Algunos autos siguen funcionando con un modo de respaldo, pero el riesgo es que se apague sin aviso. Conviene revisarlo pronto y evitar viajes largos."
+  },
+  {
+   "q": "¿Por qué hay aceite en el conector del sensor?",
+   "a": "Por un sello del sensor gastado. El aceite puede subir por los cables y dañar la conexión; hay que cambiar el sello o el sensor y limpiar el conector."
+  }
+ ],
+ "brandNotes": [],
+ "sources": [
+  {
+   "name": "SAE J2012: Diagnostic Trouble Code Definitions (SAE International), definiciones genéricas de códigos OBD-II"
+  },
+  {
+   "name": "California Air Resources Board: On-Board Diagnostic II (OBD II) Systems Fact Sheet",
+   "url": "https://ww2.arb.ca.gov/resources/fact-sheets/board-diagnostic-ii-obd-ii-systems-fact-sheet"
+  }
+ ],
+ "reviewed": "2026-11-20"
+}

@@ -1,0 +1,79 @@
+{
+ "code": "P0456",
+ "sae": "Evaporative Emission System Small Leak Detected (very small leak)",
+ "title": "Fuga muy pequeña en el sistema EVAP",
+ "system": "evap",
+ "severity": "low",
+ "drive": "Sí. Es un fallo de emisiones que no afecta al motor. Revisa la tapa del tanque y, si hueles a gasolina, no uses el auto hasta revisarlo.",
+ "summary": "El código P0456 indica una fuga muy pequeña en el sistema que retiene los vapores de gasolina (EVAP), del orden de un orificio de medio milímetro. Suele ser la tapa del tanque, un sello o una manguera con una grieta fina, y a menudo cuesta encontrarla sin una prueba de humo.",
+ "meaning": [
+  "La computadora cierra el sistema EVAP y vigila cuánto tarda en perder el vacío o la presión. Si lo pierde un poco más rápido de lo permitido, registra una fuga muy pequeña (P0456). Una fuga algo mayor da P0442 y una grande, P0455."
+ ],
+ "symptoms": [
+  "Luz de check engine sin otros síntomas.",
+  "Rara vez, un ligero olor a gasolina.",
+  "Falla en la verificación de emisiones o ITV."
+ ],
+ "causes": [
+  {
+   "name": "Tapa del tanque",
+   "detail": "Sello reseco o tapa que no cierra bien.",
+   "cost": "bajo"
+  },
+  {
+   "name": "Grieta en una manguera EVAP",
+   "detail": "Las mangueras de goma se resecan con los años.",
+   "cost": "bajo"
+  },
+  {
+   "name": "Válvula de purga o de ventilación con fuga",
+   "detail": "No sellan del todo.",
+   "cost": "medio"
+  },
+  {
+   "name": "Sello del sensor o la bomba en el tanque",
+   "detail": "Juntas en la parte superior del tanque.",
+   "cost": "medio"
+  },
+  {
+   "name": "Canister dañado",
+   "detail": "Fisuras en la carcasa.",
+   "cost": "medio"
+  }
+ ],
+ "checks": [
+  "Empezar por la tapa del tanque: revisar el sello y cerrarla hasta el clic.",
+  "Revisar mangueras y conexiones visibles del EVAP.",
+  "Probar las válvulas de purga y ventilación con el escáner.",
+  "Prueba de humo en el taller: es la forma fiable de encontrar fugas tan pequeñas."
+ ],
+ "stop": [
+  "Hueles a gasolina dentro o alrededor del auto, o ves gotas o charcos de combustible: no enciendas el motor y llévalo al taller en grúa."
+ ],
+ "related": [
+  "P0455",
+  "P0442",
+  "P0441"
+ ],
+ "faq": [
+  {
+   "q": "¿Por qué el taller no encuentra la fuga P0456?",
+   "a": "Porque es diminuta y a veces solo aparece con cierta temperatura o nivel de combustible. La prueba de humo con el sistema presurizado es la forma más fiable de localizarla."
+  },
+  {
+   "q": "¿Es urgente reparar el P0456?",
+   "a": "No para el motor, pero con la luz encendida no verás si aparece otra falla más grave, y el auto no pasará la verificación de emisiones."
+  }
+ ],
+ "brandNotes": [],
+ "sources": [
+  {
+   "name": "SAE J2012: Diagnostic Trouble Code Definitions (SAE International), definiciones genéricas de códigos OBD-II"
+  },
+  {
+   "name": "California Air Resources Board: On-Board Diagnostic II (OBD II) Systems Fact Sheet",
+   "url": "https://ww2.arb.ca.gov/resources/fact-sheets/board-diagnostic-ii-obd-ii-systems-fact-sheet"
+  }
+ ],
+ "reviewed": "2026-11-20"
+}

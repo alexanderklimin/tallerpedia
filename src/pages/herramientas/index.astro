@@ -1,0 +1,12 @@
+---
+import Base from '../../layouts/Base.astro';
+const crumbs = [{ name: 'Inicio', path: '/' }, { name: 'Herramientas', path: '/herramientas/' }];
+---
+<Base title="Herramientas y calculadoras para tu auto" description="Calculadoras gratuitas para tu auto: equivalencias de llantas y buscador de códigos OBD. Con las fórmulas a la vista." crumbs={crumbs}>
+  <h1>Herramientas</h1>
+  <p class="lead">Calculadoras con las fórmulas a la vista, para que puedas comprobar cada resultado.</p>
+  <ul class="tile-grid">
+    <li><a class="tile" href="/herramientas/equivalencia-de-llantas/"><strong>Equivalencias de llantas</strong><span>Compara dos medidas y ve cómo cambia el velocímetro.</span></a></li>
+    <li><a class="tile" href="/codigos-obd/"><strong>Buscador de códigos OBD</strong><span>Escribe el código del escáner y ve qué significa.</span></a></li>
+  </ul>
+</Base>

@@ -1,0 +1,84 @@
+{
+ "code": "P0011",
+ "sae": "\"A\" Camshaft Position - Timing Over-Advanced or System Performance (Bank 1)",
+ "title": "Árbol de levas «A» (admisión): tiempo demasiado adelantado o falla de rendimiento (banco 1)",
+ "system": "distribucion",
+ "severity": "medium",
+ "drive": "Por poco tiempo y con suavidad, si el motor no hace ruidos ni se apaga. Muchas veces la causa es el aceite: revisa el nivel enseguida. Si oyes golpeteo o traqueteo metálico, no sigas manejando.",
+ "summary": "El código P0011 indica que el árbol de levas de admisión del banco 1 no está en la posición que pide la computadora: está más adelantado de lo esperado. El sistema de distribución variable (VVT) funciona con la presión del aceite, por eso las causas más comunes son aceite bajo, sucio o de viscosidad incorrecta, y la válvula solenoide de control.",
+ "meaning": [
+  "En los motores con distribución variable, la computadora mueve el árbol de levas con un actuador (fasor) que funciona con aceite a presión, regulado por una válvula solenoide. Si la posición real no coincide con la ordenada, registra P0011 (adelantado o fuera de rango).",
+  "«A» es el árbol de admisión en la mayoría de los motores; algunos fabricantes usan otra convención."
+ ],
+ "symptoms": [
+  "Luz de check engine.",
+  "Ralentí irregular o el motor se apaga.",
+  "Pérdida de potencia y mayor consumo.",
+  "Ruido de traqueteo al arrancar en algunos motores."
+ ],
+ "causes": [
+  {
+   "name": "Nivel de aceite bajo",
+   "detail": "Sin presión suficiente, el fasor no se mueve como debe.",
+   "cost": "bajo"
+  },
+  {
+   "name": "Aceite sucio o de viscosidad incorrecta",
+   "detail": "Lodos o un aceite distinto del especificado afectan al sistema VVT.",
+   "cost": "bajo"
+  },
+  {
+   "name": "Válvula solenoide de control de la leva (OCV)",
+   "detail": "Atascada o con el filtro tapado.",
+   "cost": "medio"
+  },
+  {
+   "name": "Fasor (actuador) del árbol de levas",
+   "detail": "Desgastado o atascado.",
+   "cost": "alto"
+  },
+  {
+   "name": "Cadena de distribución estirada",
+   "detail": "Cambia la relación entre leva y cigüeñal (suele acompañarse de P0016).",
+   "cost": "alto"
+  }
+ ],
+ "checks": [
+  "Revisar nivel y estado del aceite. Si toca cambio, hacerlo con la viscosidad y especificación del manual.",
+  "Revisar la válvula solenoide de control: resistencia, conector y filtro de malla si lo tiene.",
+  "Activar la válvula con el escáner y observar si cambia la posición de la leva.",
+  "Comparar la correlación leva-cigüeñal; si hay P0016, sospechar de la cadena.",
+  "Revisar el fasor y la distribución según el manual."
+ ],
+ "stop": [
+  "Ruido metálico fuerte, golpeteo o traqueteo continuo del motor.",
+  "El testigo de presión de aceite se enciende: detén el motor de inmediato."
+ ],
+ "related": [
+  "P0014",
+  "P0016",
+  "P0010",
+  "P0340"
+ ],
+ "faq": [
+  {
+   "q": "¿Un cambio de aceite puede quitar el P0011?",
+   "a": "A veces sí, si el aceite estaba bajo, sucio o era de otra viscosidad. Usa el aceite que indica el manual. Si el código vuelve, hay que revisar la válvula solenoide y el fasor."
+  },
+  {
+   "q": "¿Qué es el VVT?",
+   "a": "Es la distribución variable: un sistema que ajusta el momento de apertura de las válvulas para ganar potencia y reducir consumo. Según la marca se llama VVT-i, VTEC, VANOS, CVVT y otros nombres."
+  }
+ ],
+ "brandNotes": [],
+ "sources": [
+  {
+   "name": "SAE J2012: Diagnostic Trouble Code Definitions (SAE International), definiciones genéricas de códigos OBD-II"
+  },
+  {
+   "name": "California Air Resources Board: On-Board Diagnostic II (OBD II) Systems Fact Sheet",
+   "url": "https://ww2.arb.ca.gov/resources/fact-sheets/board-diagnostic-ii-obd-ii-systems-fact-sheet"
+  }
+ ],
+ "reviewed": "2026-11-20"
+}

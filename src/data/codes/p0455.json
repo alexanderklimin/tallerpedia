@@ -1,0 +1,90 @@
+{
+ "code": "P0455",
+ "sae": "Evaporative Emission System Leak Detected (large leak/no flow)",
+ "title": "Fuga grande en el sistema EVAP",
+ "system": "evap",
+ "severity": "low",
+ "drive": "Sí. El sistema EVAP solo recoge los vapores del tanque de gasolina; una fuga no afecta el funcionamiento del motor. Pero revisa enseguida la tapa del tanque y, si hay olor a gasolina, no sigas usando el auto.",
+ "summary": "El código P0455 indica que el sistema que retiene los vapores de gasolina (EVAP) no mantiene el vacío durante la prueba de la computadora, como si hubiera una fuga grande. La causa más común es la tapa del tanque floja, mal cerrada o con el sello dañado.",
+ "meaning": [
+  "El sistema EVAP guarda los vapores del tanque en un filtro de carbón activado (canister) y luego los envía al motor para quemarlos. La computadora lo cierra y comprueba si mantiene presión o vacío. Si no lo consigue en absoluto, interpreta una fuga grande o falta de flujo y registra P0455.",
+  "Si la fuga es pequeña, los códigos son P0442 (pequeña) o P0456 (muy pequeña)."
+ ],
+ "symptoms": [
+  "Luz de check engine, normalmente sin otro síntoma.",
+  "A veces, olor a gasolina cerca del auto.",
+  "Falla en la verificación de emisiones o ITV."
+ ],
+ "causes": [
+  {
+   "name": "Tapa del tanque floja o dañada",
+   "detail": "Mal cerrada tras cargar combustible, con el sello gastado o no original.",
+   "cost": "bajo"
+  },
+  {
+   "name": "Manguera EVAP desconectada o rota",
+   "detail": "Mangueras entre el tanque, el canister y el motor.",
+   "cost": "bajo"
+  },
+  {
+   "name": "Válvula de ventilación (vent) atascada abierta",
+   "detail": "Válvula del canister que no cierra.",
+   "cost": "medio"
+  },
+  {
+   "name": "Válvula de purga defectuosa",
+   "detail": "No abre o no cierra cuando corresponde.",
+   "cost": "bajo"
+  },
+  {
+   "name": "Canister roto",
+   "detail": "Golpes o daño en el filtro de carbón.",
+   "cost": "medio"
+  },
+  {
+   "name": "Cuello de llenado corroído",
+   "detail": "Óxido en la boca del tanque que impide el sellado.",
+   "cost": "medio"
+  }
+ ],
+ "checks": [
+  "Revisar la tapa del tanque: que sea la correcta, que el sello esté sano y que haga clic al cerrarla. Después, el código puede tardar varios días de manejo en apagarse.",
+  "Revisar visualmente mangueras y conexiones EVAP, sobre todo cerca del canister.",
+  "Con el escáner, activar las válvulas de purga y ventilación y comprobar que funcionen.",
+  "Prueba de humo del sistema EVAP en el taller para localizar la fuga."
+ ],
+ "stop": [
+  "Hueles a gasolina dentro o alrededor del auto, o ves gotas o charcos de combustible: no enciendas el motor y llévalo al taller en grúa."
+ ],
+ "related": [
+  "P0456",
+  "P0442",
+  "P0441",
+  "P0446"
+ ],
+ "faq": [
+  {
+   "q": "¿Una tapa de gasolina puede encender la luz de check engine?",
+   "a": "Sí. Es la causa más común de P0455. Ciérrala bien o cámbiala por una adecuada; la luz se apagará sola tras varios ciclos de manejo si era eso."
+  },
+  {
+   "q": "¿Cuánto tarda en apagarse la luz?",
+   "a": "La computadora necesita repetir la prueba EVAP, que solo hace en ciertas condiciones (motor frío, nivel de combustible intermedio). Pueden pasar varios días de uso normal."
+  },
+  {
+   "q": "¿El P0455 hace gastar más gasolina?",
+   "a": "Muy poco. El problema principal es que se escapan vapores contaminantes y el auto no pasa la verificación de emisiones."
+  }
+ ],
+ "brandNotes": [],
+ "sources": [
+  {
+   "name": "SAE J2012: Diagnostic Trouble Code Definitions (SAE International), definiciones genéricas de códigos OBD-II"
+  },
+  {
+   "name": "California Air Resources Board: On-Board Diagnostic II (OBD II) Systems Fact Sheet",
+   "url": "https://ww2.arb.ca.gov/resources/fact-sheets/board-diagnostic-ii-obd-ii-systems-fact-sheet"
+  }
+ ],
+ "reviewed": "2026-11-20"
+}

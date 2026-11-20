@@ -1,0 +1,45 @@
+---
+import Base from '../layouts/Base.astro';
+import { CONTACT_EMAIL, SITE_NAME } from '../data/site.js';
+
+const jsonLd = [{
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: SITE_NAME,
+  url: Astro.site?.href,
+  email: CONTACT_EMAIL,
+  description: 'Guía práctica en español para entender el auto: códigos OBD, testigos del tablero, medidas de llantas y aceite, con fuentes y fórmulas a la vista.',
+}];
+const crumbs = [{ name: 'Inicio', path: '/' }, { name: 'Sobre Tallerpedia', path: '/sobre-tallerpedia/' }];
+---
+<Base title="Sobre Tallerpedia y cómo trabajamos" description="Quién hace Tallerpedia, de dónde salen los datos, cómo tratamos la seguridad y cómo corregimos errores." crumbs={crumbs} jsonLd={jsonLd}>
+  <article class="about">
+    <h1>Sobre Tallerpedia y cómo trabajamos</h1>
+    <p class="lead">Tallerpedia es un sitio independiente para entender tu auto (carro, coche): qué significa un código de falla, una luz del tablero o la medida de una llanta, y qué conviene revisar. Está escrito en español para lectores de México, el resto de América Latina y España.</p>
+
+    <h2>De dónde salen los datos</h2>
+    <ul>
+      <li><strong>Códigos OBD-II:</strong> la descripción de cada código es la definición genérica de la norma SAE J2012. Las causas y el orden de diagnóstico son los habituales en el oficio; cuando algo depende de la marca, lo indicamos.</li>
+      <li><strong>Medidas de llantas:</strong> se calculan con fórmulas geométricas que mostramos en cada página. Las equivalencias se buscan entre medidas que realmente se venden.</li>
+      <li><strong>Datos de modelos</strong> (aceite, capacidades, presión de llantas, fusibles): solo del manual del propietario o de especificaciones oficiales, con el año y el motor. Si no tenemos el dato, no lo escribimos.</li>
+    </ul>
+
+    <h2>Reglas que seguimos</h2>
+    <ul>
+      <li><strong>La seguridad primero.</strong> En temas de frenos, dirección, bolsas de aire, sobrecalentamiento o fugas de combustible, cada página dice cuándo no conducir y acudir al taller.</li>
+      <li><strong>No damos instrucciones peligrosas o ilegales,</strong> como desactivar bolsas de aire, quitar el catalizador o anular sensores.</li>
+      <li><strong>No inventamos precios.</strong> El costo de una reparación se indica como bajo, medio o alto, porque varía mucho según el país y el auto.</li>
+      <li><strong>Fecha de revisión visible</strong> en cada página.</li>
+    </ul>
+
+    <h2>Errores y correcciones</h2>
+    <p>Si ves un dato que no cuadra, escríbenos a <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a> indicando la página y, si puedes, la fuente. Revisamos cada aviso.</p>
+
+    <h2>Independencia</h2>
+    <p>Tallerpedia no vende piezas ni reparaciones. En el futuro podrá incluir publicidad o enlaces de afiliados a tiendas; si lo hace, estarán señalados y no cambiarán lo que dicen las páginas.</p>
+  </article>
+</Base>
+<style>
+  .about { max-width: 46rem; }
+  .about ul { display: grid; gap: 0.5rem; padding-left: 1.2rem; }
+</style>

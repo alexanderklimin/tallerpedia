@@ -1,0 +1,148 @@
+---
+import Base from '../../layouts/Base.astro';
+import Icon from '../../components/Icon.astro';
+import catalog from '../../data/tires/common.json';
+import published from '../../data/tires/published.json';
+import { parseSize, sizeLabel, sizePath, sizeSlug, dimensions, equivalents, compare, DEFAULT_TOLERANCE } from '../../lib/tires.js';
+import { article, absolute, faqPage } from '../../lib/seo.js';
+import { fmt, signed } from '../../lib/format.js';
+
+export function getStaticPaths() {
+  return published.map((slug) => ({ params: { slug } }));
+}
+
+const REVIEWED = '2026-11-20';
+const size = parseSize(Astro.params.slug.replace(/-/g, ' '))!;
+const label = sizeLabel(size);
+const d = dimensions(size);
+const isPublished = (s: { width: number; aspect: number; rim: number }) => published.includes(sizeSlug(s));
+const eq = equivalents(size, catalog as [number, number, number][], { perRim: 8 });
+const sameRim = eq.filter((e) => e.size.rim === size.rim);
+const otherRim = eq.filter((e) => e.size.rim !== size.rim);
+const closest = [...eq].sort((a, b) => Math.abs(a.diffPct) - Math.abs(b.diffPct))[0];
+const rimNeighbours = (catalog as [number, number, number][])
+  .filter(([, , rim]) => rim === size.rim)
+  .map(([width, aspect, rim]) => ({ width, aspect, rim }))
+  .filter((s) => isPublished(s) && sizeSlug(s) !== sizeSlug(size));
+
+const title = `Llanta ${label}: medidas, equivalencias y qué significa`;
+const description = `Medida ${label}: ${fmt(d.diameter, 0)} mm (${fmt(d.diameterIn)}″) de diámetro, flanco de ${fmt(d.sidewall)} mm, ${d.revsPerKm} vueltas por km y medidas equivalentes calculadas.`;
+
+const faq = [
+  {
+    q: `¿Qué significa ${label}?`,
+    a: `${size.width} es el ancho de la llanta en milímetros, ${size.aspect} es la altura del flanco como porcentaje del ancho (${fmt(d.sidewall)} mm), R indica construcción radial y ${size.rim} es el diámetro del rin en pulgadas.`,
+  },
+  {
+    q: `¿Cuánto mide una llanta ${label} en pulgadas?`,
+    a: `Su diámetro total es de unos ${fmt(d.diameterIn)} pulgadas (${fmt(d.diameter, 0)} mm) y su ancho, de ${fmt(d.widthIn)} pulgadas. Son valores teóricos: cada marca y modelo varía unos milímetros.`,
+  },
+  {
+    q: `¿Qué rin lleva la llanta ${label}?`,
+    a: `Rin de ${size.rim} pulgadas. El ancho del rin debe estar dentro del rango que indica el fabricante de la llanta para el ancho ${size.width}.`,
+  },
+  ...(closest ? [{
+    q: `¿Qué medida es equivalente a ${label}?`,
+    a: `La más cercana de la lista es ${sizeLabel(closest.size)}, con una diferencia de diámetro de ${signed(closest.diffPct)} %. En la tabla de esta página verás ${eq.length} medidas comunes dentro de ±${DEFAULT_TOLERANCE} %. Antes de cambiar, comprueba que la medida esté permitida para tu auto y que los índices de carga y velocidad sean iguales o mayores.`,
+  }] : []),
+  {
+    q: `¿Qué presión lleva una llanta ${label}?`,
+    a: 'La presión no depende solo de la medida, sino del auto, la carga y el eje. Usa la que indica la etiqueta del marco de la puerta del conductor, la tapa del tanque o el manual. El número del flanco es la presión máxima de la llanta, no la recomendada.',
+  },
+];
+
+const url = absolute(sizePath(size));
+const jsonLd = [
+  article({ headline: title, description, url, reviewed: REVIEWED }),
+  faqPage(faq),
+].filter(Boolean) as Record<string, unknown>[];
+const crumbs = [{ name: 'Inicio', path: '/' }, { name: 'Llantas', path: '/llantas/' }, { name: label, path: sizePath(size) }];
+---
+<Base title={title} description={description} crumbs={crumbs} jsonLd={jsonLd} ogType="article">
+  <article class="tire">
+    <span class="eyebrow">Medida de llanta · rin {size.rim}</span>
+    <h1>Llanta {label}</h1>
+    <p class="lead">Una llanta (neumático, cubierta) {label} mide {size.width} mm de ancho y {fmt(d.diameter, 0)} mm de diámetro total, y va en un rin (aro) de {size.rim} pulgadas. Abajo tienes sus medidas reales, las medidas equivalentes y cómo cambia el velocímetro si cambias de medida.</p>
+
+    <div class="specs">
+      <div><span>Ancho</span><strong>{size.width} mm</strong><em>{fmt(d.widthIn)}″</em></div>
+      <div><span>Altura del flanco</span><strong>{fmt(d.sidewall)} mm</strong><em>{size.aspect} % del ancho</em></div>
+      <div><span>Rin</span><strong>{size.rim}″</strong><em>{fmt(d.rimMm, 0)} mm</em></div>
+      <div><span>Diámetro total</span><strong>{fmt(d.diameter, 0)} mm</strong><em>{fmt(d.diameterIn)}″</em></div>
+      <div><span>Circunferencia</span><strong>{fmt(d.circumference, 0)} mm</strong><em>{fmt(d.circumference / 1000, 2)} m por vuelta</em></div>
+      <div><span>Vueltas por km</span><strong>{d.revsPerKm}</strong><em>teóricas</em></div>
+    </div>
+
+    <h2>Qué significa {label}</h2>
+    <figure class="decode" aria-label={`Lectura de la medida ${label}`}>
+      <div><b>{size.width}</b><span>ancho en mm</span></div>
+      <div><b>/{size.aspect}</b><span>perfil: flanco = {size.aspect} % del ancho</span></div>
+      <div><b>R</b><span>construcción radial</span></div>
+      <div><b>{size.rim}</b><span>diámetro del rin en pulgadas</span></div>
+    </figure>
+    <p>En el flanco, después de la medida, verás dos datos más, por ejemplo <code>{label} 91V</code>. El número (91) es el <strong>índice de carga</strong>, el peso máximo por llanta, y la letra (V) es el <strong>índice de velocidad</strong>. No forman parte de la medida, pero al cambiar de llanta deben ser iguales o mayores que los que pide el fabricante del auto.</p>
+
+    <h2>Medidas equivalentes a {label}</h2>
+    <p>Las medidas comunes más cercanas (hasta 8 por rin) con un diámetro total dentro de ±{DEFAULT_TOLERANCE} % del de {label}, un margen práctico muy usado para no alterar demasiado el velocímetro, el ABS ni el control de estabilidad. La columna «A 100 km/h» indica la velocidad real cuando el velocímetro marca 100.</p>
+    {eq.length === 0 ? <p>No encontramos medidas comunes dentro de ese margen.</p> : (
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th scope="col">Medida</th><th scope="col">Rin</th><th scope="col" class="num">Diámetro</th><th scope="col" class="num">Diferencia</th><th scope="col" class="num">A 100 km/h</th></tr></thead>
+          <tbody>
+            {[...sameRim, ...otherRim].map((e) => (
+              <tr>
+                <th scope="row">{isPublished(e.size) ? <a href={sizePath(e.size)}>{sizeLabel(e.size)}</a> : sizeLabel(e.size)}</th>
+                <td>{e.size.rim}″{e.size.rim !== size.rim && <span class="muted"> ({e.size.rim > size.rim ? '+' : ''}{e.size.rim - size.rim})</span>}</td>
+                <td class="num">{fmt(dimensions(e.size).diameter, 0)} mm</td>
+                <td class="num">{signed(e.diffPct)} %</td>
+                <td class="num">{fmt(e.realAt100)} km/h</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    )}
+    <div class="note">
+      <p><strong>Antes de cambiar de medida.</strong> Que el diámetro coincida no basta: la llanta tiene que caber sin rozar en la suspensión ni en la carrocería al girar, el rin debe tener el ancho y el bombeo (offset) adecuados, y los índices de carga y velocidad deben ser iguales o mayores. Algunos países exigen que la medida figure en la ficha técnica o la homologación del vehículo (en España, por ejemplo, se revisa en la ITV). Si tienes dudas, consulta en una tienda de llantas o en el taller.</p>
+    </div>
+    <p><a class="button" href={`/herramientas/equivalencia-de-llantas/?de=${sizeSlug(size)}`}><Icon name="calculator" size={18} /> Comparar con otra medida</a></p>
+
+    <h2>Presión de inflado</h2>
+    <p>La medida {label} no tiene una presión «propia»: la misma llanta puede ir a presiones distintas según el auto, el peso y el eje. La correcta para tu vehículo está en la etiqueta del marco de la puerta del conductor (a veces en la tapa del tanque o la guantera) y en el manual del propietario. Mídela con las llantas frías. La cifra que aparece en el flanco (<em>max. press.</em>) es el máximo que soporta la llanta, no la presión recomendada.</p>
+
+    {rimNeighbours.length > 0 && (
+      <>
+        <h2>Otras medidas de rin {size.rim}</h2>
+        <ul class="tile-grid">
+          {rimNeighbours.map((s) => {
+            const c = compare(size, s);
+            return <li><a class="tile" href={sizePath(s)}><strong>{sizeLabel(s)}</strong><span>{fmt(dimensions(s).diameter, 0)} mm · {signed(c.diffPct)} % frente a {label}</span></a></li>;
+          })}
+        </ul>
+      </>
+    )}
+
+    <h2>Preguntas frecuentes</h2>
+    {faq.map(({ q, a }) => <details class="faq"><summary>{q}</summary><p>{a}</p></details>)}
+
+    <section class="sources">
+      <h2>Cómo calculamos</h2>
+      <p>Altura del flanco = ancho × perfil / 100. Diámetro total = rin × 25,4 + 2 × flanco. Circunferencia = π × diámetro. Vueltas por km = 1 000 000 / circunferencia (mm). Son medidas nominales: el diámetro real varía según la marca, el desgaste y la presión. La lista de equivalencias incluye solo medidas que se venden y buscan con frecuencia, con un rin igual, uno menor o hasta dos mayores.</p>
+      <p>Revisado: {REVIEWED}.</p>
+    </section>
+  </article>
+</Base>
+
+<style>
+  .tire { max-width: 50rem; }
+  .specs { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 9.5rem), 1fr)); gap: 0.5rem; margin: 1.25rem 0; }
+  .specs div { display: flex; flex-direction: column; padding: 0.7rem 0.85rem; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; }
+  .specs span { font-size: 0.8rem; color: var(--muted); font-weight: 600; }
+  .specs strong { font-family: var(--head); font-size: 1.35rem; font-weight: 800; font-variant-numeric: tabular-nums; }
+  .specs em { font-style: normal; font-size: 0.85rem; color: var(--muted); }
+  .decode { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.4rem; margin: 1rem 0; }
+  .decode div { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 0.7rem 0.4rem; border-radius: 12px; background: var(--navy); color: #fff; }
+  .decode b { font-family: var(--head); font-size: 1.6rem; font-weight: 800; color: var(--amber-bright); }
+  .decode span { font-size: 0.8rem; line-height: 1.3; color: #d6dfeb; }
+  @media (max-width: 30rem) { .decode { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+</style>

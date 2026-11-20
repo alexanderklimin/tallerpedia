@@ -1,0 +1,119 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Icon from '../../components/Icon.astro';
+import { SYSTEM_LABELS, SEVERITY, COST, codePath } from '../../data/systems.js';
+import { article, absolute, faqPage } from '../../lib/seo.js';
+
+export async function getStaticPaths() {
+  const codes = await getCollection('codes');
+  return codes.map((entry) => ({ params: { code: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const c = entry.data;
+const all = await getCollection('codes');
+const known = new Set(all.map((e) => e.data.code));
+const related = c.related.filter((code) => known.has(code)).map((code) => ({ code, entry: all.find((e) => e.data.code === code)! }));
+const sameSystem = all.filter((e) => e.data.system === c.system && e.data.code !== c.code && !c.related.includes(e.data.code)).slice(0, 6);
+
+const title = `Código ${c.code}: ${c.title}`;
+const description = c.summary.length > 155 ? c.summary.slice(0, c.summary.lastIndexOf(' ', 152)) + '…' : c.summary;
+const url = absolute(codePath(c.code));
+const jsonLd = [
+  article({ headline: title, description, url, reviewed: c.reviewed, citation: c.sources.map((s) => s.name) }),
+  faqPage(c.faq),
+].filter(Boolean) as Record<string, unknown>[];
+const crumbs = [{ name: 'Inicio', path: '/' }, { name: 'Códigos OBD', path: '/codigos-obd/' }, { name: c.code, path: codePath(c.code) }];
+---
+<Base title={title} description={description} crumbs={crumbs} jsonLd={jsonLd} ogType="article">
+  <article class="code-page">
+    <span class="eyebrow">{SYSTEM_LABELS[c.system]}</span>
+    <h1><span class="code">{c.code}</span> {c.title}</h1>
+    <p class="std"><span class="muted">Descripción estándar (SAE J2012):</span> <span lang="en">{c.sae}</span></p>
+    <p class="lead">{c.summary}</p>
+
+    <div class="verdict">
+      <div class={`sev ${c.severity}`}>
+        <Icon name={c.severity === 'high' ? 'octagon-alert' : c.severity === 'medium' ? 'triangle-alert' : 'info'} size={22} />
+        <div><span>{SEVERITY[c.severity].label}</span><strong>¿Puedo seguir manejando?</strong></div>
+      </div>
+      <p>{c.drive}</p>
+    </div>
+
+    <h2>Qué significa el código {c.code}</h2>
+    {c.meaning.map((p) => <p>{p}</p>)}
+
+    <h2>Síntomas</h2>
+    <ul class="checks">{c.symptoms.map((s) => <li>{s}</li>)}</ul>
+
+    <h2>Causas habituales</h2>
+    <p class="muted small">De las más frecuentes y fáciles de revisar a las menos frecuentes. El costo es orientativo: depende del auto, el país y el taller.</p>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th scope="col">Causa</th><th scope="col">Qué pasa</th><th scope="col" class="num">Costo</th></tr></thead>
+        <tbody>
+          {c.causes.map((cause) => (
+            <tr><th scope="row">{cause.name}</th><td>{cause.detail}</td><td class="num"><abbr title={COST[cause.cost].label}>{COST[cause.cost].mark}</abbr></td></tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Cómo se diagnostica</h2>
+    <p>El orden que suele seguir un mecánico, de lo más sencillo a lo más complejo. Sirve para entender el diagnóstico y hablar con el taller; varios pasos requieren escáner y herramientas.</p>
+    <ol class="steps">{c.checks.map((s) => <li>{s}</li>)}</ol>
+
+    <div class="alert" role="note">
+      <Icon name="shield-alert" size={24} />
+      <div>
+        <strong>Cuándo no conducir y acudir al taller</strong>
+        <ul>{c.stop.map((s) => <li>{s}</li>)}</ul>
+      </div>
+    </div>
+
+    {c.brandNotes.length > 0 && (
+      <>
+        <h2>Según la marca</h2>
+        <p class="muted small">Particularidades que varían según el fabricante. Confírmalas en el manual de servicio o boletines técnicos de tu modelo.</p>
+        <ul>{c.brandNotes.map((n) => <li>{n}</li>)}</ul>
+      </>
+    )}
+
+    {(related.length > 0 || sameSystem.length > 0) && (
+      <>
+        <h2>Códigos relacionados</h2>
+        <ul class="tile-grid">
+          {related.map(({ code, entry: r }) => <li><a class="tile" href={codePath(code)}><strong>{code}</strong><span>{r.data.title}</span></a></li>)}
+          {sameSystem.map((r) => <li><a class="tile" href={codePath(r.data.code)}><strong>{r.data.code}</strong><span>{r.data.title}</span></a></li>)}
+        </ul>
+      </>
+    )}
+
+    <h2>Preguntas frecuentes</h2>
+    {c.faq.map(({ q, a }) => <details class="faq"><summary>{q}</summary><p>{a}</p></details>)}
+
+    <section class="sources">
+      <h2>Fuentes</h2>
+      <ul>{c.sources.map((s) => <li>{s.url ? <a href={s.url} rel="noopener">{s.name}</a> : s.name}</li>)}</ul>
+      <p>La descripción del código es la definición genérica de OBD-II. Las causas y el orden de diagnóstico son orientativos: el procedimiento exacto lo indica el manual de servicio del fabricante. Revisado: {c.reviewed}.</p>
+    </section>
+  </article>
+</Base>
+
+<style>
+  .code-page { max-width: 50rem; }
+  h1 .code { display: inline-block; padding: 0 0.35em; margin-right: 0.15em; border-radius: 10px; background: var(--navy); color: var(--amber-bright); font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace; font-weight: 700; }
+  .std { font-size: 0.95rem; margin-bottom: 1rem; }
+  .verdict { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 1rem 1.15rem; margin: 1.25rem 0; }
+  .verdict p { margin: 0.6rem 0 0; }
+  .sev { display: flex; align-items: center; gap: 0.6rem; }
+  .sev div { display: flex; flex-direction: column; line-height: 1.25; }
+  .sev span { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
+  .sev strong { font-family: var(--head); font-size: 1.15rem; }
+  .sev.low { color: var(--green); } .sev.medium { color: var(--amber); } .sev.high { color: var(--red); }
+  .sev strong { color: var(--ink); }
+  .checks { padding-left: 1.2rem; }
+  .steps { padding-left: 1.4rem; display: grid; gap: 0.45rem; }
+  abbr { text-decoration: none; font-weight: 700; color: var(--amber); }
+</style>

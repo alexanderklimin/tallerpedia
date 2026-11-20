@@ -1,0 +1,82 @@
+---
+// GA4 (gtag.js) with Consent Mode v2, adapted from /opt/pets-es. Visitors in European time zones get
+// no Google script until they accept. Elsewhere analytics runs without advertising storage, and Google
+// still applies the denied default to EEA, UK and Swiss traffic by IP. Only on the production host.
+import { GA_ID, ANALYTICS_HOST } from '../data/site.js';
+
+const EEA = ['AT', 'BE', 'BG', 'HR', 'CY', 'CZ', 'DK', 'EE', 'FI', 'FR', 'DE', 'GR', 'HU', 'IS', 'IE', 'IT', 'LV', 'LI', 'LT', 'LU', 'MT', 'NL', 'NO', 'PL', 'PT', 'RO', 'SK', 'SI', 'ES', 'SE', 'GB', 'CH'];
+---
+{GA_ID && (
+  <>
+    <div class="consent" id="consent" role="region" aria-label="Preferencias de cookies" hidden>
+      <p>Usamos cookies de análisis para saber qué páginas son útiles y mejorar el sitio. <a href="/privacidad/">Política de privacidad y cookies</a></p>
+      <div class="consent-actions">
+        <button type="button" data-consent="no">Rechazar</button>
+        <button type="button" data-consent="yes">Aceptar</button>
+      </div>
+    </div>
+    <script is:inline define:vars={{ GA_ID, EEA, ANALYTICS_HOST }}>
+      (function () {
+        if (location.hostname !== ANALYTICS_HOST && location.hostname !== 'www.' + ANALYTICS_HOST) return;
+        var KEY = 'tp_consent';
+        var box = document.getElementById('consent');
+        var stored = null;
+        try { stored = localStorage.getItem(KEY); } catch (error) {}
+        var zone = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
+        var europe = /^Europe\//.test(zone) || ['Atlantic/Canary', 'Atlantic/Madeira', 'Atlantic/Azores', 'Atlantic/Reykjavik', 'Africa/Ceuta'].indexOf(zone) !== -1;
+        var loaded = false;
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { window.dataLayer.push(arguments); }
+
+        function load(granted) {
+          if (loaded) return;
+          loaded = true;
+          var denied = { ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied' };
+          gtag('consent', 'default', Object.assign({ analytics_storage: 'denied', region: EEA, wait_for_update: 500 }, denied));
+          gtag('consent', 'default', Object.assign({ analytics_storage: 'granted' }, denied));
+          if (granted !== null) gtag('consent', 'update', { analytics_storage: granted ? 'granted' : 'denied' });
+          gtag('js', new Date());
+          gtag('config', GA_ID);
+          var script = document.createElement('script');
+          script.async = true;
+          script.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+          document.head.appendChild(script);
+        }
+
+        if (stored === 'yes') load(true);
+        else if (stored !== 'no' && !europe) load(null);
+        if (!stored && europe) box.hidden = false;
+
+        box.addEventListener('click', function (event) {
+          var choice = event.target.getAttribute && event.target.getAttribute('data-consent');
+          if (!choice) return;
+          try { localStorage.setItem(KEY, choice); } catch (error) {}
+          if (choice === 'yes') {
+            load(true);
+            gtag('consent', 'update', { analytics_storage: 'granted' });
+          } else if (loaded) {
+            gtag('consent', 'update', { analytics_storage: 'denied' });
+          }
+          box.hidden = true;
+        });
+
+        document.querySelectorAll('[data-open-consent]').forEach(function (button) {
+          button.hidden = false;
+          button.addEventListener('click', function () { box.hidden = false; });
+        });
+      })();
+    </script>
+  </>
+)}
+
+<style is:global>
+  .consent { position: fixed; inset-inline: 0.75rem; bottom: 0.75rem; z-index: 20; display: flex; flex-wrap: wrap; gap: 0.6rem 1rem; align-items: center; max-width: 46rem; margin-inline: auto; padding: 0.9rem 1.1rem; border-radius: 18px; background: var(--navy); color: #fff; font-size: 0.925rem; line-height: 1.4; box-shadow: 0 10px 30px rgb(10 20 40 / 30%); }
+  .consent[hidden] { display: none; }
+  .consent p { flex: 1 1 16rem; margin: 0; }
+  .consent a { color: #fff; }
+  .consent-actions { display: grid; flex: 1 1 13rem; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+  .consent-actions button { min-height: 2.75rem; border: 2px solid #fff; border-radius: 999px; background: #fff; color: var(--navy); font: inherit; font-weight: 700; cursor: pointer; }
+  .consent-actions button[data-consent='no'] { background: transparent; color: #fff; }
+  .footer-button { padding: 0; border: 0; background: none; color: #fff; font: inherit; text-decoration: underline; cursor: pointer; min-height: 2.25rem; text-align: left; }
+  .footer-button[hidden] { display: none; }
+</style>

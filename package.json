@@ -1,0 +1,25 @@
+{
+  "name": "tallerpedia",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "test": "node --test src/lib/*.test.js",
+    "icons": "node scripts/icons.mjs"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "3.7.5",
+    "@fontsource-variable/archivo": "^5.2.0",
+    "astro": "7.4.12"
+  },
+  "devDependencies": {
+    "lucide-static": "^0.460.0",
+    "wrangler": "4.164.0"
+  }
+}

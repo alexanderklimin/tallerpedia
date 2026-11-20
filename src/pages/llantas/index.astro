@@ -1,0 +1,35 @@
+---
+import Base from '../../layouts/Base.astro';
+import published from '../../data/tires/published.json';
+import { parseSize, sizeLabel, sizePath, dimensions } from '../../lib/tires.js';
+import { fmt } from '../../lib/format.js';
+
+const sizes = published.map((slug) => parseSize(slug.replace(/-/g, ' '))!).sort((a, b) => a.rim - b.rim || a.width - b.width || a.aspect - b.aspect);
+const rims = [...new Set(sizes.map((s) => s.rim))];
+const crumbs = [{ name: 'Inicio', path: '/' }, { name: 'Llantas', path: '/llantas/' }];
+---
+<Base title="Medidas de llantas: cómo leerlas y equivalencias" description="Cómo leer la medida de una llanta (neumático), qué significa cada número y tablas de medidas por rin con diámetro y equivalencias calculadas." crumbs={crumbs}>
+  <h1>Medidas de llantas</h1>
+  <p class="lead">La medida de la llanta (neumático o cubierta) está en el flanco, por ejemplo <code>205/55 R16 91V</code>. Elige tu medida para ver sus dimensiones reales, las medidas equivalentes y qué cambia en el velocímetro.</p>
+  <p><a class="button" href="/herramientas/equivalencia-de-llantas/">Calculadora de equivalencias</a></p>
+
+  <h2>Cómo leer la medida</h2>
+  <ul>
+    <li><strong>205</strong>: ancho de la llanta en milímetros.</li>
+    <li><strong>55</strong>: perfil, la altura del flanco como porcentaje del ancho.</li>
+    <li><strong>R</strong>: construcción radial (casi todas las llantas actuales).</li>
+    <li><strong>16</strong>: diámetro del rin (aro) en pulgadas.</li>
+    <li><strong>91V</strong>: índice de carga (91) e índice de velocidad (V). Al cambiar de llanta deben ser iguales o mayores que los del fabricante del auto.</li>
+  </ul>
+
+  {rims.map((rim) => (
+    <>
+      <h2>Rin {rim}</h2>
+      <ul class="tile-grid">
+        {sizes.filter((s) => s.rim === rim).map((s) => (
+          <li><a class="tile" href={sizePath(s)}><strong>{sizeLabel(s)}</strong><span>Diámetro {fmt(dimensions(s).diameter, 0)} mm · {fmt(dimensions(s).diameterIn)}″</span></a></li>
+        ))}
+      </ul>
+    </>
+  ))}
+</Base>

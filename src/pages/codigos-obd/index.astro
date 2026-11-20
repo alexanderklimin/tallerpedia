@@ -1,0 +1,61 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { SYSTEM_LABELS, SEVERITY, PREFIX, codePath } from '../../data/systems.js';
+
+const codes = (await getCollection('codes')).sort((a, b) => a.data.code.localeCompare(b.data.code));
+const groups = Object.entries(SYSTEM_LABELS)
+  .map(([key, label]) => ({ key, label, items: codes.filter((c) => c.data.system === key) }))
+  .filter((g) => g.items.length > 0);
+const crumbs = [{ name: 'Inicio', path: '/' }, { name: 'Códigos OBD', path: '/codigos-obd/' }];
+---
+<Base title="Códigos OBD-II: qué significan y qué revisar" description="Códigos de falla OBD-II explicados en español: qué significa cada código, síntomas, causas habituales, cómo se diagnostica y cuándo no conducir." crumbs={crumbs}>
+  <h1>Códigos OBD-II</h1>
+  <p class="lead">Cuando se enciende la luz de check engine, la computadora del auto guarda un código de falla. Aquí tienes qué significa cada uno, sus causas habituales, el orden de diagnóstico y si puedes seguir manejando.</p>
+
+  <form class="finder" action="/codigos-obd/" method="get" data-code-finder>
+    <label for="code-input">Busca tu código</label>
+    <div>
+      <input id="code-input" name="c" inputmode="text" autocomplete="off" placeholder="Ej.: P0420" maxlength="5" pattern="[PpBbCcUu][0-9A-Fa-f]{4}" required />
+      <button class="button" type="submit">Buscar</button>
+    </div>
+    <p class="finder-msg" role="status" aria-live="polite"></p>
+  </form>
+
+  <h2>Cómo se lee un código</h2>
+  <p>Los códigos OBD-II tienen una letra y cuatro caracteres. La letra indica el sistema: <strong>P</strong> {PREFIX.P}, <strong>B</strong> {PREFIX.B}, <strong>C</strong> {PREFIX.C} y <strong>U</strong> {PREFIX.U}. Si el primer número es 0, el código es genérico (igual en todas las marcas); si es 1, es propio del fabricante y su significado cambia según la marca.</p>
+
+  {groups.map((g) => (
+    <>
+      <h2>{g.label}</h2>
+      <ul class="tile-grid">
+        {g.items.map((c) => (
+          <li><a class="tile" href={codePath(c.data.code)}><strong>{c.data.code}</strong><span>{c.data.title}</span><span class={`pill ${c.data.severity}`}>{SEVERITY[c.data.severity].label}</span></a></li>
+        ))}
+      </ul>
+    </>
+  ))}
+  <script type="application/json" id="code-list" set:html={JSON.stringify(codes.map((c) => c.data.code))} />
+</Base>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('[data-code-finder]');
+  const list: string[] = JSON.parse(document.getElementById('code-list')?.textContent || '[]');
+  const msg = form?.querySelector<HTMLElement>('.finder-msg');
+  form?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const code = (form.querySelector('input')?.value || '').trim().toUpperCase();
+    if (list.includes(code)) location.href = `/codigos-obd/${code.toLowerCase()}/`;
+    else if (msg) msg.textContent = `Todavía no tenemos una página para ${code}. Estamos añadiendo códigos poco a poco.`;
+  });
+</script>
+
+<style>
+  .finder { background: var(--navy); color: #fff; border-radius: var(--radius); padding: 1rem 1.15rem; margin: 1.25rem 0; max-width: 34rem; }
+  .finder label { display: block; font-weight: 700; margin-bottom: 0.4rem; }
+  .finder div { display: flex; gap: 0.5rem; }
+  .finder input { flex: 1; min-width: 0; min-height: 3rem; padding: 0 0.9rem; border-radius: 10px; border: 0; font: 700 1.2rem ui-monospace, Menlo, Consolas, monospace; text-transform: uppercase; }
+  .finder .button { background: var(--amber-bright); color: var(--navy-dark); }
+  .finder-msg { margin: 0.5rem 0 0; min-height: 1.2em; font-size: 0.95rem; }
+  .tile .pill { align-self: flex-start; margin-top: 0.4rem; }
+</style>

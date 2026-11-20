@@ -1,0 +1,85 @@
+{
+ "code": "P0174",
+ "sae": "System Too Lean (Bank 2)",
+ "title": "Mezcla demasiado pobre (banco 2)",
+ "system": "mezcla",
+ "severity": "medium",
+ "drive": "Sí, con precaución y por poco tiempo si el motor no tironea. Una mezcla pobre prolongada puede causar fallas de encendido y sobrecalentar la combustión. Si el motor jalonea o la luz parpadea, detente.",
+ "summary": "El código P0174 indica que el banco 2 de un motor V6 o V8 recibe demasiado aire o poco combustible y la computadora ya no puede compensarlo. Casi siempre aparece junto con P0171; entonces la causa suele ser común: fuga de vacío, sensor MAF o presión de combustible.",
+ "meaning": [
+  "La computadora corrige la mezcla con el ajuste de combustible. Si en el banco 2 ya agregó el máximo permitido y la sonda sigue indicando mezcla pobre, registra P0174.",
+  "Si solo aparece P0174 (sin P0171), la causa está en ese lado: una fuga de vacío en la admisión de ese banco, inyectores de ese lado o una fuga de escape antes de su sonda."
+ ],
+ "symptoms": [
+  "Luz de check engine.",
+  "Ralentí irregular.",
+  "Tirones o falta de fuerza al acelerar.",
+  "Fallas de encendido en casos avanzados."
+ ],
+ "causes": [
+  {
+   "name": "Fuga de vacío",
+   "detail": "Mangueras, juntas de admisión, PCV o booster del freno.",
+   "cost": "bajo"
+  },
+  {
+   "name": "Sensor MAF sucio o defectuoso",
+   "detail": "Mide menos aire del real. Afecta a los dos bancos.",
+   "cost": "medio"
+  },
+  {
+   "name": "Presión de combustible baja",
+   "detail": "Filtro, bomba o regulador. Afecta a los dos bancos.",
+   "cost": "medio"
+  },
+  {
+   "name": "Inyectores del banco 2",
+   "detail": "Obstruidos o sucios.",
+   "cost": "medio"
+  },
+  {
+   "name": "Fuga de escape antes de la sonda del banco 2",
+   "detail": "El aire que entra falsea la lectura.",
+   "cost": "bajo"
+  }
+ ],
+ "checks": [
+  "Ver si también hay P0171: si sí, buscar causas comunes (MAF, presión de combustible, fuga grande).",
+  "Comparar los ajustes de combustible de los dos bancos en ralentí y a 2500 rpm.",
+  "Buscar fugas de vacío, con máquina de humo si es necesario.",
+  "Revisar y limpiar el sensor MAF.",
+  "Medir la presión de combustible.",
+  "Revisar fugas de escape y la sonda del banco 2."
+ ],
+ "stop": [
+  "El motor jalonea, se apaga o la luz de check engine parpadea.",
+  "Hay olor a gasolina: posible fuga de combustible."
+ ],
+ "related": [
+  "P0171",
+  "P0172",
+  "P0430",
+  "P0300"
+ ],
+ "faq": [
+  {
+   "q": "¿Mi auto de 4 cilindros puede dar P0174?",
+   "a": "Normalmente no: los motores de 4 cilindros en línea solo tienen banco 1. P0174 aparece en motores en V."
+  },
+  {
+   "q": "¿Por qué salen juntos P0171 y P0174?",
+   "a": "Porque la causa afecta a todo el motor: el sensor MAF, la presión de combustible o una fuga de vacío en una parte común de la admisión."
+  }
+ ],
+ "brandNotes": [],
+ "sources": [
+  {
+   "name": "SAE J2012: Diagnostic Trouble Code Definitions (SAE International), definiciones genéricas de códigos OBD-II"
+  },
+  {
+   "name": "California Air Resources Board: On-Board Diagnostic II (OBD II) Systems Fact Sheet",
+   "url": "https://ww2.arb.ca.gov/resources/fact-sheets/board-diagnostic-ii-obd-ii-systems-fact-sheet"
+  }
+ ],
+ "reviewed": "2026-11-20"
+}

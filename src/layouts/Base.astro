@@ -1,0 +1,241 @@
+---
+import '@fontsource-variable/archivo';
+import Icon from '../components/Icon.astro';
+import Analytics from '../components/Analytics.astro';
+import { SITE_NAME } from '../data/site.js';
+
+interface Crumb { name: string; path: string }
+interface Props {
+  title: string;
+  description: string;
+  crumbs?: Crumb[];
+  jsonLd?: Record<string, unknown>[];
+  noindex?: boolean;
+  ogType?: 'website' | 'article';
+  image?: { src: string; alt: string; width: number; height: number };
+}
+
+const { title, description, crumbs = [], jsonLd = [], noindex = false, ogType = 'website' } = Astro.props;
+const image = Astro.props.image ?? { src: '/og-default.png', alt: 'Tallerpedia: guía práctica para tu auto', width: 1200, height: 630 };
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const absolute = (path: string) => new URL(path, Astro.site).href;
+const current = Astro.url.pathname;
+// Add the brand only when it still fits in ~65 characters (Google truncates longer titles).
+const branded = `${title} | ${SITE_NAME}`;
+const fullTitle = current === '/' || branded.length > 65 ? title : branded;
+
+const nav = [
+  { href: '/codigos-obd/', label: 'Códigos', icon: 'scan-line' },
+  { href: '/llantas/', label: 'Llantas', icon: 'circle-dot' },
+  { href: '/herramientas/', label: 'Herramientas', icon: 'calculator' },
+];
+
+const schemas = [...jsonLd];
+if (crumbs.length > 1) {
+  schemas.push({
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: crumbs.map((crumb, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: crumb.name,
+      item: absolute(crumb.path),
+    })),
+  });
+}
+---
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#16304f" />
+    {noindex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={canonical} />}
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:site_name" content={SITE_NAME} />
+    <meta property="og:locale" content="es_ES" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={absolute(image.src)} />
+    <meta property="og:image:width" content={String(image.width)} />
+    <meta property="og:image:height" content={String(image.height)} />
+    <meta property="og:image:alt" content={image.alt} />
+    <meta name="twitter:card" content="summary_large_image" />
+    {schemas.map((schema) => (
+      <script is:inline type="application/ld+json" set:html={JSON.stringify(schema).replace(/</g, '\\u003c')} />
+    ))}
+  </head>
+  <body>
+    <a class="skip" href="#contenido">Saltar al contenido</a>
+    <header class="site-header">
+      <div class="wrap bar">
+        <a class="brand" href="/" aria-label={`${SITE_NAME}, inicio`}>
+          <span class="brand-mark"><Icon name="cog" size={18} /></span>
+          <span>Taller<span class="brand-accent">pedia</span></span>
+        </a>
+        <nav aria-label="Principal">
+          {nav.map((item) => (
+            <a href={item.href} aria-current={current.startsWith(item.href) ? 'page' : undefined}>
+              <Icon name={item.icon as never} size={18} />
+              <span>{item.label}</span>
+            </a>
+          ))}
+        </nav>
+      </div>
+    </header>
+    <main id="contenido" class="wrap">
+      {crumbs.length > 1 && (
+        <nav class="crumbs" aria-label="Ruta de navegación">
+          <ol>
+            {crumbs.map((crumb, index) => (
+              <li>
+                {index < crumbs.length - 1
+                  ? <a href={crumb.path}>{crumb.name}</a>
+                  : <span aria-current="page">{crumb.name}</span>}
+              </li>
+            ))}
+          </ol>
+        </nav>
+      )}
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <div class="wrap footer-grid">
+        <div>
+          <p class="footer-brand"><Icon name="cog" size={18} /> {SITE_NAME}</p>
+          <p>Guía práctica para entender tu auto: códigos OBD, testigos del tablero, medidas de llantas y aceite. Información general: ante una falla de frenos, dirección o sobrecalentamiento, acude a un taller.</p>
+        </div>
+        <nav class="footer-links" aria-label="Secciones">
+          <a href="/codigos-obd/">Códigos OBD</a>
+          <a href="/llantas/">Llantas</a>
+          <a href="/herramientas/">Herramientas</a>
+          <a href="/sobre-tallerpedia/">Sobre Tallerpedia</a>
+          <a href="/contacto/">Contacto</a>
+          <a href="/privacidad/">Privacidad</a>
+          <a href="/aviso-legal/">Aviso legal</a>
+          <button type="button" class="footer-button" data-open-consent hidden>Cookies</button>
+        </nav>
+      </div>
+      <p class="wrap credits">Iconos: <a href="https://lucide.dev" rel="noopener">Lucide</a>. Tipografía: Archivo (SIL OFL).</p>
+    </footer>
+    <Analytics />
+  </body>
+</html>
+
+<style is:global>
+  :root {
+    color-scheme: light;
+    --bg: #f5f6f8;
+    --surface: #ffffff;
+    --ink: #141c26;
+    --muted: #5a6472;
+    --line: #e2e6ec;
+    --navy: #16304f;
+    --navy-dark: #0e2138;
+    --navy-soft: #e6edf6;
+    --accent: #1d5fa8;
+    --amber: #8a5a00;
+    --amber-bright: #f5a524;
+    --amber-soft: #fff2d9;
+    --red: #b3261e;
+    --red-soft: #fde8e5;
+    --green: #12703f;
+    --green-soft: #dcf4e5;
+    --radius: 14px;
+    --head: 'Archivo Variable', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; scroll-padding-top: 5rem; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 1.0625rem/1.65 system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif; }
+  .wrap { width: min(100%, 68rem); margin-inline: auto; padding-inline: 1rem; }
+  a { color: var(--accent); text-underline-offset: 0.18em; text-decoration-thickness: 1px; }
+  h1, h2, h3 { font-family: var(--head); line-height: 1.15; letter-spacing: -0.005em; word-spacing: 0.04em; color: var(--ink); }
+  h1 { font-size: clamp(2rem, 6vw, 3.1rem); font-weight: 800; margin: 0.4rem 0 0.5rem; }
+  h2 { font-size: clamp(1.4rem, 3.5vw, 1.75rem); font-weight: 750; margin: 2.5rem 0 0.6rem; }
+  h3 { font-size: 1.15rem; font-weight: 700; margin: 1.25rem 0 0.3rem; }
+  p { margin: 0 0 1rem; }
+  code, .mono { font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace; }
+  .icon { flex: none; vertical-align: -0.2em; }
+  .lead { font-size: 1.18rem; color: #2b3544; }
+  .muted { color: var(--muted); }
+  .small { font-size: 0.9rem; }
+  .eyebrow { display: block; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); }
+  .skip { position: absolute; left: -999px; }
+  .skip:focus { left: 1rem; top: 0.5rem; background: var(--surface); padding: 0.5rem 0.75rem; z-index: 10; }
+  :focus-visible { outline: 3px solid var(--amber-bright); outline-offset: 2px; }
+
+  .site-header { position: sticky; top: 0; z-index: 5; background: var(--navy); color: #fff; }
+  .bar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: 3.75rem; }
+  .brand { display: inline-flex; align-items: center; gap: 0.5rem; font-family: var(--head); font-weight: 800; font-size: 1.35rem; color: #fff; text-decoration: none; }
+  .brand-accent { color: var(--amber-bright); }
+  .brand-mark { display: inline-grid; place-items: center; width: 2rem; height: 2rem; border-radius: 9px; color: var(--navy); background: var(--amber-bright); }
+  .bar nav { display: flex; gap: 0.1rem; }
+  .bar nav a { display: inline-flex; align-items: center; gap: 0.35rem; min-height: 2.5rem; padding: 0.3rem 0.7rem; border-radius: 10px; color: #fff; font-weight: 600; font-size: 0.95rem; text-decoration: none; }
+  .bar nav a .icon { color: var(--amber-bright); }
+  .bar nav a:hover, .bar nav a[aria-current='page'] { background: rgb(255 255 255 / 12%); }
+  @media (max-width: 44rem) {
+    .bar { flex-direction: column; align-items: stretch; gap: 0.2rem; padding-block: 0.5rem 0.35rem; }
+    .bar .brand { align-self: center; }
+    .bar nav { display: grid; grid-template-columns: repeat(3, 1fr); }
+    .bar nav a { flex-direction: column; gap: 0.1rem; padding: 0.25rem 0.05rem; font-size: 0.72rem; min-height: 3rem; justify-content: center; }
+  }
+
+  main { padding-block: 1rem 4rem; }
+  .crumbs ol { display: flex; flex-wrap: wrap; gap: 0.2rem 0.5rem; list-style: none; margin: 0.25rem 0 0.5rem; padding: 0; font-size: 0.875rem; color: var(--muted); }
+  .crumbs a { color: var(--muted); }
+  .crumbs li + li::before { content: '›'; margin-right: 0.5rem; }
+
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.1rem 1.25rem; margin-block: 1.25rem; }
+  .pill { display: inline-flex; align-items: center; gap: 0.3rem; padding: 0.15rem 0.65rem; border-radius: 999px; font-size: 0.85rem; font-weight: 700; white-space: nowrap; background: var(--navy-soft); color: var(--navy); }
+  .pill.low { background: var(--green-soft); color: var(--green); }
+  .pill.medium { background: var(--amber-soft); color: var(--amber); }
+  .pill.high { background: var(--red-soft); color: var(--red); }
+  .button { display: inline-flex; align-items: center; gap: 0.45rem; min-height: 3rem; padding: 0.55rem 1.25rem; border-radius: 10px; background: var(--navy); color: #fff; font-weight: 700; text-decoration: none; border: 0; font-size: 1rem; cursor: pointer; }
+  .button:hover { background: var(--navy-dark); }
+
+  .alert { display: flex; gap: 0.75rem; padding: 1rem 1.1rem; border-radius: var(--radius); margin-block: 1.25rem; background: var(--red-soft); color: #5c1410; }
+  .alert .icon { color: var(--red); margin-top: 0.15rem; }
+  .alert strong { display: block; color: var(--red); font-family: var(--head); font-size: 1.05rem; }
+  .alert p, .alert ul { margin: 0.25rem 0 0; }
+  .alert ul { padding-left: 1.1rem; }
+  .note { padding: 0.9rem 1.1rem; border-radius: var(--radius); background: var(--amber-soft); color: #4a3300; margin-block: 1.25rem; }
+
+  .table-scroll { overflow-x: auto; border-radius: var(--radius); background: var(--surface); border: 1px solid var(--line); }
+  table { width: 100%; border-collapse: collapse; font-size: 0.975rem; }
+  th, td { text-align: left; padding: 0.65rem 0.85rem; border-bottom: 1px solid var(--line); vertical-align: top; }
+  tr:last-child td, tr:last-child th { border-bottom: 0; }
+  thead th { font-size: 0.78rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); font-weight: 700; }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+  .tile-grid { display: grid; gap: 0.6rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 14rem), 1fr)); list-style: none; padding: 0; margin: 1rem 0 0; }
+  .tile { display: flex; flex-direction: column; gap: 0.1rem; height: 100%; padding: 0.8rem 0.95rem; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; color: var(--ink); text-decoration: none; }
+  .tile:hover { border-color: var(--accent); }
+  .tile strong { font-family: var(--head); font-size: 1.1rem; font-weight: 750; line-height: 1.2; }
+  .tile span { color: var(--muted); font-size: 0.9rem; line-height: 1.35; }
+
+  .faq { border-bottom: 1px solid var(--line); padding: 0.85rem 0; }
+  .faq summary { font-weight: 650; cursor: pointer; list-style: none; display: flex; justify-content: space-between; gap: 1rem; }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after { content: '+'; color: var(--accent); font-weight: 700; font-size: 1.3rem; line-height: 1; }
+  .faq[open] summary::after { content: '–'; }
+  .faq p { margin: 0.6rem 0 0; color: #2b3544; }
+
+  .sources { font-size: 0.925rem; color: var(--muted); border-top: 1px solid var(--line); margin-top: 3rem; padding-top: 0.5rem; }
+  .sources h2 { font-size: 1.1rem; margin-top: 1rem; }
+  .sources ul { padding-left: 1.2rem; margin: 0.4rem 0; }
+  .site-footer { background: var(--navy-dark); color: #d6dfeb; font-size: 0.925rem; padding-block: 2rem 1rem; }
+  .footer-grid { display: grid; gap: 1rem 3rem; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); }
+  @media (max-width: 40rem) { .footer-grid { grid-template-columns: 1fr; } }
+  .site-footer p { margin: 0.3rem 0; max-width: 34rem; }
+  .footer-brand { display: flex; align-items: center; gap: 0.4rem; font-family: var(--head); font-weight: 800; font-size: 1.25rem; color: #fff; }
+  .footer-brand .icon { color: var(--amber-bright); }
+  .footer-links { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 1rem; align-content: start; }
+  .footer-links a { color: #fff; min-height: 2.25rem; display: inline-flex; align-items: center; }
+  .credits { font-size: 0.8rem; color: #9fb0c6; margin-top: 1.25rem; }
+  .credits a { color: inherit; }
+</style>

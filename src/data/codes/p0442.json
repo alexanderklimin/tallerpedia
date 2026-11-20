@@ -1,0 +1,80 @@
+{
+ "code": "P0442",
+ "sae": "Evaporative Emission System Leak Detected (small leak)",
+ "title": "Fuga pequeña en el sistema EVAP",
+ "system": "evap",
+ "severity": "low",
+ "drive": "Sí. No afecta al funcionamiento del motor. Revisa la tapa del tanque y, si hay olor a gasolina, no uses el auto.",
+ "summary": "El código P0442 indica una fuga pequeña en el sistema EVAP, el que retiene los vapores del tanque de gasolina. Las causas típicas son la tapa del tanque, una manguera agrietada o una válvula que no sella. No es una avería del motor, pero el auto contamina más y no pasará la verificación.",
+ "meaning": [
+  "Durante su prueba, la computadora cierra el sistema EVAP y comprueba si mantiene el vacío. Si lo pierde más rápido de lo normal, registra una fuga pequeña. Según el tamaño de la fuga, el código cambia: P0456 (muy pequeña), P0442 (pequeña) o P0455 (grande)."
+ ],
+ "symptoms": [
+  "Luz de check engine.",
+  "Posible olor leve a gasolina.",
+  "Falla en la verificación de emisiones."
+ ],
+ "causes": [
+  {
+   "name": "Tapa del tanque",
+   "detail": "Floja, dañada o no adecuada para el auto.",
+   "cost": "bajo"
+  },
+  {
+   "name": "Manguera EVAP agrietada",
+   "detail": "Goma reseca o mal conectada.",
+   "cost": "bajo"
+  },
+  {
+   "name": "Válvula de purga",
+   "detail": "No cierra del todo.",
+   "cost": "bajo"
+  },
+  {
+   "name": "Válvula de ventilación del canister",
+   "detail": "Con fuga o atascada.",
+   "cost": "medio"
+  },
+  {
+   "name": "Canister o cuello de llenado",
+   "detail": "Fisuras u óxido.",
+   "cost": "medio"
+  }
+ ],
+ "checks": [
+  "Revisar y cerrar bien la tapa del tanque.",
+  "Inspección visual de mangueras y conectores EVAP.",
+  "Probar con el escáner las válvulas de purga y ventilación.",
+  "Prueba de humo para localizar la fuga."
+ ],
+ "stop": [
+  "Hueles a gasolina dentro o alrededor del auto, o ves gotas o charcos de combustible: no enciendas el motor y llévalo al taller en grúa."
+ ],
+ "related": [
+  "P0456",
+  "P0455",
+  "P0441",
+  "P0446"
+ ],
+ "faq": [
+  {
+   "q": "¿El P0442 puede ser solo la tapa?",
+   "a": "Sí, es una causa frecuente. Revisa el sello y ciérrala bien; si era eso, la luz se apagará tras varios días de manejo."
+  },
+  {
+   "q": "¿Qué es el sistema EVAP?",
+   "a": "Es el sistema que evita que los vapores de gasolina del tanque salgan a la atmósfera: los guarda en un filtro de carbón y luego los quema en el motor."
+  }
+ ],
+ "brandNotes": [],
+ "sources": [
+  {
+   "name": "SAE J2012: Diagnostic Trouble Code Definitions (SAE International), definiciones genéricas de códigos OBD-II"
+  },
+  {
+   "name": "California Air Resources Board: On-Board Diagnostic II (OBD II) Systems Fact Sheet",
+   "url": "https://ww2.arb.ca.gov/resources/fact-sheets/board-diagnostic-ii-obd-ii-systems-fact-sheet"
+  }
+ ],
+ "reviewed": "2026-11-20"
+}

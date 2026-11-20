@@ -1,0 +1,84 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import published from '../data/tires/published.json';
+import { parseSize, sizeLabel, sizePath } from '../lib/tires.js';
+import { codePath } from '../data/systems.js';
+import { SITE_NAME } from '../data/site.js';
+
+const codes = (await getCollection('codes')).sort((a, b) => a.data.code.localeCompare(b.data.code));
+const topCodes = ['P0420', 'P0171', 'P0300', 'P0455', 'P0128', 'P0340'].map((c) => codes.find((e) => e.data.code === c)).filter(Boolean);
+const topSizes = published.slice(0, 8).map((s) => parseSize(s.replace(/-/g, ' '))!);
+const jsonLd = [{ '@context': 'https://schema.org', '@type': 'WebSite', name: SITE_NAME, url: Astro.site?.href, inLanguage: 'es' }];
+---
+<Base title="Tallerpedia: códigos OBD, llantas y guía práctica para tu auto" description="Qué significa cada código OBD, medidas y equivalencias de llantas y qué revisar en tu auto, explicado en español y con la seguridad primero." jsonLd={jsonLd}>
+  <section class="hero">
+    <h1>Entiende qué le pasa a tu auto</h1>
+    <p class="lead">Códigos de falla, medidas de llantas y qué revisar, explicado claro y con la seguridad primero.</p>
+    <div class="quick">
+      <form action="/codigos-obd/" class="q" data-go="code">
+        <label for="hc"><Icon name="scan-line" size={18} /> Código OBD</label>
+        <div><input id="hc" placeholder="P0420" maxlength="5" autocomplete="off" required /><button class="button" type="submit">Ver</button></div>
+      </form>
+      <form action="/herramientas/equivalencia-de-llantas/" class="q" data-go="tire">
+        <label for="ht"><Icon name="circle-dot" size={18} /> Medida de llanta</label>
+        <div><input id="ht" placeholder="205/55 R16" autocomplete="off" required /><button class="button" type="submit">Ver</button></div>
+      </form>
+    </div>
+  </section>
+
+  <h2>Códigos más consultados</h2>
+  <ul class="tile-grid">
+    {topCodes.map((c) => <li><a class="tile" href={codePath(c!.data.code)}><strong>{c!.data.code}</strong><span>{c!.data.title}</span></a></li>)}
+  </ul>
+  <p><a href="/codigos-obd/">Todos los códigos <Icon name="arrow-right" size={16} /></a></p>
+
+  <h2>Medidas de llantas</h2>
+  <ul class="tile-grid">
+    {topSizes.map((s) => <li><a class="tile" href={sizePath(s)}><strong>{sizeLabel(s)}</strong><span>Rin {s.rim} · equivalencias</span></a></li>)}
+  </ul>
+  <p><a href="/llantas/">Todas las medidas <Icon name="arrow-right" size={16} /></a> · <a href="/herramientas/equivalencia-de-llantas/">Calculadora de equivalencias</a></p>
+
+  <div class="alert" role="note">
+    <Icon name="shield-alert" size={24} />
+    <div>
+      <strong>Si falla algo de seguridad, no conduzcas</strong>
+      <p>Frenos que no responden, dirección dura o con juego, temperatura en rojo, olor a gasolina o la luz de check engine parpadeando: detente en un lugar seguro y acude a un taller o pide una grúa.</p>
+    </div>
+  </div>
+  <script type="application/json" id="home-codes" set:html={JSON.stringify(codes.map((c) => c.data.code))} />
+</Base>
+
+<script>
+  import { parseSize, sizeSlug } from '../lib/tires.js';
+  import published from '../data/tires/published.json';
+  const codes: string[] = JSON.parse(document.getElementById('home-codes')?.textContent || '[]');
+  document.querySelectorAll<HTMLFormElement>('[data-go]').forEach((form) => {
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const value = form.querySelector('input')!.value.trim();
+      if (form.dataset.go === 'code') {
+        const code = value.toUpperCase();
+        location.href = codes.includes(code) ? `/codigos-obd/${code.toLowerCase()}/` : '/codigos-obd/';
+      } else {
+        const size = parseSize(value);
+        if (!size) { location.href = '/llantas/'; return; }
+        const slug = sizeSlug(size);
+        location.href = published.includes(slug) ? `/llantas/${slug}/` : `/herramientas/equivalencia-de-llantas/?de=${slug}`;
+      }
+    });
+  });
+</script>
+
+<style>
+  .hero { padding: 1.5rem 0 0.5rem; }
+  .hero h1 { max-width: 18ch; }
+  .quick { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr)); gap: 0.75rem; margin-top: 1.25rem; }
+  .q { padding: 1rem 1.1rem; border-radius: var(--radius); background: var(--navy); color: #fff; }
+  .q label { display: flex; align-items: center; gap: 0.4rem; font-weight: 700; margin-bottom: 0.45rem; }
+  .q label .icon { color: var(--amber-bright); }
+  .q div { display: flex; gap: 0.5rem; }
+  .q input { flex: 1; min-width: 0; min-height: 3rem; padding: 0 0.85rem; border: 0; border-radius: 10px; font: 600 1.15rem system-ui, sans-serif; }
+  .q .button { background: var(--amber-bright); color: var(--navy-dark); }
+</style>

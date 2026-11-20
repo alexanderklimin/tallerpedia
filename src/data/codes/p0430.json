@@ -1,0 +1,89 @@
+{
+ "code": "P0430",
+ "sae": "Catalyst System Efficiency Below Threshold (Bank 2)",
+ "title": "Eficiencia del catalizador por debajo del umbral (banco 2)",
+ "system": "catalizador",
+ "severity": "medium",
+ "drive": "Normalmente sí, a corto plazo, si el motor funciona bien y la luz de check engine no parpadea. El auto contamina más y puede no pasar la verificación o la ITV. Conviene revisarlo pronto para que una posible falla de encendido no termine de dañar el catalizador.",
+ "summary": "El código P0430 indica que el catalizador del banco 2 ya no limpia los gases como debería. Aparece en motores V6 y V8, que tienen dos lados de escape. Las causas son las mismas que en P0420: catalizador gastado, sonda, fuga o una falla del motor que lo dañó.",
+ "meaning": [
+  "La computadora compara la sonda de oxígeno anterior y la posterior al catalizador del banco 2. Si la señal posterior empieza a oscilar como la anterior, el catalizador ya no almacena oxígeno y se registra el código.",
+  "El banco 2 es el lado del motor opuesto al cilindro número 1. Para saber cuál es en tu auto, consulta el manual de servicio: varía según el fabricante."
+ ],
+ "symptoms": [
+  "Luz de check engine encendida, a menudo sin otros síntomas.",
+  "Olor a azufre en el escape.",
+  "Pérdida de potencia o ruido metálico si el catalizador está obstruido o roto.",
+  "Falla en la verificación de emisiones o ITV."
+ ],
+ "causes": [
+  {
+   "name": "Catalizador del banco 2 desgastado",
+   "detail": "Pierde eficiencia con los años y los kilómetros.",
+   "cost": "alto"
+  },
+  {
+   "name": "Sonda de oxígeno posterior del banco 2",
+   "detail": "Una sonda lenta o defectuosa puede simular un catalizador malo.",
+   "cost": "medio"
+  },
+  {
+   "name": "Fuga de escape en el banco 2",
+   "detail": "Entra aire cerca de las sondas y la lectura se altera.",
+   "cost": "bajo"
+  },
+  {
+   "name": "Fallas de encendido o mezcla rica en ese lado",
+   "detail": "Combustible sin quemar recalienta y daña el catalizador.",
+   "cost": "medio"
+  },
+  {
+   "name": "Consumo de aceite o anticongelante",
+   "detail": "Contaminan el catalizador al quemarse.",
+   "cost": "alto"
+  }
+ ],
+ "checks": [
+  "Leer todos los códigos. Si hay fallas de encendido (P0300–P0308) o de mezcla (P0174, P0175), se corrigen primero.",
+  "Comparar en el escáner la sonda anterior y la posterior del banco 2 con el motor caliente.",
+  "Si también aparece P0420, revisar causas comunes a los dos lados: mezcla, combustible, consumo de aceite.",
+  "Buscar fugas de escape en el lado del banco 2.",
+  "Consultar boletines técnicos del modelo.",
+  "Sustituir el catalizador por uno homologado si las pruebas lo confirman."
+ ],
+ "stop": [
+  "La luz de check engine parpadea: indica fallas de encendido fuertes que pueden sobrecalentar y dañar el catalizador. Reduce la velocidad y lleva el auto al taller.",
+  "Pérdida fuerte de potencia u olor a quemado: el catalizador puede estar obstruido.",
+  "Quitar o vaciar el catalizador es ilegal en la mayoría de los países."
+ ],
+ "related": [
+  "P0420",
+  "P0174",
+  "P0300"
+ ],
+ "faq": [
+  {
+   "q": "¿Qué es el banco 2?",
+   "a": "En motores en V hay dos filas de cilindros. El banco 1 es la que contiene el cilindro 1 y el banco 2, la otra. Los motores de 4 cilindros en línea solo tienen banco 1, así que no dan P0430."
+  },
+  {
+   "q": "¿Tengo que cambiar los dos catalizadores?",
+   "a": "No necesariamente. Si solo aparece P0430, la falla está en el lado 2. Si salen P0420 y P0430 a la vez, conviene buscar una causa común antes de cambiar nada."
+  },
+  {
+   "q": "¿Puedo pasar la verificación con P0430?",
+   "a": "En general no: con la luz de check engine encendida o un código de emisiones activo, la mayoría de los programas de verificación e inspección rechazan el vehículo."
+  }
+ ],
+ "brandNotes": [],
+ "sources": [
+  {
+   "name": "SAE J2012: Diagnostic Trouble Code Definitions (SAE International), definiciones genéricas de códigos OBD-II"
+  },
+  {
+   "name": "California Air Resources Board: On-Board Diagnostic II (OBD II) Systems Fact Sheet",
+   "url": "https://ww2.arb.ca.gov/resources/fact-sheets/board-diagnostic-ii-obd-ii-systems-fact-sheet"
+  }
+ ],
+ "reviewed": "2026-11-20"
+}

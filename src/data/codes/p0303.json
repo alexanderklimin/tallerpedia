@@ -1,0 +1,91 @@
+{
+ "code": "P0303",
+ "sae": "Cylinder 3 Misfire Detected",
+ "title": "Falla de encendido en el cilindro 3",
+ "system": "encendido",
+ "severity": "high",
+ "drive": "Si la luz de check engine parpadea, no: reduce la velocidad y llévalo al taller, porque el combustible sin quemar puede sobrecalentar el catalizador. Con la luz fija y una vibración leve, puedes ir con suavidad hasta el taller, sin velocidad alta ni carga.",
+ "summary": "El código P0303 indica que el cilindro 3 no está quemando bien la mezcla. Lo más habitual es una bujía gastada o una bobina de encendido de ese cilindro; con menos frecuencia, el inyector o la compresión. Conviene repararlo pronto para proteger el catalizador.",
+ "meaning": [
+  "La computadora detecta, por la velocidad del cigüeñal, que el cilindro 3 pierde combustiones. El número de cilindro sigue el orden del fabricante: para saber dónde está el cilindro 3 en tu motor, consulta el manual. En muchos motores transversales de 4 cilindros, el 1 está del lado de la banda de distribución, pero no es una regla.",
+  "Como la falla se concentra en un cilindro, el diagnóstico suele ser más directo que con P0300: se revisan las piezas de ese cilindro y se intercambian con las de otro para ver si la falla «se mueve»."
+ ],
+ "symptoms": [
+  "Motor que tiembla en ralentí o jalonea al acelerar.",
+  "Pérdida de potencia.",
+  "Luz de check engine fija o parpadeando.",
+  "Olor a gasolina en el escape."
+ ],
+ "causes": [
+  {
+   "name": "Bujías gastadas o en mal estado",
+   "detail": "Electrodos desgastados, separación incorrecta o carbón. Es lo más frecuente en autos sin afinación reciente.",
+   "cost": "bajo"
+  },
+  {
+   "name": "Bobina de encendido o cable de bujía",
+   "detail": "Una bobina débil o un cable con fuga no da chispa suficiente.",
+   "cost": "medio"
+  },
+  {
+   "name": "Inyector sucio u obstruido",
+   "detail": "El cilindro recibe menos combustible del necesario.",
+   "cost": "medio"
+  },
+  {
+   "name": "Fuga de vacío cerca de ese cilindro",
+   "detail": "Junta de admisión o manguera próxima al cilindro.",
+   "cost": "bajo"
+  },
+  {
+   "name": "Baja compresión",
+   "detail": "Válvulas, anillos o junta de culata dañados. Es la causa menos frecuente y la más cara.",
+   "cost": "alto"
+  }
+ ],
+ "checks": [
+  "Revisar el contador de fallas del cilindro 3 en el escáner, si está disponible.",
+  "Sacar y revisar la bujía del cilindro 3: desgaste, carbón, aceite o humedad.",
+  "Intercambiar la bobina (o el cable) del cilindro 3 con la de otro cilindro. Si la falla pasa al otro cilindro (por ejemplo, aparece P0301), la bobina es la culpable.",
+  "Hacer lo mismo con la bujía si la bobina no era.",
+  "Revisar el inyector de ese cilindro (pulso eléctrico, resistencia, prueba de balance).",
+  "Prueba de compresión o de fugas si todo lo anterior está bien."
+ ],
+ "stop": [
+  "La luz de check engine parpadea: indica fallas de encendido fuertes que pueden sobrecalentar y dañar el catalizador. Reduce la velocidad y lleva el auto al taller.",
+  "El motor vibra fuerte, pierde potencia o se apaga.",
+  "Ves humo blanco, el nivel de anticongelante baja o la temperatura sube: puede ser la junta de culata."
+ ],
+ "related": [
+  "P0300",
+  "P0301",
+  "P0302",
+  "P0304",
+  "P0420"
+ ],
+ "faq": [
+  {
+   "q": "¿Dónde está el cilindro 3?",
+   "a": "Depende del motor. El fabricante numera los cilindros y lo indica en el manual de servicio; a veces también en el múltiple de admisión o en la tapa de punterías. No lo supongas: cambiar la pieza del cilindro equivocado es un error frecuente."
+  },
+  {
+   "q": "¿Puedo cambiar solo la bujía del cilindro 3?",
+   "a": "Se puede, pero si las demás tienen el mismo kilometraje, lo habitual es cambiar el juego completo en la afinación, con la bujía que indica el fabricante."
+  },
+  {
+   "q": "¿Es grave el código P0303?",
+   "a": "Sí, si se deja sin reparar: además de la pérdida de potencia, el combustible sin quemar daña el catalizador, que es una pieza cara."
+  }
+ ],
+ "brandNotes": [],
+ "sources": [
+  {
+   "name": "SAE J2012: Diagnostic Trouble Code Definitions (SAE International), definiciones genéricas de códigos OBD-II"
+  },
+  {
+   "name": "California Air Resources Board: On-Board Diagnostic II (OBD II) Systems Fact Sheet",
+   "url": "https://ww2.arb.ca.gov/resources/fact-sheets/board-diagnostic-ii-obd-ii-systems-fact-sheet"
+  }
+ ],
+ "reviewed": "2026-11-20"
+}

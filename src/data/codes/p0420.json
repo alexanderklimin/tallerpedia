@@ -1,0 +1,101 @@
+{
+ "code": "P0420",
+ "sae": "Catalyst System Efficiency Below Threshold (Bank 1)",
+ "title": "Eficiencia del catalizador por debajo del umbral (banco 1)",
+ "system": "catalizador",
+ "severity": "medium",
+ "drive": "Por lo general sí, a corto plazo, si el motor funciona con normalidad y la luz de check engine no parpadea. No es una avería inmediata, pero el auto contamina más, puede no pasar la verificación vehicular o la ITV y, si la causa es una falla de encendido, el catalizador se seguirá dañando.",
+ "summary": "El código P0420 indica que la computadora del motor detecta que el catalizador del banco 1 ya no limpia los gases de escape como debería. A menudo el catalizador está desgastado, pero también puede ser una sonda lambda, una fuga de escape u otra falla que lo dañó.",
+ "meaning": [
+  "El catalizador (convertidor catalítico) almacena oxígeno y transforma los gases contaminantes. La computadora (ECU o PCM) compara la señal de la sonda de oxígeno anterior al catalizador con la posterior. Con un catalizador sano, la sonda posterior da una señal bastante estable; si empieza a oscilar igual que la anterior, la computadora deduce que el catalizador ya no almacena oxígeno y registra P0420.",
+  "Banco 1 es el lado del motor donde está el cilindro número 1. En motores de 4 cilindros en línea solo hay un banco. Si el mismo problema aparece en el banco 2 (motores V6 o V8), el código es P0430."
+ ],
+ "symptoms": [
+  "Luz de check engine encendida, casi siempre sin otros síntomas.",
+  "Olor a huevo podrido (azufre) en el escape.",
+  "Pérdida de potencia o ruido metálico bajo el auto si el catalizador está obstruido o roto por dentro.",
+  "Falla en la verificación de emisiones o en la ITV."
+ ],
+ "causes": [
+  {
+   "name": "Catalizador desgastado",
+   "detail": "Con los años y los kilómetros pierde capacidad. Es la causa más común en autos con mucho recorrido.",
+   "cost": "alto"
+  },
+  {
+   "name": "Sonda de oxígeno posterior defectuosa o lenta",
+   "detail": "Si la sonda que vigila el catalizador falla, puede dar una lectura falsa de catalizador malo.",
+   "cost": "medio"
+  },
+  {
+   "name": "Fuga de escape",
+   "detail": "Una fuga antes o cerca de las sondas deja entrar aire y altera la lectura.",
+   "cost": "bajo"
+  },
+  {
+   "name": "Fallas de encendido o mezcla rica",
+   "detail": "Bujías, bobinas o inyectores en mal estado envían combustible sin quemar que recalienta y daña el catalizador. Si no se corrigen, un catalizador nuevo también se dañará.",
+   "cost": "medio"
+  },
+  {
+   "name": "Consumo de aceite o anticongelante",
+   "detail": "El aceite o el líquido refrigerante que se queman contaminan el catalizador.",
+   "cost": "alto"
+  },
+  {
+   "name": "Software de la computadora",
+   "detail": "Algunos fabricantes publicaron actualizaciones para corregir detecciones falsas en ciertos modelos.",
+   "cost": "bajo"
+  }
+ ],
+ "checks": [
+  "Leer todos los códigos guardados. Si también hay P0300–P0308, P0171 o P0172, se resuelven primero: son la causa más que la consecuencia.",
+  "Revisar en el escáner las señales de las dos sondas de oxígeno con el motor caliente. Si la posterior oscila casi igual que la anterior, el catalizador está agotado; si está plana o sin respuesta, puede fallar la sonda.",
+  "Buscar fugas en el múltiple y el tubo de escape, sobre todo entre el motor y la sonda posterior.",
+  "Revisar si el motor consume aceite o anticongelante (nivel que baja, humo azul o blanco).",
+  "Consultar boletines técnicos o actualizaciones de software del fabricante para ese modelo.",
+  "Si todo lo demás está bien, sustituir el catalizador por uno homologado para el vehículo."
+ ],
+ "stop": [
+  "La luz de check engine parpadea: indica fallas de encendido fuertes que pueden sobrecalentar y dañar el catalizador. Reduce la velocidad y lleva el auto al taller.",
+  "Notas pérdida fuerte de potencia, el auto no pasa de cierta velocidad o hay olor a quemado: el catalizador puede estar obstruido y sobrecalentarse.",
+  "Quitar o vaciar el catalizador es ilegal en la mayoría de los países y no soluciona el problema de fondo."
+ ],
+ "related": [
+  "P0430",
+  "P0300",
+  "P0171",
+  "P0172",
+  "P0136",
+  "P0141"
+ ],
+ "faq": [
+  {
+   "q": "¿Se borra el código P0420 solo?",
+   "a": "Puede apagarse si la computadora vuelve a medir una eficiencia correcta en varios ciclos de manejo, pero si la causa sigue ahí, regresa. Borrarlo con el escáner antes de una verificación no sirve: los monitores quedan «no listos» y se nota."
+  },
+  {
+   "q": "¿Un aditivo limpia catalizadores arregla el P0420?",
+   "a": "En un catalizador agotado, no. Puede ayudar muy poco si hay depósitos leves, pero ningún aditivo recupera el material activo perdido."
+  },
+  {
+   "q": "¿Cuánto cuesta reparar el código P0420?",
+   "a": "Depende de la causa: una fuga de escape o una sonda son reparaciones de costo bajo o medio; cambiar el catalizador suele ser lo más caro. Por eso conviene descartar primero lo demás."
+  },
+  {
+   "q": "¿Qué diferencia hay entre P0420 y P0430?",
+   "a": "Es la misma falla en distinto lado del motor: P0420 es el banco 1 y P0430, el banco 2 en motores V6 y V8."
+  }
+ ],
+ "brandNotes": [],
+ "sources": [
+  {
+   "name": "SAE J2012: Diagnostic Trouble Code Definitions (SAE International), definiciones genéricas de códigos OBD-II"
+  },
+  {
+   "name": "California Air Resources Board: On-Board Diagnostic II (OBD II) Systems Fact Sheet",
+   "url": "https://ww2.arb.ca.gov/resources/fact-sheets/board-diagnostic-ii-obd-ii-systems-fact-sheet"
+  }
+ ],
+ "reviewed": "2026-11-20"
+}

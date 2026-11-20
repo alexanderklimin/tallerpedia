@@ -1,0 +1,78 @@
+{
+ "code": "P0335",
+ "sae": "Crankshaft Position Sensor \"A\" Circuit",
+ "title": "Sensor de posición del cigüeñal «A»: falla de circuito",
+ "system": "sensores",
+ "severity": "high",
+ "drive": "No es recomendable. Sin la señal del cigüeñal, el motor puede apagarse en marcha o no arrancar. Si se apaga en carretera, perderás la asistencia de la dirección y del freno. Lleva el auto al taller cuanto antes o usa grúa.",
+ "summary": "El código P0335 indica que la computadora no recibe una señal válida del sensor de posición del cigüeñal (CKP). Es una de las señales más importantes del motor: sin ella no hay chispa ni inyección. Suele deberse al sensor, su cableado o su conector.",
+ "meaning": [
+  "El sensor del cigüeñal informa a la computadora de la velocidad y la posición del motor. Con ese dato decide cuándo dar chispa e inyectar combustible, y también calcula las revoluciones del tacómetro.",
+  "Si la señal desaparece, la mayoría de los motores se apagan o no arrancan."
+ ],
+ "symptoms": [
+  "El motor no arranca o tarda mucho.",
+  "Se apaga en marcha, sobre todo en caliente.",
+  "El tacómetro no se mueve al dar marcha.",
+  "Tirones y pérdida de potencia."
+ ],
+ "causes": [
+  {
+   "name": "Sensor del cigüeñal defectuoso",
+   "detail": "Es común que falle con el calor y vuelva a funcionar al enfriarse.",
+   "cost": "bajo"
+  },
+  {
+   "name": "Cableado o conector",
+   "detail": "Cables rozados, conector suelto o con aceite.",
+   "cost": "bajo"
+  },
+  {
+   "name": "Rueda dentada (reluctora) dañada",
+   "detail": "Dientes rotos o suciedad metálica en el sensor.",
+   "cost": "medio"
+  },
+  {
+   "name": "Separación incorrecta del sensor",
+   "detail": "Tras una reparación, el sensor quedó mal montado.",
+   "cost": "bajo"
+  }
+ ],
+ "checks": [
+  "Ver si el tacómetro se mueve al dar marcha: si no, falta señal del cigüeñal.",
+  "Revisar conector y cableado.",
+  "Medir la señal del sensor según el manual (resistencia en sensores inductivos, alimentación y señal en sensores Hall).",
+  "Revisar la rueda dentada y la limpieza del sensor.",
+  "Sustituir el sensor si se confirma la falla."
+ ],
+ "stop": [
+  "El motor se apaga en marcha: detente en un lugar seguro y no vuelvas a la vía si no arranca con normalidad. La dirección y el freno pierden asistencia sin motor.",
+  "Si el auto no arranca, usa grúa."
+ ],
+ "related": [
+  "P0340",
+  "P0016",
+  "P0300"
+ ],
+ "faq": [
+  {
+   "q": "¿Por qué el auto se apaga en caliente y arranca en frío?",
+   "a": "Es un síntoma clásico de un sensor de cigüeñal que falla con la temperatura. Al enfriarse vuelve a funcionar durante un tiempo."
+  },
+  {
+   "q": "¿Hay que reprogramar algo al cambiar el sensor?",
+   "a": "En algunos autos, sí: hay que hacer un aprendizaje de la variación del cigüeñal con escáner para que el sistema de detección de fallas de encendido funcione bien. Lo indica el manual del fabricante."
+  }
+ ],
+ "brandNotes": [],
+ "sources": [
+  {
+   "name": "SAE J2012: Diagnostic Trouble Code Definitions (SAE International), definiciones genéricas de códigos OBD-II"
+  },
+  {
+   "name": "California Air Resources Board: On-Board Diagnostic II (OBD II) Systems Fact Sheet",
+   "url": "https://ww2.arb.ca.gov/resources/fact-sheets/board-diagnostic-ii-obd-ii-systems-fact-sheet"
+  }
+ ],
+ "reviewed": "2026-11-20"
+}

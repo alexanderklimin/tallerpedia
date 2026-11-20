@@ -1,0 +1,98 @@
+{
+ "code": "P0300",
+ "sae": "Random/Multiple Cylinder Misfire Detected",
+ "title": "Falla de encendido aleatoria o en varios cilindros",
+ "system": "encendido",
+ "severity": "high",
+ "drive": "Con la luz de check engine parpadeando, no: reduce la velocidad y llévalo al taller lo antes posible, porque el combustible sin quemar sobrecalienta el catalizador. Si la luz está fija y el motor solo tiembla un poco, puedes manejar con suavidad hasta el taller, sin cargas ni velocidad alta.",
+ "summary": "El código P0300 indica que la computadora detecta fallas de combustión en varios cilindros o en cilindros que cambian. A diferencia de P0301–P0308, no señala un cilindro concreto, por eso suele apuntar a algo que afecta a todo el motor: bujías gastadas, mezcla pobre, combustible o compresión.",
+ "meaning": [
+  "La computadora vigila la velocidad del cigüeñal. Cada vez que un cilindro no quema bien, el cigüeñal se frena un instante. Si esto pasa por encima de un umbral, registra una falla de encendido (misfire). Cuando las fallas son en varios cilindros o al azar, el código es P0300; cuando se concentran en uno, es P030X, donde X es el número del cilindro.",
+  "Si además aparece un P0301, P0302, etc., ese cilindro es el punto de partida del diagnóstico."
+ ],
+ "symptoms": [
+  "Motor que tiembla o «jalonea», sobre todo en ralentí o al acelerar.",
+  "Pérdida de potencia.",
+  "Luz de check engine fija o parpadeando.",
+  "Mayor consumo y olor a gasolina en el escape."
+ ],
+ "causes": [
+  {
+   "name": "Bujías gastadas o en mal estado",
+   "detail": "Electrodos desgastados, separación incorrecta o carbón. Es lo más frecuente en autos sin afinación reciente.",
+   "cost": "bajo"
+  },
+  {
+   "name": "Bobina de encendido o cable de bujía",
+   "detail": "Una bobina débil o un cable con fuga no da chispa suficiente.",
+   "cost": "medio"
+  },
+  {
+   "name": "Mezcla pobre",
+   "detail": "Fuga de vacío, sensor MAF sucio o presión de combustible baja afectan a todos los cilindros (a menudo con P0171 o P0174).",
+   "cost": "medio"
+  },
+  {
+   "name": "Combustible de mala calidad o con agua",
+   "detail": "Puede causar fallas en varios cilindros a la vez.",
+   "cost": "bajo"
+  },
+  {
+   "name": "Distribución desfasada",
+   "detail": "Cadena o banda estirada o fuera de tiempo (a veces con P0016).",
+   "cost": "alto"
+  },
+  {
+   "name": "Baja compresión",
+   "detail": "Válvulas, anillos o junta de culata dañados. Es la causa menos frecuente y la más cara.",
+   "cost": "alto"
+  }
+ ],
+ "checks": [
+  "Leer todos los códigos: si hay P030X de un cilindro concreto, o P0171/P0174, se empieza por ahí.",
+  "Revisar en el escáner el contador de fallas por cilindro (misfire counters), si el auto lo ofrece.",
+  "Revisar bujías: estado, separación de electrodos y kilometraje desde la última afinación.",
+  "Revisar bobinas o cables; intercambiar una bobina de cilindro y ver si la falla cambia de cilindro.",
+  "Revisar ajustes de combustible, fugas de vacío y presión de combustible.",
+  "Prueba de compresión o de fugas de cilindro si lo anterior está bien."
+ ],
+ "stop": [
+  "La luz de check engine parpadea: indica fallas de encendido fuertes que pueden sobrecalentar y dañar el catalizador. Reduce la velocidad y lleva el auto al taller.",
+  "El motor vibra fuerte, pierde potencia o se apaga.",
+  "Ves humo blanco, el nivel de anticongelante baja o la temperatura sube: puede ser la junta de culata."
+ ],
+ "related": [
+  "P0301",
+  "P0302",
+  "P0303",
+  "P0304",
+  "P0171",
+  "P0420",
+  "P0016"
+ ],
+ "faq": [
+  {
+   "q": "¿Por qué parpadea la luz de check engine?",
+   "a": "Parpadea cuando las fallas de encendido son tan frecuentes que pueden dañar el catalizador. Es una señal para reducir la carga del motor y revisarlo cuanto antes."
+  },
+  {
+   "q": "¿Una afinación quita el P0300?",
+   "a": "Si la causa son bujías o cables gastados, sí. Si el problema es una fuga de vacío, el combustible o la compresión, la afinación sola no lo resolverá."
+  },
+  {
+   "q": "¿Qué diferencia hay entre P0300 y P0301?",
+   "a": "P0300 son fallas en varios cilindros o al azar; P0301 es una falla concentrada en el cilindro 1. Con un cilindro concreto, el diagnóstico es más directo."
+  }
+ ],
+ "brandNotes": [],
+ "sources": [
+  {
+   "name": "SAE J2012: Diagnostic Trouble Code Definitions (SAE International), definiciones genéricas de códigos OBD-II"
+  },
+  {
+   "name": "California Air Resources Board: On-Board Diagnostic II (OBD II) Systems Fact Sheet",
+   "url": "https://ww2.arb.ca.gov/resources/fact-sheets/board-diagnostic-ii-obd-ii-systems-fact-sheet"
+  }
+ ],
+ "reviewed": "2026-11-20"
+}

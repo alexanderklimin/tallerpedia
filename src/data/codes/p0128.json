@@ -1,0 +1,77 @@
+{
+ "code": "P0128",
+ "sae": "Coolant Thermostat (Coolant Temperature Below Thermostat Regulating Temperature)",
+ "title": "Termostato: el motor no alcanza la temperatura de trabajo",
+ "system": "enfriamiento",
+ "severity": "low",
+ "drive": "Sí, en general. El motor tarda en calentarse, consume más y la calefacción funciona peor, pero no es una avería inmediata. Si la aguja de temperatura sube por encima de lo normal o se pierde anticongelante, es otra situación: detente.",
+ "summary": "El código P0128 indica que el motor tarda demasiado en llegar a su temperatura normal de trabajo. Lo más habitual es un termostato que se quedó abierto; también puede ser el sensor de temperatura o un nivel bajo de anticongelante.",
+ "meaning": [
+  "El termostato mantiene el líquido refrigerante dentro del motor hasta que alcanza su temperatura de trabajo. La computadora calcula cuánto debería tardar en calentarse según la temperatura exterior y el uso. Si pasa ese tiempo y la temperatura sigue baja, registra P0128."
+ ],
+ "symptoms": [
+  "Luz de check engine.",
+  "La aguja de temperatura se queda baja o tarda mucho en subir.",
+  "La calefacción echa aire tibio.",
+  "Mayor consumo de combustible."
+ ],
+ "causes": [
+  {
+   "name": "Termostato abierto o débil",
+   "detail": "Es la causa más común: se queda abierto y el motor se enfría de más.",
+   "cost": "bajo"
+  },
+  {
+   "name": "Sensor de temperatura del refrigerante",
+   "detail": "Da una lectura más baja que la real.",
+   "cost": "bajo"
+  },
+  {
+   "name": "Nivel de anticongelante bajo",
+   "detail": "El sensor puede quedar sin líquido y leer mal.",
+   "cost": "bajo"
+  },
+  {
+   "name": "Ventilador del radiador encendido todo el tiempo",
+   "detail": "Relevador o sensor que lo mantiene funcionando.",
+   "cost": "bajo"
+  }
+ ],
+ "checks": [
+  "Con el motor frío, revisar el nivel de anticongelante (nunca abras el tapón del radiador con el motor caliente).",
+  "Comparar en el escáner la temperatura del refrigerante con la real (termómetro infrarrojo en la salida del termostato).",
+  "Comprobar si la manguera superior del radiador se calienta demasiado pronto: indicaría termostato abierto.",
+  "Ver si el ventilador del radiador arranca con el motor frío.",
+  "Cambiar el termostato por uno con la temperatura que indica el fabricante."
+ ],
+ "stop": [
+  "La aguja de temperatura sube por encima de la mitad, se enciende el testigo de temperatura o sale vapor: detente en un lugar seguro y apaga el motor.",
+  "El nivel de anticongelante baja de forma repetida: puede haber una fuga o una junta de culata dañada.",
+  "No abras el tapón del radiador ni del depósito con el motor caliente: el líquido sale a presión y quema."
+ ],
+ "related": [
+  "P0118",
+  "P0172"
+ ],
+ "faq": [
+  {
+   "q": "¿Puedo quitar el termostato para que no se caliente?",
+   "a": "No. Sin termostato el motor trabaja frío, consume más, se desgasta antes y el código no se apaga. Cambia el termostato por uno con la especificación del fabricante."
+  },
+  {
+   "q": "¿El P0128 aparece más en invierno?",
+   "a": "Sí, con frío el termostato débil se nota más porque el motor pierde calor más rápido."
+  }
+ ],
+ "brandNotes": [],
+ "sources": [
+  {
+   "name": "SAE J2012: Diagnostic Trouble Code Definitions (SAE International), definiciones genéricas de códigos OBD-II"
+  },
+  {
+   "name": "California Air Resources Board: On-Board Diagnostic II (OBD II) Systems Fact Sheet",
+   "url": "https://ww2.arb.ca.gov/resources/fact-sheets/board-diagnostic-ii-obd-ii-systems-fact-sheet"
+  }
+ ],
+ "reviewed": "2026-11-20"
+}

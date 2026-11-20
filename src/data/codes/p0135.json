@@ -1,0 +1,70 @@
+{
+ "code": "P0135",
+ "sae": "O2 Sensor Heater Circuit (Bank 1 Sensor 1)",
+ "title": "Circuito del calefactor de la sonda de oxígeno (banco 1, sensor 1)",
+ "system": "catalizador",
+ "severity": "low",
+ "drive": "Sí. La sonda tardará más en funcionar después de arrancar en frío, lo que puede subir un poco el consumo y las emisiones, pero no daña el motor a corto plazo.",
+ "summary": "El código P0135 indica una falla en la resistencia calefactora de la sonda de oxígeno anterior al catalizador (banco 1, sensor 1). Casi siempre se soluciona cambiando la sonda, pero antes hay que revisar el fusible y el conector.",
+ "meaning": [
+  "La sonda de oxígeno solo mide bien cuando está muy caliente. Por eso lleva una resistencia interna que la calienta tras el arranque. La computadora vigila esa resistencia y, si su consumo eléctrico no es el esperado, registra P0135.",
+  "Sensor 1 es la sonda anterior al catalizador. Banco 1 es el lado del cilindro 1."
+ ],
+ "symptoms": [
+  "Luz de check engine.",
+  "Ligero aumento del consumo, sobre todo en trayectos cortos.",
+  "Posible falla en la verificación de emisiones."
+ ],
+ "causes": [
+  {
+   "name": "Resistencia de la sonda quemada",
+   "detail": "Es la causa más común; requiere cambiar la sonda.",
+   "cost": "medio"
+  },
+  {
+   "name": "Fusible del calefactor",
+   "detail": "Un fusible fundido deja sin alimentación a la sonda.",
+   "cost": "bajo"
+  },
+  {
+   "name": "Conector o cableado",
+   "detail": "Cables quemados por el escape o conector corroído.",
+   "cost": "bajo"
+  }
+ ],
+ "checks": [
+  "Revisar el fusible del calefactor de la sonda (ver el diagrama de fusibles del manual).",
+  "Inspeccionar el conector y que los cables no toquen el escape.",
+  "Medir la resistencia del calefactor y la alimentación de 12 V según el manual.",
+  "Cambiar la sonda por una del tipo especificado para el motor."
+ ],
+ "stop": [
+  "Si el fusible se vuelve a fundir, hay un cortocircuito: no lo sustituyas por uno de mayor amperaje."
+ ],
+ "related": [
+  "P0141",
+  "P0171",
+  "P0420"
+ ],
+ "faq": [
+  {
+   "q": "¿Puedo poner cualquier sonda de oxígeno?",
+   "a": "Debe ser la indicada para tu motor: número de cables, tipo (convencional o de banda ancha) y conector. Una sonda incorrecta da lecturas erróneas."
+  },
+  {
+   "q": "¿Qué diferencia hay entre P0135 y P0141?",
+   "a": "P0135 es el calefactor de la sonda anterior al catalizador (sensor 1) y P0141 el de la sonda posterior (sensor 2)."
+  }
+ ],
+ "brandNotes": [],
+ "sources": [
+  {
+   "name": "SAE J2012: Diagnostic Trouble Code Definitions (SAE International), definiciones genéricas de códigos OBD-II"
+  },
+  {
+   "name": "California Air Resources Board: On-Board Diagnostic II (OBD II) Systems Fact Sheet",
+   "url": "https://ww2.arb.ca.gov/resources/fact-sheets/board-diagnostic-ii-obd-ii-systems-fact-sheet"
+  }
+ ],
+ "reviewed": "2026-11-20"
+}

@@ -1,0 +1,27 @@
+---
+import Base from '../layouts/Base.astro';
+import { CONTACT_EMAIL, LEGAL_UPDATED, OWNER_COUNTRY, OWNER_NAME } from '../data/site.js';
+---
+<Base title="Aviso legal" description="Titular de Tallerpedia, condiciones de uso, origen de la información y responsabilidad." crumbs={[{ name: 'Inicio', path: '/' }, { name: 'Aviso legal', path: '/aviso-legal/' }]}>
+  <article class="legal">
+    <h1>Aviso legal</h1>
+
+    <h2>Titular</h2>
+    <p>Tallerpedia (tallerpedia.com) es un sitio web de {OWNER_NAME}{OWNER_COUNTRY && `, con residencia en ${OWNER_COUNTRY}`}. Contacto: <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.</p>
+
+    <h2>Información general, no profesional</h2>
+    <p>Las páginas ofrecen información general sobre el funcionamiento, el mantenimiento y las fallas de los vehículos. No sustituyen el diagnóstico de un mecánico, el manual del propietario ni el manual de servicio del fabricante. Cada auto, motor y año de fabricación puede tener particularidades.</p>
+    <p>Las reparaciones de frenos, dirección, bolsas de aire (airbags), sistema de combustible y sistema eléctrico de alto voltaje deben hacerlas profesionales. Ante cualquier síntoma que afecte a la seguridad, no conduzcas el vehículo y acude a un taller.</p>
+    <p>Las calculadoras dan resultados nominales a partir de fórmulas publicadas en cada página. Antes de cambiar la medida de llantas o rines, comprueba que esté permitida para tu vehículo y en tu país.</p>
+    <p>Los costos de reparación que se mencionan son orientativos y relativos (bajo, medio, alto). Los precios reales dependen del país, el vehículo y el taller.</p>
+
+    <h2>Propiedad intelectual</h2>
+    <p>Los textos y el diseño de Tallerpedia son de su titular. Las marcas y modelos de vehículos se mencionan solo para identificarlos y pertenecen a sus propietarios. Los iconos son de Lucide (licencia ISC) y la tipografía Archivo se usa bajo licencia SIL Open Font.</p>
+
+    <h2>Enlaces</h2>
+    <p>Enlazamos a fuentes externas para que puedas comprobar la información. No controlamos su contenido. Si incluimos enlaces de afiliados, los señalaremos claramente.</p>
+
+    <p class="sources">Última actualización: {LEGAL_UPDATED}.</p>
+  </article>
+</Base>
+<style>.legal { max-width: 46rem; }</style>

@@ -1,0 +1,96 @@
+{
+ "code": "P0172",
+ "sae": "System Too Rich (Bank 1)",
+ "title": "Mezcla demasiado rica (banco 1)",
+ "system": "mezcla",
+ "severity": "medium",
+ "drive": "Por poco tiempo, sí, si el motor funciona sin tirones. Una mezcla rica gasta más combustible, ensucia bujías y, con el tiempo, daña el catalizador. Si sale humo negro abundante, hay olor fuerte a gasolina o la luz parpadea, no sigas manejando.",
+ "summary": "El código P0172 significa que el banco 1 recibe demasiado combustible o muy poco aire, y la computadora ya no puede reducir la mezcla. Las causas habituales son inyectores que gotean, presión de combustible alta, un sensor MAF o de temperatura que da datos falsos, o un filtro de aire muy tapado.",
+ "meaning": [
+  "La sonda de oxígeno detecta exceso de combustible y la computadora resta inyección mediante el ajuste de combustible. Cuando llega al límite negativo y la mezcla sigue rica, registra P0172. En el banco 2 el código es P0175."
+ ],
+ "symptoms": [
+  "Luz de check engine.",
+  "Mayor consumo de combustible.",
+  "Olor a gasolina en el escape o humo negro.",
+  "Ralentí irregular y bujías con hollín.",
+  "Posibles fallas de encendido."
+ ],
+ "causes": [
+  {
+   "name": "Inyector que gotea",
+   "detail": "Entra combustible aunque la computadora no lo pida.",
+   "cost": "medio"
+  },
+  {
+   "name": "Presión de combustible alta",
+   "detail": "Regulador de presión defectuoso o retorno obstruido.",
+   "cost": "medio"
+  },
+  {
+   "name": "Sensor MAF con lectura alta",
+   "detail": "Mide más aire del que entra y la computadora inyecta de más.",
+   "cost": "medio"
+  },
+  {
+   "name": "Sensor de temperatura del refrigerante",
+   "detail": "Si indica motor frío cuando está caliente, la computadora enriquece la mezcla.",
+   "cost": "bajo"
+  },
+  {
+   "name": "Filtro de aire muy tapado",
+   "detail": "Restringe la entrada de aire.",
+   "cost": "bajo"
+  },
+  {
+   "name": "Canister o válvula de purga EVAP",
+   "detail": "Una válvula de purga abierta todo el tiempo mete vapores de gasolina en la admisión.",
+   "cost": "bajo"
+  },
+  {
+   "name": "Aceite contaminado con gasolina",
+   "detail": "Los vapores del cárter pasan a la admisión por la ventilación PCV.",
+   "cost": "bajo"
+  }
+ ],
+ "checks": [
+  "Leer los ajustes de combustible y el resto de códigos.",
+  "Revisar el filtro de aire.",
+  "Comparar la lectura del sensor MAF con la especificación del fabricante.",
+  "Comprobar en el escáner que la temperatura del refrigerante coincida con la real del motor.",
+  "Medir la presión de combustible y si se mantiene al apagar el motor (fuga de inyectores).",
+  "Revisar la válvula de purga EVAP.",
+  "Oler el aceite del motor: si huele a gasolina, hay combustible en el cárter."
+ ],
+ "stop": [
+  "Olor fuerte a gasolina en el motor o bajo el auto: puede haber una fuga. No enciendas el motor.",
+  "La luz de check engine parpadea: indica fallas de encendido fuertes que pueden sobrecalentar y dañar el catalizador. Reduce la velocidad y lleva el auto al taller."
+ ],
+ "related": [
+  "P0171",
+  "P0174",
+  "P0420",
+  "P0128"
+ ],
+ "faq": [
+  {
+   "q": "¿El P0172 gasta más gasolina?",
+   "a": "Sí. Mezcla rica significa que el motor quema más combustible del necesario, y suele notarse en el rendimiento por litro o por galón."
+  },
+  {
+   "q": "¿Puede dañar el catalizador?",
+   "a": "Sí, si dura mucho tiempo: el combustible sin quemar recalienta el catalizador. Por eso a veces termina apareciendo P0420."
+  }
+ ],
+ "brandNotes": [],
+ "sources": [
+  {
+   "name": "SAE J2012: Diagnostic Trouble Code Definitions (SAE International), definiciones genéricas de códigos OBD-II"
+  },
+  {
+   "name": "California Air Resources Board: On-Board Diagnostic II (OBD II) Systems Fact Sheet",
+   "url": "https://ww2.arb.ca.gov/resources/fact-sheets/board-diagnostic-ii-obd-ii-systems-fact-sheet"
+  }
+ ],
+ "reviewed": "2026-11-20"
+}

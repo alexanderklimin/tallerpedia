@@ -1,0 +1,96 @@
+{
+ "code": "P0171",
+ "sae": "System Too Lean (Bank 1)",
+ "title": "Mezcla demasiado pobre (banco 1)",
+ "system": "mezcla",
+ "severity": "medium",
+ "drive": "Sí, con precaución y por poco tiempo si el motor no tironea ni pierde potencia. Una mezcla pobre prolongada calienta más la combustión y puede provocar fallas de encendido. Si el motor jalonea o la luz de check engine parpadea, no sigas manejando.",
+ "summary": "El código P0171 significa que el motor recibe demasiado aire o muy poco combustible en el banco 1, y la computadora ya no puede compensarlo. La causa más común es una entrada de aire no medido (fuga de vacío), seguida del sensor MAF sucio y problemas de presión de combustible.",
+ "meaning": [
+  "La computadora ajusta la cantidad de combustible con la señal de la sonda de oxígeno. Esa corrección se llama ajuste de combustible (fuel trim). Cuando la sonda indica mezcla pobre y la computadora ya agregó todo el combustible que se le permite (a menudo alrededor de +25 %, según el fabricante), registra P0171.",
+  "Si el mismo problema aparece en el banco 2 de un motor V, el código es P0174. Si salen ambos, la causa suele ser común: MAF, presión de combustible o una fuga grande."
+ ],
+ "symptoms": [
+  "Luz de check engine.",
+  "Ralentí inestable o que sube y baja.",
+  "Tirones o falta de fuerza al acelerar.",
+  "Fallas de encendido en casos avanzados.",
+  "A veces, silbido de una fuga de vacío con el motor encendido."
+ ],
+ "causes": [
+  {
+   "name": "Fuga de vacío",
+   "detail": "Mangueras agrietadas, juntas del múltiple de admisión, la válvula PCV o el booster del freno dejan entrar aire que el sensor no mide.",
+   "cost": "bajo"
+  },
+  {
+   "name": "Sensor MAF sucio o defectuoso",
+   "detail": "Si mide menos aire del que entra, la computadora inyecta poco combustible.",
+   "cost": "medio"
+  },
+  {
+   "name": "Presión de combustible baja",
+   "detail": "Filtro tapado, bomba débil o regulador defectuoso.",
+   "cost": "medio"
+  },
+  {
+   "name": "Inyectores sucios u obstruidos",
+   "detail": "Entregan menos combustible del que la computadora ordena.",
+   "cost": "medio"
+  },
+  {
+   "name": "Fuga de escape antes de la sonda",
+   "detail": "El aire que entra por la fuga engaña a la sonda.",
+   "cost": "bajo"
+  },
+  {
+   "name": "Sonda de oxígeno anterior defectuosa",
+   "detail": "Menos común: una sonda que lee pobre sin motivo.",
+   "cost": "medio"
+  }
+ ],
+ "checks": [
+  "Leer los ajustes de combustible (short y long term fuel trim) en ralentí y a 2500 rpm. Si son muy altos en ralentí y mejoran al acelerar, apunta a fuga de vacío; si empeoran con carga, apunta a combustible o MAF.",
+  "Revisar mangueras de vacío, el ducto entre el MAF y la mariposa, la válvula PCV y las juntas de admisión. Un taller puede usar una máquina de humo para encontrar fugas.",
+  "Revisar y, si procede, limpiar el sensor MAF con limpiador específico para MAF.",
+  "Medir la presión de combustible con manómetro y compararla con la especificación del fabricante.",
+  "Revisar fugas de escape antes de la sonda anterior.",
+  "Verificar la respuesta de la sonda de oxígeno anterior."
+ ],
+ "stop": [
+  "El motor jalonea, se apaga o la luz de check engine parpadea.",
+  "Hueles a gasolina: puede haber una fuga de combustible. No enciendas el motor y llévalo al taller."
+ ],
+ "related": [
+  "P0174",
+  "P0172",
+  "P0101",
+  "P0300",
+  "P0420"
+ ],
+ "faq": [
+  {
+   "q": "¿El P0171 puede ser por la tapa de la gasolina?",
+   "a": "No es lo habitual. Una tapa mal cerrada suele dar códigos del sistema EVAP (P0455, P0456, P0442), no de mezcla."
+  },
+  {
+   "q": "¿Limpiar el sensor MAF quita el P0171?",
+   "a": "A veces, si el sensor estaba sucio. Usa solo limpiador para MAF y no toques el elemento sensor. Si el código vuelve, hay que buscar fugas de vacío o revisar la presión de combustible."
+  },
+  {
+   "q": "¿Qué diferencia hay entre P0171 y P0174?",
+   "a": "P0171 es el banco 1 y P0174 el banco 2. Si salen los dos a la vez, la causa suele afectar a todo el motor: MAF, presión de combustible o una fuga de vacío grande."
+  }
+ ],
+ "brandNotes": [],
+ "sources": [
+  {
+   "name": "SAE J2012: Diagnostic Trouble Code Definitions (SAE International), definiciones genéricas de códigos OBD-II"
+  },
+  {
+   "name": "California Air Resources Board: On-Board Diagnostic II (OBD II) Systems Fact Sheet",
+   "url": "https://ww2.arb.ca.gov/resources/fact-sheets/board-diagnostic-ii-obd-ii-systems-fact-sheet"
+  }
+ ],
+ "reviewed": "2026-11-20"
+}

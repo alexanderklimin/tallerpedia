@@ -1,0 +1,74 @@
+{
+ "code": "P0113",
+ "sae": "Intake Air Temperature Sensor 1 Circuit High",
+ "title": "Sensor de temperatura del aire de admisión: señal alta",
+ "system": "sensores",
+ "severity": "low",
+ "drive": "Normalmente sí. La computadora usa un valor de reserva y el motor sigue funcionando, aunque puede consumir un poco más o arrancar peor en frío. Repáralo cuando puedas.",
+ "summary": "El código P0113 indica que la señal del sensor de temperatura del aire de admisión (IAT) está en voltaje alto, como si el aire estuviera muy frío o el sensor estuviera desconectado. Casi siempre es un conector suelto, un cable roto o el propio sensor.",
+ "meaning": [
+  "El sensor IAT mide la temperatura del aire que entra al motor. Es un termistor: su resistencia cambia con la temperatura. Un voltaje alto equivale a aire muy frío o a un circuito abierto, y la computadora lo considera fuera de rango.",
+  "En muchos autos el sensor IAT va integrado en el sensor MAF; en otros, en el ducto o el múltiple de admisión."
+ ],
+ "symptoms": [
+  "Luz de check engine.",
+  "A veces, arranque difícil en frío o ralentí irregular.",
+  "Ligero aumento del consumo."
+ ],
+ "causes": [
+  {
+   "name": "Conector desconectado o con corrosión",
+   "detail": "Muy común después de cambiar el filtro de aire o limpiar el MAF.",
+   "cost": "bajo"
+  },
+  {
+   "name": "Cable cortado o dañado",
+   "detail": "Circuito abierto entre el sensor y la computadora.",
+   "cost": "bajo"
+  },
+  {
+   "name": "Sensor IAT defectuoso",
+   "detail": "Termistor abierto.",
+   "cost": "bajo"
+  },
+  {
+   "name": "Sensor MAF con IAT integrado",
+   "detail": "Si van juntos, puede ser necesario cambiar la pieza completa.",
+   "cost": "medio"
+  }
+ ],
+ "checks": [
+  "Revisar que el conector del sensor IAT (o del MAF) esté bien conectado, sobre todo si se tocó el filtro de aire hace poco.",
+  "Leer la temperatura del aire en el escáner: un valor de alrededor de −40 °C con el motor frío indica circuito abierto.",
+  "Medir la resistencia del sensor y compararla con la tabla del fabricante.",
+  "Revisar el cableado entre el sensor y la computadora."
+ ],
+ "stop": [
+  "Si además el motor se apaga o no arranca, puede haber otra falla: revisa todos los códigos antes de seguir manejando."
+ ],
+ "related": [
+  "P0101",
+  "P0128"
+ ],
+ "faq": [
+  {
+   "q": "¿El P0113 puede ser porque cambié el filtro de aire?",
+   "a": "Sí, es frecuente: al mover el ducto de admisión el conector del sensor puede quedar suelto. Revísalo primero."
+  },
+  {
+   "q": "¿Qué lectura debería dar el sensor IAT?",
+   "a": "Con el motor frío, una temperatura parecida a la del ambiente. Un valor extremo y fijo, como −40 °C, suele indicar circuito abierto."
+  }
+ ],
+ "brandNotes": [],
+ "sources": [
+  {
+   "name": "SAE J2012: Diagnostic Trouble Code Definitions (SAE International), definiciones genéricas de códigos OBD-II"
+  },
+  {
+   "name": "California Air Resources Board: On-Board Diagnostic II (OBD II) Systems Fact Sheet",
+   "url": "https://ww2.arb.ca.gov/resources/fact-sheets/board-diagnostic-ii-obd-ii-systems-fact-sheet"
+  }
+ ],
+ "reviewed": "2026-11-20"
+}
