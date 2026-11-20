@@ -1,0 +1,66 @@
+{
+ "kind": "grade",
+ "order": 3,
+ "grade": "15W-40",
+ "name": "Aceite 15W-40",
+ "h1": "Aceite 15W-40: qué significa y para qué motores es",
+ "title": "Aceite 15W-40: qué significa y cuándo usarlo",
+ "short": "Clásico de motores diésel de trabajo: camiones, camionetas, maquinaria.",
+ "summary": "El 15W-40 es el aceite clásico de los motores diésel de trabajo: camiones, autobuses, maquinaria y muchas camionetas diésel. En frío se comporta como un grado 15W y en caliente como un SAE 40. Lo correcto es usarlo solo si el fabricante del motor lo indica, con la categoría que pide (por ejemplo API CK-4).",
+ "sections": [
+  {
+   "heading": "Para qué motores es",
+   "paragraphs": [
+    "Los fabricantes de motores diésel de servicio pesado especifican a menudo 15W-40 con una categoría API para diésel (CK-4 es la actual para la mayoría de estos motores) o una secuencia ACEA E. Algunas camionetas y autos diésel antiguos también lo admiten.",
+    "No es el aceite adecuado para un auto moderno de gasolina que pide 0W-20 o 5W-30, ni para diésel ligeros con filtro de partículas que exigen un aceite ACEA C."
+   ]
+  },
+  {
+   "heading": "Diésel: CK-4 y FA-4 no son lo mismo",
+   "paragraphs": [
+    "API CK-4 cubre los motores que pedían categorías anteriores (CJ-4, CI-4, CH-4). API FA-4, en cambio, es para ciertos motores diésel diseñados a partir de 2017 y no es compatible con los anteriores; FA-4 se fabrica en grados XW-30, así que un 15W-40 no será FA-4. Usa FA-4 solo si el fabricante lo permite."
+   ]
+  },
+  {
+   "heading": "Clima frío",
+   "paragraphs": [
+    "El grado 15W es más espeso en frío que un 10W o un 5W. En zonas con inviernos muy fríos, muchos fabricantes de motores diésel indican un 10W-30 o un 5W-40 por debajo de cierta temperatura. Consulta la tabla de viscosidad por temperatura de tu manual."
+   ]
+  }
+ ],
+ "faq": [
+  {
+   "q": "¿Puedo usar 15W-40 en un auto de gasolina?",
+   "a": "Solo si el manual lo admite y el aceite tiene una categoría API para gasolina (algunos 15W-40 llevan doble categoría, por ejemplo CK-4 y SN). En autos modernos que piden aceites finos, no."
+  },
+  {
+   "q": "¿Qué significa 15W-40?",
+   "a": "15W es el grado en frío y 40 la viscosidad a 100 °C. Es más espeso en frío que un 10W-40 y similar en caliente."
+  },
+  {
+   "q": "¿Qué es mejor para diésel, 15W-40 o 5W-40?",
+   "a": "El que indique el fabricante. Un 5W-40 fluye mejor en frío; un 15W-40 suele ser el estándar en motores de trabajo de clima templado. Lo decisivo es la categoría (CK-4, ACEA E o C, homologación de marca) que pide el manual."
+  }
+ ],
+ "sources": [
+  {
+   "name": "SAE J300: Engine Oil Viscosity Classification (SAE International)"
+  },
+  {
+   "name": "Anton Paar Wiki: SAE viscosity grades (tabla de SAE J300)",
+   "url": "https://wiki.anton-paar.com/en/sae-viscosity-grades/"
+  },
+  {
+   "name": "American Petroleum Institute (API): Oil Categories",
+   "url": "https://www.api.org/products-and-services/engine-oil/eolcs-categories-and-classifications/oil-categories"
+  },
+  {
+   "name": "ACEA: ACEA Oil Sequences 2021",
+   "url": "https://www.acea.auto/publication/acea-oil-sequences-2021/"
+  },
+  {
+   "name": "Manuales del propietario de los fabricantes: especificaciones de aceite de motor"
+  }
+ ],
+ "reviewed": "2026-11-20"
+}

@@ -71,4 +71,23 @@ const lights = defineCollection({
   }),
 });
 
-export const collections = { codes, lights };
+// Engine oil pages in src/data/oils/: SAE grade pages (computed J300 table added by the template) and guides.
+const oils = defineCollection({
+  loader: glob({ pattern: '*.json', base: './src/data/oils' }),
+  schema: z.object({
+    kind: z.enum(['grade', 'guide']),
+    order: z.number(),
+    grade: z.string().regex(/^\d{1,2}W-\d{2}$/).optional(),
+    name: z.string(),
+    h1: z.string(),
+    title: z.string().max(65),
+    short: z.string().max(90),
+    summary: z.string().min(80),
+    sections: z.array(section).min(2),
+    faq: z.array(z.object({ q: z.string(), a: z.string() })).min(2),
+    sources: z.array(source).min(2),
+    reviewed: isoDate,
+  }),
+});
+
+export const collections = { codes, lights, oils };

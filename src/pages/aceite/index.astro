@@ -1,0 +1,32 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+
+const oils = (await getCollection('oils')).sort((a, b) => a.data.order - b.data.order);
+const grades = oils.filter((o) => o.data.kind === 'grade');
+const guides = oils.filter((o) => o.data.kind === 'guide');
+const crumbs = [{ name: 'Inicio', path: '/' }, { name: 'Aceite de motor', path: '/aceite/' }];
+---
+<Base title="Aceite de motor: viscosidades y cómo elegir" description="Qué significan 5W-30, 10W-40 y las demás viscosidades, qué son las categorías API y ACEA y cómo elegir el aceite que pide tu auto." crumbs={crumbs}>
+  <h1>Aceite de motor</h1>
+  <p class="lead">Para elegir aceite necesitas dos datos del manual de tu auto: la <strong>viscosidad</strong> (por ejemplo 5W-30) y la <strong>especificación</strong> de calidad (API, ACEA o la del fabricante). Aquí te explicamos qué significa cada uno.</p>
+
+  <h2>Cómo se lee la etiqueta</h2>
+  <ul>
+    <li><strong>5W-30</strong>: viscosidad según la norma SAE J300. El número con W es el comportamiento en frío; el segundo, con el motor caliente.</li>
+    <li><strong>API SP / SQ</strong>: categoría de calidad para motores de gasolina (la letra S). Las de diésel empiezan por C (por ejemplo CK-4).</li>
+    <li><strong>ACEA A3/B4, C3, E8…</strong>: secuencias europeas. Las C son de bajo contenido en cenizas, para autos con filtro de partículas o catalizadores sensibles.</li>
+    <li><strong>Homologaciones de marca</strong> (dexos, VW 504 00, MB 229.51…): si tu manual pide una, busca ese código exacto en el envase.</li>
+  </ul>
+
+  <h2>Viscosidades</h2>
+  <ul class="tile-grid">
+    {grades.map((o) => <li><a class="tile" href={`/aceite/${o.id}/`}><strong>{o.data.grade}</strong><span>{o.data.short}</span></a></li>)}
+  </ul>
+
+  <h2>Guías</h2>
+  <ul class="tile-grid">
+    {guides.map((o) => <li><a class="tile" href={`/aceite/${o.id}/`}><strong>{o.data.name}</strong><span>{o.data.short}</span></a></li>)}
+    <li><a class="tile" href="/testigos/testigo-de-aceite/"><strong>Testigo de aceite</strong><span>Qué hacer si se enciende la aceitera roja.</span></a></li>
+  </ul>
+</Base>

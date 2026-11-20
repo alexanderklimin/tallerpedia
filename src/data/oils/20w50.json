@@ -1,0 +1,63 @@
+{
+ "kind": "grade",
+ "order": 4,
+ "grade": "20W-50",
+ "name": "Aceite 20W-50",
+ "h1": "Aceite 20W-50: qué significa y para qué motores es",
+ "title": "Aceite 20W-50: qué significa y cuándo usarlo",
+ "short": "Aceite espeso para motores antiguos, climas cálidos y algunas motos.",
+ "summary": "El 20W-50 es un aceite multigrado espeso: en frío fluye como un grado 20W y en caliente protege como un SAE 50. Lo indican algunos motores antiguos, ciertas motocicletas y fabricantes para climas muy cálidos. En motores modernos diseñados para aceites finos no es adecuado.",
+ "sections": [
+  {
+   "heading": "Para qué motores es",
+   "paragraphs": [
+    "Algunos manuales de autos de los años 80 y 90 lo admitían en climas cálidos. Varias marcas de motocicletas, sobre todo de motores grandes refrigerados por aire, también lo especifican. En América Latina se vende mucho para autos con muchos kilómetros.",
+    "En un motor moderno que pide 0W-20, 5W-30 o similar, el 20W-50 tarda más en llegar a todas las piezas en el arranque y puede afectar al funcionamiento de sistemas como la distribución variable."
+   ]
+  },
+  {
+   "heading": "¿Sirve para un motor que consume aceite?",
+   "paragraphs": [
+    "Un aceite más espeso puede reducir un poco el consumo, pero no corrige la causa: anillos, guías de válvula o retenes gastados, o una fuga. Si tu motor consume aceite, revisa la causa y sigue usando la viscosidad que permite el manual."
+   ]
+  },
+  {
+   "heading": "La viscosidad no basta: revisa la especificación",
+   "paragraphs": [
+    "Dos aceites con la misma viscosidad pueden ser muy distintos. Además del grado SAE, el manual indica una especificación de calidad que el aceite debe cumplir: una categoría API (por ejemplo API SP o SQ para gasolina, CK-4 para diésel pesado), una secuencia ACEA (A/B, C o E) o una homologación del fabricante (por ejemplo dexos, VW 504 00 o MB 229.51). Busca esos códigos en la etiqueta del envase.",
+    "Las categorías API más nuevas para gasolina cubren a las anteriores: si el manual pide API SN, un aceite API SP o SQ también sirve. Con las especificaciones europeas y las homologaciones de marca no siempre es así: usa la que pide tu manual."
+   ]
+  }
+ ],
+ "faq": [
+  {
+   "q": "¿Qué significa 20W-50?",
+   "a": "20W es el grado en frío: es más espeso al arrancar que un 15W o un 10W. 50 es la viscosidad a 100 °C, de las más altas en aceites de motor."
+  },
+  {
+   "q": "¿Puedo poner 20W-50 en lugar de 5W-30?",
+   "a": "No, salvo que el manual lo admita expresamente. Son viscosidades muy diferentes en frío y en caliente."
+  },
+  {
+   "q": "¿El 20W-50 es bueno para clima caliente?",
+   "a": "Algunos fabricantes lo permiten con temperaturas ambiente altas. La tabla de viscosidad por temperatura del manual es la que manda."
+  }
+ ],
+ "sources": [
+  {
+   "name": "SAE J300: Engine Oil Viscosity Classification (SAE International)"
+  },
+  {
+   "name": "Anton Paar Wiki: SAE viscosity grades (tabla de SAE J300)",
+   "url": "https://wiki.anton-paar.com/en/sae-viscosity-grades/"
+  },
+  {
+   "name": "American Petroleum Institute (API): Oil Categories",
+   "url": "https://www.api.org/products-and-services/engine-oil/eolcs-categories-and-classifications/oil-categories"
+  },
+  {
+   "name": "Manuales del propietario de los fabricantes: especificaciones de aceite de motor"
+  }
+ ],
+ "reviewed": "2026-11-20"
+}

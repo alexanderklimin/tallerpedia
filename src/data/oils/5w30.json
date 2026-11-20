@@ -1,0 +1,75 @@
+{
+ "kind": "grade",
+ "order": 1,
+ "grade": "5W-30",
+ "name": "Aceite 5W-30",
+ "h1": "Aceite 5W-30: qué significa y para qué motores es",
+ "title": "Aceite 5W-30: qué significa y cuándo usarlo",
+ "short": "Muy común en autos modernos de gasolina y diésel ligeros.",
+ "summary": "El 5W-30 es un aceite multigrado: fluye como un aceite de grado 5W en frío y protege como un SAE 30 con el motor caliente. Es de los más usados en autos de gasolina y diésel ligeros de las últimas décadas, pero solo debes usarlo si el manual de tu auto lo indica, con la especificación que pide.",
+ "sections": [
+  {
+   "heading": "Para qué autos es",
+   "paragraphs": [
+    "Muchos fabricantes especifican 5W-30 para motores de gasolina y diésel de autos y camionetas ligeras, sobre todo desde los años 2000. En autos europeos diésel con filtro de partículas suele pedirse un 5W-30 de bajo contenido en cenizas (ACEA C2 o C3, o la homologación de la marca).",
+    "Si tu manual pide otra viscosidad, como 0W-20 o 5W-20, no la sustituyas por 5W-30 sin que el manual lo permita para tu clima. Al revés también: un motor que pide 5W-30 no debe llevar un aceite más fino que el indicado."
+   ]
+  },
+  {
+   "heading": "La viscosidad no basta: revisa la especificación",
+   "paragraphs": [
+    "Dos aceites con la misma viscosidad pueden ser muy distintos. Además del grado SAE, el manual indica una especificación de calidad que el aceite debe cumplir: una categoría API (por ejemplo API SP o SQ para gasolina, CK-4 para diésel pesado), una secuencia ACEA (A/B, C o E) o una homologación del fabricante (por ejemplo dexos, VW 504 00 o MB 229.51). Busca esos códigos en la etiqueta del envase.",
+    "Las categorías API más nuevas para gasolina cubren a las anteriores: si el manual pide API SN, un aceite API SP o SQ también sirve. Con las especificaciones europeas y las homologaciones de marca no siempre es así: usa la que pide tu manual."
+   ]
+  },
+  {
+   "heading": "5W-30 frente a otras viscosidades",
+   "paragraphs": [
+    "Frente a un 10W-30, el 5W-30 fluye mejor en arranques en frío y protege igual en caliente. Frente a un 5W-40, en caliente es algo menos viscoso. Frente a un 0W-20, es más espeso en frío y en caliente. La tabla de abajo compara los límites de la norma SAE J300."
+   ]
+  }
+ ],
+ "faq": [
+  {
+   "q": "¿Qué significa 5W-30?",
+   "a": "El 5W indica el comportamiento en frío (la W es de winter, invierno): cuanto más bajo, mejor fluye al arrancar en frío. El 30 indica la viscosidad a 100 °C, con el motor caliente. Así, un 5W-30 se comporta como un aceite fino en frío y como un SAE 30 en caliente."
+  },
+  {
+   "q": "¿Puedo usar 5W-30 en lugar de 10W-40?",
+   "a": "Solo si el manual de tu auto admite 5W-30. Algunos manuales dan varias viscosidades según la temperatura ambiente; si 5W-30 está en la lista, puedes usarlo."
+  },
+  {
+   "q": "¿El 5W-30 es sintético?",
+   "a": "No necesariamente. La viscosidad no dice el tipo de base. Hay 5W-30 sintéticos y semisintéticos; el envase lo indica."
+  },
+  {
+   "q": "¿Puedo mezclar 5W-30 con otro aceite?",
+   "a": "Para completar el nivel en una emergencia, sí: los aceites de motor certificados son compatibles entre sí. Pero la mezcla puede no cumplir la especificación de tu motor, así que conviene hacer el cambio completo pronto."
+  }
+ ],
+ "sources": [
+  {
+   "name": "SAE J300: Engine Oil Viscosity Classification (SAE International)"
+  },
+  {
+   "name": "Anton Paar Wiki: SAE viscosity grades (tabla de SAE J300)",
+   "url": "https://wiki.anton-paar.com/en/sae-viscosity-grades/"
+  },
+  {
+   "name": "American Petroleum Institute (API): Oil Categories",
+   "url": "https://www.api.org/products-and-services/engine-oil/eolcs-categories-and-classifications/oil-categories"
+  },
+  {
+   "name": "MOTOR: API announces improved gasoline engine oil standards (API SQ e ILSAC GF-7, 2025)",
+   "url": "https://motor.com/2025/01/api-announces-improved-gasoline-engine-oil-standards"
+  },
+  {
+   "name": "ACEA: ACEA Oil Sequences 2021",
+   "url": "https://www.acea.auto/publication/acea-oil-sequences-2021/"
+  },
+  {
+   "name": "Manuales del propietario de los fabricantes: especificaciones de aceite de motor"
+  }
+ ],
+ "reviewed": "2026-11-20"
+}

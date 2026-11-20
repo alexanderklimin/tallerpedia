@@ -1,0 +1,69 @@
+{
+ "kind": "guide",
+ "order": 10,
+ "name": "Sintético vs. mineral",
+ "h1": "Aceite sintético, semisintético y mineral: diferencias",
+ "title": "Aceite sintético vs. mineral: diferencias y cuál usar",
+ "short": "Qué cambia entre las bases y cuándo importa.",
+ "summary": "La diferencia entre un aceite sintético, uno semisintético y uno mineral está en el aceite base. Los sintéticos fluyen mejor en frío y resisten mejor el calor y la oxidación, pero lo decisivo para tu auto es que el aceite tenga la viscosidad y la especificación que pide el manual.",
+ "sections": [
+  {
+   "heading": "Qué es cada uno",
+   "list": [
+    "Mineral: aceite base obtenido por refinación del petróleo. Es el más económico. Sirve si cumple la especificación que pide tu motor.",
+    "Semisintético: mezcla de bases minerales y sintéticas. Es un punto intermedio en precio y prestaciones.",
+    "Sintético: bases muy refinadas o fabricadas químicamente (por ejemplo hidrocraqueadas o PAO). Tienen moléculas más uniformes, por eso fluyen mejor en frío y resisten mejor las altas temperaturas."
+   ],
+   "paragraphs": []
+  },
+  {
+   "heading": "Cuándo importa",
+   "paragraphs": [
+    "Muchos aceites de baja viscosidad (0W-20, 0W-16, 5W-30 con especificaciones europeas) solo se pueden fabricar con bases sintéticas, así que si tu manual los pide, el tipo ya viene dado.",
+    "Los motores turbo, los de inyección directa y los que usan intervalos de cambio largos suelen exigir especificaciones que en la práctica cumplen aceites sintéticos.",
+    "En un motor antiguo que pide un aceite mineral, un sintético con la misma viscosidad y una categoría válida también sirve. No daña los retenes; como mucho, puede hacer visible una fuga que ya existía."
+   ]
+  },
+  {
+   "heading": "Intervalo de cambio",
+   "paragraphs": [
+    "El intervalo de cambio lo fija el fabricante del auto, en kilómetros o meses, según el uso (normal o severo). Un aceite sintético no permite alargar el intervalo por sí solo si el manual no lo indica. Muchos autos modernos tienen un indicador de mantenimiento que calcula el momento del cambio."
+   ]
+  }
+ ],
+ "faq": [
+  {
+   "q": "¿Puedo pasar de aceite mineral a sintético?",
+   "a": "Sí, si el sintético tiene la viscosidad y la especificación que pide tu manual. No hace falta ningún procedimiento especial."
+  },
+  {
+   "q": "¿Puedo volver de sintético a mineral?",
+   "a": "Sí, si el mineral cumple la especificación del manual. Si el fabricante exige un aceite que solo existe en sintético, no."
+  },
+  {
+   "q": "¿Se pueden mezclar sintético y mineral?",
+   "a": "Los aceites de motor con categoría API son compatibles entre sí, así que puedes completar el nivel en una emergencia. La mezcla tendrá prestaciones intermedias; en el siguiente cambio vuelve al aceite especificado."
+  },
+  {
+   "q": "¿El sintético hace que el motor consuma menos combustible?",
+   "a": "Puede ayudar un poco, sobre todo en aceites de baja viscosidad diseñados para ahorrar combustible, pero el efecto depende más de la viscosidad y la especificación que del tipo de base."
+  }
+ ],
+ "sources": [
+  {
+   "name": "American Petroleum Institute (API): Oil Categories",
+   "url": "https://www.api.org/products-and-services/engine-oil/eolcs-categories-and-classifications/oil-categories"
+  },
+  {
+   "name": "ACEA: ACEA Oil Sequences 2021",
+   "url": "https://www.acea.auto/publication/acea-oil-sequences-2021/"
+  },
+  {
+   "name": "SAE J300: Engine Oil Viscosity Classification (SAE International)"
+  },
+  {
+   "name": "Manuales del propietario de los fabricantes: especificaciones de aceite de motor"
+  }
+ ],
+ "reviewed": "2026-11-20"
+}

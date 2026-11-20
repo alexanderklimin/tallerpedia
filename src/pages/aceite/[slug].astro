@@ -1,0 +1,114 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Icon from '../../components/Icon.astro';
+import { parseGrade, gradeLabel, gradeSlug, gradeSpecs } from '../../lib/oils.js';
+import { fmt } from '../../lib/format.js';
+import { article, absolute, faqPage } from '../../lib/seo.js';
+
+export async function getStaticPaths() {
+  const oils = await getCollection('oils');
+  return oils.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const o = entry.data;
+const all = (await getCollection('oils')).sort((a, b) => a.data.order - b.data.order);
+const grade = o.grade ? parseGrade(o.grade) : null;
+const specs = grade ? gradeSpecs(grade) : null;
+const gradePages = all.filter((e) => e.data.kind === 'grade');
+// Comparison table: this grade plus the grades we have pages for, plus common neighbours.
+const compareList = ['0W-20', '5W-30', '10W-30', '5W-40', '10W-40', '15W-40', '20W-50']
+  .map((g) => parseGrade(g)!)
+  .concat(grade && !['0W-20', '5W-30', '10W-30', '5W-40', '10W-40', '15W-40', '20W-50'].includes(gradeLabel(grade)) ? [grade] : []);
+const pageFor = (g: { winter: number; hot: number }) => gradePages.find((e) => e.id === gradeSlug(g));
+const others = all.filter((e) => e.id !== entry.id);
+
+const path = `/aceite/${entry.id}/`;
+const description = o.summary.length > 155 ? o.summary.slice(0, o.summary.lastIndexOf(' ', 152)) + '…' : o.summary;
+const jsonLd = [
+  article({ headline: o.h1, description, url: absolute(path), reviewed: o.reviewed, citation: o.sources.map((s) => s.name) }),
+  faqPage(o.faq),
+].filter(Boolean) as Record<string, unknown>[];
+const crumbs = [{ name: 'Inicio', path: '/' }, { name: 'Aceite de motor', path: '/aceite/' }, { name: o.name, path }];
+---
+<Base title={o.title} description={description} crumbs={crumbs} jsonLd={jsonLd} ogType="article">
+  <article class="oil">
+    <span class="eyebrow">Aceite de motor</span>
+    <h1>{o.h1}</h1>
+    <p class="lead">{o.summary}</p>
+
+    {grade && specs && (
+      <>
+        <figure class="decode" aria-label={`Lectura del grado ${gradeLabel(grade)}`}>
+          <div><b>{grade.winter}W</b><span>grado en frío (W = winter): fluye en el arranque en frío</span></div>
+          <div><b>{grade.hot}</b><span>viscosidad con el motor caliente, a 100 °C</span></div>
+        </figure>
+        <div class="specs">
+          <div><span>Prueba de arranque en frío</span><strong>{specs.crankC} °C</strong><em>viscosidad máxima de arranque (CCS)</em></div>
+          <div><span>Prueba de bombeo en frío</span><strong>{specs.pumpC} °C</strong><em>sin bloqueo de bombeo (MRV)</em></div>
+          <div><span>Viscosidad a 100 °C</span><strong>{fmt(specs.kvMin)}–{fmt(specs.kvMax)}</strong><em>mm²/s (cSt)</em></div>
+          <div><span>Alta temperatura y cizalla</span><strong>≥ {fmt(specs.hths)}</strong><em>mPa·s a 150 °C (HTHS)</em></div>
+        </div>
+        <p class="muted small">Límites de la norma SAE J300 para el grado {gradeLabel(grade)}. Las temperaturas son las de las pruebas de laboratorio, no una temperatura mínima de uso garantizada: la que vale para tu auto está en la tabla de viscosidades del manual.</p>
+      </>
+    )}
+
+    <div class="note"><p><strong>Lo primero: el manual de tu auto.</strong> La viscosidad y la especificación correctas las fija el fabricante del motor. Están en el manual del propietario y, a veces, en la tapa del aceite. Esta página explica qué significa cada dato para que elijas bien en la tienda.</p></div>
+
+    {o.sections.map((s) => (
+      <>
+        <h2>{s.heading}</h2>
+        {s.paragraphs.map((p) => <p>{p}</p>)}
+        {s.list && (s.ordered ? <ol>{s.list.map((i) => <li>{i}</li>)}</ol> : <ul>{s.list.map((i) => <li>{i}</li>)}</ul>)}
+      </>
+    ))}
+
+    {grade && (
+      <>
+        <h2>Comparación con otras viscosidades</h2>
+        <div class="table-scroll">
+          <table>
+            <thead><tr><th scope="col">Grado</th><th scope="col" class="num">Arranque en frío</th><th scope="col" class="num">A 100 °C (mm²/s)</th></tr></thead>
+            <tbody>
+              {compareList.map((g) => {
+                const s = gradeSpecs(g); const p = pageFor(g); const me = gradeLabel(g) === gradeLabel(grade);
+                return <tr class={me ? 'me' : undefined}><th scope="row">{p && !me ? <a href={`/aceite/${p.id}/`}>{gradeLabel(g)}</a> : gradeLabel(g)}</th><td class="num">{s.crankC} °C</td><td class="num">{fmt(s.kvMin)}–{fmt(s.kvMax)}</td></tr>;
+              })}
+            </tbody>
+          </table>
+        </div>
+        <p class="muted small">Cuanto más bajo el número antes de la W, mejor fluye en frío. Cuanto más alto el segundo número, más espeso en caliente.</p>
+      </>
+    )}
+
+    <h2>Preguntas frecuentes</h2>
+    {o.faq.map(({ q, a }) => <details class="faq"><summary>{q}</summary><p>{a}</p></details>)}
+
+    <h2>Más sobre aceite</h2>
+    <ul class="tile-grid">
+      {others.map((e) => <li><a class="tile" href={`/aceite/${e.id}/`}><strong>{e.data.name}</strong><span>{e.data.short}</span></a></li>)}
+      <li><a class="tile" href="/testigos/testigo-de-aceite/"><strong>Testigo de aceite</strong><span>Qué hacer si se enciende la aceitera roja.</span></a></li>
+    </ul>
+
+    <section class="sources">
+      <h2>Fuentes</h2>
+      <ul>{o.sources.map((s) => <li>{s.url ? <a href={s.url} rel="noopener">{s.name}</a> : s.name}</li>)}</ul>
+      <p>No recomendamos marcas. Revisado: {o.reviewed}.</p>
+    </section>
+  </article>
+</Base>
+
+<style>
+  .oil { max-width: 50rem; }
+  .decode { display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem; margin: 1.25rem 0 0.75rem; }
+  .decode div { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 0.75rem 0.5rem; border-radius: 12px; background: var(--navy); color: #fff; }
+  .decode b { font-family: var(--head); font-size: 1.8rem; font-weight: 800; color: var(--amber-bright); }
+  .decode span { font-size: 0.85rem; line-height: 1.3; color: #d6dfeb; }
+  .specs { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 9rem), 1fr)); gap: 0.5rem; margin: 0.75rem 0; }
+  .specs div { display: flex; flex-direction: column; padding: 0.7rem 0.85rem; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; }
+  .specs span { font-size: 0.8rem; color: var(--muted); font-weight: 600; }
+  .specs strong { font-family: var(--head); font-size: 1.3rem; font-weight: 800; font-variant-numeric: tabular-nums; }
+  .specs em { font-style: normal; font-size: 0.82rem; color: var(--muted); }
+  tr.me th, tr.me td { background: var(--amber-soft); font-weight: 700; }
+</style>

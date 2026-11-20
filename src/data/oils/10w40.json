@@ -1,0 +1,71 @@
+{
+ "kind": "grade",
+ "order": 2,
+ "grade": "10W-40",
+ "name": "Aceite 10W-40",
+ "h1": "Aceite 10W-40: qué significa y para qué motores es",
+ "title": "Aceite 10W-40: qué significa y cuándo usarlo",
+ "short": "Habitual en motores de gasolina más antiguos, climas templados y muchas motos.",
+ "summary": "El 10W-40 es un aceite multigrado que en frío fluye como un grado 10W y en caliente protege como un SAE 40. Es frecuente en motores de gasolina más antiguos, en climas templados o cálidos y en muchas motocicletas. Úsalo solo si el manual de tu auto o moto lo permite.",
+ "sections": [
+  {
+   "heading": "Para qué motores es",
+   "paragraphs": [
+    "Muchos autos de gasolina de los años 90 y 2000 admitían 10W-40 en climas templados y cálidos, a menudo junto con otras viscosidades según la temperatura. Muchas motocicletas de cuatro tiempos también lo especifican.",
+    "En motores modernos que piden aceites más finos (0W-20, 5W-30) no conviene usar 10W-40: en frío tarda más en llegar a todas las piezas y puede afectar al consumo y a algunos sistemas que dependen de la presión del aceite."
+   ]
+  },
+  {
+   "heading": "Motos: el aceite de auto no siempre sirve",
+   "paragraphs": [
+    "En la mayoría de las motos, el mismo aceite lubrica el motor, la caja de cambios y el embrague húmedo. Para ellas existe la clasificación JASO MA o MA2. Algunos aceites de auto llevan aditivos reductores de fricción que pueden hacer patinar el embrague. Si tu moto pide JASO MA, usa un 10W-40 con esa clasificación."
+   ]
+  },
+  {
+   "heading": "La viscosidad no basta: revisa la especificación",
+   "paragraphs": [
+    "Dos aceites con la misma viscosidad pueden ser muy distintos. Además del grado SAE, el manual indica una especificación de calidad que el aceite debe cumplir: una categoría API (por ejemplo API SP o SQ para gasolina, CK-4 para diésel pesado), una secuencia ACEA (A/B, C o E) o una homologación del fabricante (por ejemplo dexos, VW 504 00 o MB 229.51). Busca esos códigos en la etiqueta del envase.",
+    "Las categorías API más nuevas para gasolina cubren a las anteriores: si el manual pide API SN, un aceite API SP o SQ también sirve. Con las especificaciones europeas y las homologaciones de marca no siempre es así: usa la que pide tu manual."
+   ]
+  }
+ ],
+ "faq": [
+  {
+   "q": "¿Qué significa 10W-40?",
+   "a": "10W es el grado en frío (W de winter): fluye en arranques en frío hasta temperaturas más altas que un 5W. 40 es la viscosidad a 100 °C, más espesa que un 30."
+  },
+  {
+   "q": "¿Es mejor 10W-40 para un motor con muchos kilómetros?",
+   "a": "Solo si el manual lo admite. Un aceite más espeso no repara un motor que consume aceite; si el consumo es alto, conviene buscar la causa."
+  },
+  {
+   "q": "¿Puedo usar 10W-40 en lugar de 5W-30?",
+   "a": "Solo si tu manual lo incluye como opción para tu clima. Si el fabricante pide 5W-30, especialmente con una especificación concreta, mantenla."
+  },
+  {
+   "q": "¿10W-40 es semisintético?",
+   "a": "Muchos 10W-40 son semisintéticos, pero también los hay minerales y sintéticos. La viscosidad y el tipo de base son cosas distintas."
+  }
+ ],
+ "sources": [
+  {
+   "name": "SAE J300: Engine Oil Viscosity Classification (SAE International)"
+  },
+  {
+   "name": "Anton Paar Wiki: SAE viscosity grades (tabla de SAE J300)",
+   "url": "https://wiki.anton-paar.com/en/sae-viscosity-grades/"
+  },
+  {
+   "name": "American Petroleum Institute (API): Oil Categories",
+   "url": "https://www.api.org/products-and-services/engine-oil/eolcs-categories-and-classifications/oil-categories"
+  },
+  {
+   "name": "ACEA: ACEA Oil Sequences 2021",
+   "url": "https://www.acea.auto/publication/acea-oil-sequences-2021/"
+  },
+  {
+   "name": "Manuales del propietario de los fabricantes: especificaciones de aceite de motor"
+  }
+ ],
+ "reviewed": "2026-11-20"
+}
