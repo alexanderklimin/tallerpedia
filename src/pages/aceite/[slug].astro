@@ -3,7 +3,6 @@ import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import OilScale from '../../components/OilScale.astro';
 import OilCan from '../../components/OilCan.astro';
-import OilCompare from '../../components/OilCompare.astro';
 import { parseGrade, gradeLabel, gradeSlug, gradeSpecs } from '../../lib/oils.js';
 import { fmt } from '../../lib/format.js';
 import { article, absolute, faqPage } from '../../lib/seo.js';
@@ -45,7 +44,6 @@ const crumbs = [{ name: 'Inicio', path: '/' }, { name: 'Aceite de motor', path: 
     </div>
     <p class="lead">{o.summary}</p>
 
-    {grade && <OilCompare a={gradeLabel(grade)} b={gradeLabel(grade) === '5W-30' ? '10W-40' : '5W-30'} title={`Compara ${gradeLabel(grade)} con otro aceite`} />}
 
     {grade && specs && (
       <>

@@ -72,7 +72,7 @@ const defaultTo = b ?? (() => {
           <text x="35" y="142" text-anchor="middle" class="cap2">ancho = ancho</text>
         </g>
       </svg>
-      <div class="legend"><span class="la"><i></i><b data-leg-a></b></span><span class="lb"><i></i><b data-leg-b></b></span></div>
+      <div class="legend"><span class="la"><i></i><b data-leg-a></b></span><span class="lb"><i></i><b data-leg-b></b></span><span class="ld">Diferencia: <b data-diff></b></span></div>
     </div>
     <p class="tt-verdict" data-verdict></p>
     <div class="table-scroll">
@@ -103,6 +103,25 @@ const defaultTo = b ?? (() => {
   import published from '../data/tires/published.json';
 
   type Size = { width: number; aspect: number; rim: number };
+  const MAX_DIA = Math.max(...(catalog as [number, number, number][]).map(([w, a, r]) => r * 25.4 + (2 * w * a) / 100));
+  const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // Animate numeric SVG attributes from their current value to the target.
+  function tween(el: Element, to: Record<string, number>, ms = 450) {
+    const from: Record<string, number> = {};
+    for (const key in to) from[key] = parseFloat(el.getAttribute(key) || '0');
+    const token = Symbol();
+    (el as any)._tw = token;
+    if (still) { for (const key in to) el.setAttribute(key, to[key].toFixed(2)); return; }
+    const t0 = performance.now();
+    const step = (now: number) => {
+      if ((el as any)._tw !== token) return;
+      const p = Math.min(1, (now - t0) / ms);
+      const e = 1 - Math.pow(1 - p, 3);
+      for (const key in to) el.setAttribute(key, (from[key] + (to[key] - from[key]) * e).toFixed(2));
+      if (p < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }
   const link = (s: Size) => (published.includes(sizeSlug(s)) ? `<a href="/llantas/${sizeSlug(s)}/">${sizeLabel(s)}</a>` : sizeLabel(s));
 
   document.querySelectorAll<HTMLElement>('[data-tire-tool]').forEach((root) => {
@@ -125,19 +144,22 @@ const defaultTo = b ?? (() => {
         ['Vueltas/km', String(da.revsPerKm), String(db.revsPerKm), signed(db.revsPerKm - da.revsPerKm, 0)],
         ['Velocímetro 100 = real, km/h', '100', `${fmt(c.realAt100)}`, signed(c.realAt100 - 100, 1)],
       ];
-      // Scale drawing: both wheels on the same ground line, cross-sections side by side.
-      const big = Math.max(da.diameter, db.diameter);
-      const k = 190 / big;
-      const place = (el: SVGCircleElement | null, dia: number) => { if (!el) return; el.style.r = String((dia * k) / 2); el.style.cy = String(205 - (dia * k) / 2); };
-      place(root.querySelector('[data-wheel-a]'), da.diameter);
-      place(root.querySelector('.tb'), db.diameter);
-      place(root.querySelector('.rb'), db.rimMm);
-      place(root.querySelector('[data-rim-a]'), da.rimMm);
+      // Scale drawing with a fixed scale (largest common size = 190 px), so a bigger tire looks bigger.
+      // Animated with requestAnimationFrame + setAttribute (CSS r/cy transitions do not work in Safari).
+      const k = 190 / MAX_DIA;
+      // Each tire stands on the ground line; its rim is drawn around the same centre.
+      const circle = (el: Element | null, dia: number, tireDia: number) => el && tween(el, { r: (dia * k) / 2, cy: 205 - (tireDia * k) / 2 });
+      circle(root.querySelector('[data-wheel-a]'), da.diameter, da.diameter);
+      circle(root.querySelector('.tb'), db.diameter, db.diameter);
+      circle(root.querySelector('.rb'), db.rimMm, db.diameter);
+      circle(root.querySelector('[data-rim-a]'), da.rimMm, da.diameter);
+      const rect = (el: Element | null, s: Size, sw: number) => { if (!el) return; const w = s.width * k; const h = sw * k; tween(el, { width: w, height: h, x: 35 - w / 2, y: 110 - h }); };
+      rect(root.querySelector('[data-sec-b]'), b, db.sidewall);
+      rect(root.querySelector('[data-sec-a]'), a, da.sidewall);
       const legA = root.querySelector('[data-leg-a]'); if (legA) legA.textContent = `Actual ${sizeLabel(a)} · ${fmt(da.diameter, 0)} mm`;
       const legB = root.querySelector('[data-leg-b]'); if (legB) legB.textContent = `Nueva ${sizeLabel(b)} · ${fmt(db.diameter, 0)} mm`;
-      const sec = (el: SVGRectElement | null, s: Size, sw: number) => { if (!el) return; const w = s.width * k; const h = sw * k; el.style.width = `${w}px`; el.style.height = `${h}px`; el.style.x = `${35 - w / 2}px`; el.style.y = `${110 - h}px`; };
-      sec(root.querySelector('[data-sec-b]'), b, db.sidewall);
-      sec(root.querySelector('[data-sec-a]'), a, da.sidewall);
+      const diffEl = root.querySelector('[data-diff]');
+      if (diffEl) diffEl.textContent = `${signed(c.diffMm, 0)} mm (${signed(c.diffPct, 1)} %)`;
       $('[data-compare]')!.innerHTML = rows.map((r) => `<tr><th scope="row">${r[0]}</th><td class="num">${r[1]}</td><td class="num">${r[2]}</td><td class="num">${r[3]}</td></tr>`).join('');
       const verdict = $('[data-verdict]')!;
       const same = c.diffMm === 0 && a.width === b.width;
@@ -191,7 +213,6 @@ const defaultTo = b ?? (() => {
   .tt-out { margin-top: 0.9rem; }
   .tt-vis { background: rgb(255 255 255 / 6%); border-radius: 12px; padding: 0.5rem; margin-bottom: 0.75rem; }
   .tt-vis svg { display: block; width: 100%; max-height: 15rem; }
-  .tt-vis circle, .tt-vis rect { transition: r 0.45s ease, cy 0.45s ease, width 0.45s ease, height 0.45s ease, x 0.45s ease, y 0.45s ease; }
   .ground { stroke: #5f7391; stroke-dasharray: 3 4; }
   .tb { fill: #0b1522; stroke: var(--amber-bright); stroke-width: 3; }
   .rb { fill: #c9d3df; }
@@ -206,9 +227,9 @@ const defaultTo = b ?? (() => {
   .la i { border-top: 2px dashed #fff; }
   .lb i { height: 0.7rem; border-radius: 3px; background: #0b1522; box-shadow: inset 0 0 0 2px var(--amber-bright); }
   .ra { fill: none; stroke: #fff; stroke-width: 1.5; stroke-dasharray: 4 4; }
+  .ld { color: #d6dfeb; } .ld b { color: var(--amber-bright); font-weight: 800; }
   .cap2 { fill: #8fa3bd; font: 500 10px system-ui, sans-serif; }
   .la { color: #fff; } .lb { color: var(--amber-bright); }
-  @media (prefers-reduced-motion: reduce) { .tt-vis circle, .tt-vis rect { transition: none; } }
   .tt-out .table-scroll { color: var(--ink); }
   .tt-out table { font-size: 0.9rem; }
   .tt-out th, .tt-out td { padding: 0.5rem 0.55rem; }
