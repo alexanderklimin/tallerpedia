@@ -1,0 +1,39 @@
+---
+// Generic motor oil jug (no brand) with the grade on the label; the oil inside sways gently.
+interface Props { grade?: string; size?: number; label?: string }
+const { grade = '', size = 150, label = 'Aceite de motor' } = Astro.props;
+const id = `oc${Math.random().toString(36).slice(2, 7)}`;
+---
+<svg class="oc" width={size} height={Math.round(size * 1.15)} viewBox="0 0 120 138" role="img" aria-label={grade ? `Envase de aceite ${grade}` : 'Envase de aceite de motor'}>
+  <defs>
+    <clipPath id={`${id}-body`}><path d="M18 30 Q18 22 26 22 H70 L84 8 H100 Q106 8 106 14 V126 Q106 132 100 132 H24 Q18 132 18 126 Z" /></clipPath>
+    <linearGradient id={`${id}-oil`} x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffcd5c" /><stop offset="1" stop-color="#c77800" /></linearGradient>
+    <linearGradient id={`${id}-shine`} x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0.35" /><stop offset="1" stop-color="#fff" stop-opacity="0" /></linearGradient>
+  </defs>
+  <!-- cap and handle -->
+  <rect x="84" y="0" width="18" height="9" rx="2" fill="#f5a524" />
+  <path d="M30 22 V12 Q30 6 36 6 H58 Q64 6 64 12 V22" fill="none" stroke="#2b4a70" stroke-width="7" />
+  <!-- body -->
+  <path d="M18 30 Q18 22 26 22 H70 L84 8 H100 Q106 8 106 14 V126 Q106 132 100 132 H24 Q18 132 18 126 Z" fill="#dfe7f0" stroke="#16304f" stroke-width="3" />
+  <g clip-path={`url(#${id}-body)`}>
+    <g class="oc-wave">
+      <path d="M-40 70 Q-25 64 -10 70 T20 70 T50 70 T80 70 T110 70 T140 70 T170 70 V140 H-40 Z" fill={`url(#${id}-oil)`} opacity="0.95" />
+    </g>
+    <rect x="22" y="26" width="16" height="100" fill={`url(#${id}-shine)`} />
+  </g>
+  <!-- label -->
+  <rect x="30" y="58" width="64" height="50" rx="6" fill="#16304f" />
+  <text x="62" y="76" text-anchor="middle" fill="#b9c6d8" font-size="8" font-family="system-ui, sans-serif" font-weight="600">{label.toUpperCase()}</text>
+  {grade
+    ? <text x="62" y="98" text-anchor="middle" fill="#f5a524" font-size={grade.length > 5 ? 13 : 16} font-family="Archivo Variable, system-ui, sans-serif" font-weight="800">{grade}</text>
+    : <path d="M62 84 c0 0 -7 8 -7 12 a7 7 0 0 0 14 0 c0 -4 -7 -12 -7 -12z" fill="#f5a524" />}
+  <!-- level marks -->
+  <path d="M100 40 h-5 M100 60 h-5 M100 80 h-5 M100 100 h-5" stroke="#16304f" stroke-width="1.5" opacity="0.5" />
+</svg>
+
+<style>
+  .oc { display: block; flex: none; filter: drop-shadow(0 10px 18px rgb(14 33 56 / 22%)); }
+  .oc-wave { animation: sway 4s ease-in-out infinite; }
+  @keyframes sway { 0%, 100% { transform: translateX(0) rotate(0deg); } 50% { transform: translateX(-30px) rotate(-2deg); } }
+  @media (prefers-reduced-motion: reduce) { .oc-wave { animation: none; } }
+</style>

@@ -2,6 +2,8 @@
 import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import OilScale from '../../components/OilScale.astro';
+import OilCan from '../../components/OilCan.astro';
+import OilCompare from '../../components/OilCompare.astro';
 import { parseGrade, gradeLabel, gradeSlug, gradeSpecs } from '../../lib/oils.js';
 import { fmt } from '../../lib/format.js';
 import { article, absolute, faqPage } from '../../lib/seo.js';
@@ -34,9 +36,16 @@ const crumbs = [{ name: 'Inicio', path: '/' }, { name: 'Aceite de motor', path: 
 ---
 <Base title={o.title} description={description} crumbs={crumbs} jsonLd={jsonLd} ogType="article">
   <article class="oil">
-    <span class="eyebrow">Aceite de motor</span>
-    <h1>{o.h1}</h1>
+    <div class="oil-head">
+      <div>
+        <span class="eyebrow">Aceite de motor</span>
+        <h1>{o.h1}</h1>
+      </div>
+      <OilCan grade={o.grade} size={110} label={o.kind === 'grade' ? 'SAE' : 'Aceite'} />
+    </div>
     <p class="lead">{o.summary}</p>
+
+    {grade && <OilCompare a={gradeLabel(grade)} b={gradeLabel(grade) === '5W-30' ? '10W-40' : '5W-30'} title={`Compara ${gradeLabel(grade)} con otro aceite`} />}
 
     {grade && specs && (
       <>
@@ -102,6 +111,8 @@ const crumbs = [{ name: 'Inicio', path: '/' }, { name: 'Aceite de motor', path: 
 
 <style>
   .oil { max-width: 50rem; }
+  .oil-head { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+  @media (max-width: 30rem) { .oil-head :global(.oc) { width: 76px; height: 87px; } }
   .decode { display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem; margin: 1.25rem 0 0.75rem; }
   .decode div { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 0.75rem 0.5rem; border-radius: 12px; background: var(--navy); color: #fff; }
   .decode b { font-family: var(--head); font-size: 1.8rem; font-weight: 800; color: var(--amber-bright); }

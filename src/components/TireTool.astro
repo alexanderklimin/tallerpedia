@@ -62,13 +62,17 @@ const defaultTo = b ?? (() => {
           <circle class="rb" cx="110" r="50" cy="115" />
         </g>
         <circle class="ta" cx="110" r="90" cy="115" data-wheel-a />
+        <circle class="ra" cx="110" r="50" cy="115" data-rim-a />
+        <text x="110" y="14" text-anchor="middle" class="cap">Vista lateral</text>
         <g transform="translate(225 0)">
           <rect class="sb" data-sec-b x="0" y="40" width="40" height="40" rx="5" />
           <rect class="sa" data-sec-a x="0" y="40" width="40" height="40" rx="5" />
-          <text x="35" y="128" text-anchor="middle" class="cap">sección</text>
+          <text x="35" y="14" text-anchor="middle" class="cap">Corte</text>
+          <text x="35" y="128" text-anchor="middle" class="cap2">alto = flanco</text>
+          <text x="35" y="142" text-anchor="middle" class="cap2">ancho = ancho</text>
         </g>
       </svg>
-      <div class="legend"><span class="la">— — actual</span><span class="lb">■ nueva</span></div>
+      <div class="legend"><span class="la"><i></i><b data-leg-a></b></span><span class="lb"><i></i><b data-leg-b></b></span></div>
     </div>
     <p class="tt-verdict" data-verdict></p>
     <div class="table-scroll">
@@ -128,6 +132,9 @@ const defaultTo = b ?? (() => {
       place(root.querySelector('[data-wheel-a]'), da.diameter);
       place(root.querySelector('.tb'), db.diameter);
       place(root.querySelector('.rb'), db.rimMm);
+      place(root.querySelector('[data-rim-a]'), da.rimMm);
+      const legA = root.querySelector('[data-leg-a]'); if (legA) legA.textContent = `Actual ${sizeLabel(a)} · ${fmt(da.diameter, 0)} mm`;
+      const legB = root.querySelector('[data-leg-b]'); if (legB) legB.textContent = `Nueva ${sizeLabel(b)} · ${fmt(db.diameter, 0)} mm`;
       const sec = (el: SVGRectElement | null, s: Size, sw: number) => { if (!el) return; const w = s.width * k; const h = sw * k; el.style.width = `${w}px`; el.style.height = `${h}px`; el.style.x = `${35 - w / 2}px`; el.style.y = `${110 - h}px`; };
       sec(root.querySelector('[data-sec-b]'), b, db.sidewall);
       sec(root.querySelector('[data-sec-a]'), a, da.sidewall);
@@ -192,7 +199,14 @@ const defaultTo = b ?? (() => {
   .sb { fill: #0b1522; stroke: var(--amber-bright); stroke-width: 2; }
   .sa { fill: none; stroke: #fff; stroke-width: 1.5; stroke-dasharray: 4 3; }
   .cap { fill: #b9c6d8; font: 600 11px system-ui, sans-serif; }
-  .legend { display: flex; gap: 1rem; justify-content: center; font-size: 0.85rem; }
+  .legend { display: flex; flex-wrap: wrap; gap: 0.25rem 1.2rem; justify-content: center; font-size: 0.85rem; }
+  .legend span { display: inline-flex; align-items: center; gap: 0.4rem; }
+  .legend b { font-weight: 600; }
+  .legend i { width: 1.4rem; height: 0; flex: none; }
+  .la i { border-top: 2px dashed #fff; }
+  .lb i { height: 0.7rem; border-radius: 3px; background: #0b1522; box-shadow: inset 0 0 0 2px var(--amber-bright); }
+  .ra { fill: none; stroke: #fff; stroke-width: 1.5; stroke-dasharray: 4 4; }
+  .cap2 { fill: #8fa3bd; font: 500 10px system-ui, sans-serif; }
   .la { color: #fff; } .lb { color: var(--amber-bright); }
   @media (prefers-reduced-motion: reduce) { .tt-vis circle, .tt-vis rect { transition: none; } }
   .tt-out .table-scroll { color: var(--ink); }
