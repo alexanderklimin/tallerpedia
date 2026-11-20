@@ -4,7 +4,7 @@ export const GA_ID = '';
 export const ANALYTICS_HOST = 'tallerpedia.com';
 export const SITE_NAME = 'Tallerpedia';
 export const CONTACT_EMAIL = 'hola@tallerpedia.com';
-// Owner data for the legal pages (same owner as hojapedia.com, confirmed there by the user).
-export const OWNER_NAME = 'Aleksandr Klimin';
+// Legal pages name the site's team, not a person (user's choice 2026-11-20: keep personal name off the sites).
+export const OWNER_LABEL = 'el equipo de Tallerpedia';
 export const OWNER_COUNTRY = 'Chile';
 export const LEGAL_UPDATED = '20 de noviembre de 2026';

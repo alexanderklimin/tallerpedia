@@ -1,6 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
-import { CONTACT_EMAIL, GA_ID, LEGAL_UPDATED, OWNER_COUNTRY, OWNER_NAME } from '../data/site.js';
+import { CONTACT_EMAIL, GA_ID, LEGAL_UPDATED, OWNER_COUNTRY, OWNER_LABEL } from '../data/site.js';
 ---
 <Base
   title="Política de privacidad y cookies"
@@ -15,7 +15,7 @@ import { CONTACT_EMAIL, GA_ID, LEGAL_UPDATED, OWNER_COUNTRY, OWNER_NAME } from '
     <p>Tallerpedia no te pide registrarte. {GA_ID ? 'Usamos Google Analytics, con tu consentimiento, para saber qué páginas resultan útiles.' : 'No usa cookies ni herramientas de analítica.'} Las calculadoras y el buscador de códigos funcionan en tu navegador y no envían lo que escribes a nuestros servidores.</p>
 
     <h2>Responsable</h2>
-    <p>El responsable del tratamiento es {OWNER_NAME}{OWNER_COUNTRY && `, con residencia en ${OWNER_COUNTRY}`}. Puedes escribir a <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.</p>
+    <p>El responsable del tratamiento es {OWNER_LABEL}, titular de tallerpedia.com{OWNER_COUNTRY && `, con sede en ${OWNER_COUNTRY}`}. Puedes escribir a <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.</p>
 
     <h2>Datos que tratamos</h2>
     <h3>Datos técnicos de la conexión</h3>

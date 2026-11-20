@@ -1,13 +1,13 @@
 ---
 import Base from '../layouts/Base.astro';
-import { CONTACT_EMAIL, LEGAL_UPDATED, OWNER_COUNTRY, OWNER_NAME } from '../data/site.js';
+import { CONTACT_EMAIL, LEGAL_UPDATED, OWNER_COUNTRY, OWNER_LABEL } from '../data/site.js';
 ---
 <Base title="Aviso legal" description="Titular de Tallerpedia, condiciones de uso, origen de la información y responsabilidad." crumbs={[{ name: 'Inicio', path: '/' }, { name: 'Aviso legal', path: '/aviso-legal/' }]}>
   <article class="legal">
     <h1>Aviso legal</h1>
 
     <h2>Titular</h2>
-    <p>Tallerpedia (tallerpedia.com) es un sitio web de {OWNER_NAME}{OWNER_COUNTRY && `, con residencia en ${OWNER_COUNTRY}`}. Contacto: <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.</p>
+    <p>Tallerpedia (tallerpedia.com) es un sitio web gestionado por {OWNER_LABEL}{OWNER_COUNTRY && `, con sede en ${OWNER_COUNTRY}`}. Contacto: <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.</p>
 
     <h2>Información general, no profesional</h2>
     <p>Las páginas ofrecen información general sobre el funcionamiento, el mantenimiento y las fallas de los vehículos. No sustituyen el diagnóstico de un mecánico, el manual del propietario ni el manual de servicio del fabricante. Cada auto, motor y año de fabricación puede tener particularidades.</p>
