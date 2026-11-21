@@ -1,6 +1,2 @@
-# ВРЕМЕННО до запуска: превью на workers.dev не индексируется. Удалить при запуске на tallerpedia.com.
-/*
-  X-Robots-Tag: noindex
-
 /_astro/*
   Cache-Control: public, max-age=31536000, immutable

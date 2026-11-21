@@ -1,6 +1,6 @@
 {
   // Статический сайт на Cloudflare Workers (static assets). Сборка: npm run build → dist/
-  // До запуска: workers_dev=true, без routes. При запуске (явное «да»): routes tallerpedia.com, workers_dev=false.
+  // Запущен 2026-11-21 (явное «да» пользователя): домен tallerpedia.com, workers.dev отключён.
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "tallerpedia",
   "compatibility_date": "2026-11-01",
@@ -9,6 +9,7 @@
     "html_handling": "auto-trailing-slash",
     "not_found_handling": "404-page"
   },
-  "workers_dev": true,
+  "routes": [{ "pattern": "tallerpedia.com", "custom_domain": true }],
+  "workers_dev": false,
   "preview_urls": false
 }
