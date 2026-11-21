@@ -17,6 +17,7 @@ const codes = defineCollection({
     code: codeId,
     sae: z.string().min(10), // standard English description (SAE J2012 / ISO 15031-6)
     title: z.string().min(10), // Spanish translation of the standard description
+    short: z.string().min(5).max(32), // short topic for the <title>
     system: z.enum(SYSTEMS),
     severity: z.enum(['low', 'medium', 'high']),
     drive: z.string().min(40), // "¿Puedo seguir manejando?"

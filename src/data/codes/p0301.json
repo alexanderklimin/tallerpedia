@@ -2,6 +2,7 @@
  "code": "P0301",
  "sae": "Cylinder 1 Misfire Detected",
  "title": "Falla de encendido en el cilindro 1",
+ "short": "falla de encendido cilindro 1",
  "system": "encendido",
  "severity": "high",
  "drive": "Si la luz de check engine parpadea, no: reduce la velocidad y llévalo al taller, porque el combustible sin quemar puede sobrecalentar el catalizador. Con la luz fija y una vibración leve, puedes ir con suavidad hasta el taller, sin velocidad alta ni carga.",

@@ -2,6 +2,7 @@
  "code": "P0442",
  "sae": "Evaporative Emission System Leak Detected (small leak)",
  "title": "Fuga pequeña en el sistema EVAP",
+ "short": "fuga pequeña EVAP",
  "system": "evap",
  "severity": "low",
  "drive": "Sí. No afecta al funcionamiento del motor. Revisa la tapa del tanque y, si hay olor a gasolina, no uses el auto.",

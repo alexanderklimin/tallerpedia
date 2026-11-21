@@ -2,6 +2,7 @@
  "code": "P0128",
  "sae": "Coolant Thermostat (Coolant Temperature Below Thermostat Regulating Temperature)",
  "title": "Termostato: el motor no alcanza la temperatura de trabajo",
+ "short": "termostato, motor frío",
  "system": "enfriamiento",
  "severity": "low",
  "drive": "Sí, en general. El motor tarda en calentarse, consume más y la calefacción funciona peor, pero no es una avería inmediata. Si la aguja de temperatura sube por encima de lo normal o se pierde anticongelante, es otra situación: detente.",

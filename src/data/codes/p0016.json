@@ -2,6 +2,7 @@
  "code": "P0016",
  "sae": "Crankshaft Position - Camshaft Position Correlation (Bank 1 Sensor A)",
  "title": "Correlación entre posición del cigüeñal y del árbol de levas (banco 1, sensor A)",
+ "short": "correlación cigüeñal-levas",
  "system": "distribucion",
  "severity": "high",
  "drive": "Con precaución y lo mínimo posible. Si la causa es una cadena o banda de distribución estirada o saltada, seguir manejando puede romperla y causar un daño grave al motor. Si oyes traqueteo metálico, no lo manejes y llévalo en grúa.",

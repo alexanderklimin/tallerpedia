@@ -2,6 +2,7 @@
  "code": "P0430",
  "sae": "Catalyst System Efficiency Below Threshold (Bank 2)",
  "title": "Eficiencia del catalizador por debajo del umbral (banco 2)",
+ "short": "catalizador (banco 2)",
  "system": "catalizador",
  "severity": "medium",
  "drive": "Normalmente sí, a corto plazo, si el motor funciona bien y la luz de check engine no parpadea. El auto contamina más y puede no pasar la verificación o la ITV. Conviene revisarlo pronto para que una posible falla de encendido no termine de dañar el catalizador.",

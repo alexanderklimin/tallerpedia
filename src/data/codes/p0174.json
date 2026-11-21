@@ -2,6 +2,7 @@
  "code": "P0174",
  "sae": "System Too Lean (Bank 2)",
  "title": "Mezcla demasiado pobre (banco 2)",
+ "short": "mezcla pobre (banco 2)",
  "system": "mezcla",
  "severity": "medium",
  "drive": "Sí, con precaución y por poco tiempo si el motor no tironea. Una mezcla pobre prolongada puede causar fallas de encendido y sobrecalentar la combustión. Si el motor jalonea o la luz parpadea, detente.",

@@ -2,6 +2,7 @@
  "code": "P0340",
  "sae": "Camshaft Position Sensor \"A\" Circuit (Bank 1 or Single Sensor)",
  "title": "Sensor de posición del árbol de levas «A»: falla de circuito (banco 1)",
+ "short": "sensor del árbol de levas",
  "system": "sensores",
  "severity": "high",
  "drive": "Con precaución: el motor puede arrancar con dificultad, apagarse en marcha o no volver a encender. Si se apaga mientras manejas, perderás la asistencia de la dirección y del freno. Lo más prudente es ir directamente al taller o usar grúa si se apaga.",

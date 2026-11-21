@@ -2,7 +2,7 @@
 import Base from '../layouts/Base.astro';
 import { CONTACT_EMAIL } from '../data/site.js';
 ---
-<Base title="Contacto" description="Escríbenos para corregir un dato, proponer un código o una medida, o preguntar por una página de Tallerpedia." crumbs={[{ name: 'Inicio', path: '/' }, { name: 'Contacto', path: '/contacto/' }]}>
+<Base title="Contacto: correcciones y sugerencias" description="Escríbenos para corregir un dato, proponer un código o una medida, o preguntar por una página de Tallerpedia." crumbs={[{ name: 'Inicio', path: '/' }, { name: 'Contacto', path: '/contacto/' }]}>
   <h1>Contacto</h1>
   <p class="lead">¿Has visto un dato que no cuadra o echas en falta un código, una medida o un modelo? Escríbenos.</p>
   <p class="contact"><a class="button" href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a></p>

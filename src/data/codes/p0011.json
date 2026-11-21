@@ -2,6 +2,7 @@
  "code": "P0011",
  "sae": "\"A\" Camshaft Position - Timing Over-Advanced or System Performance (Bank 1)",
  "title": "Árbol de levas «A» (admisión): tiempo demasiado adelantado o falla de rendimiento (banco 1)",
+ "short": "árbol de levas adelantado",
  "system": "distribucion",
  "severity": "medium",
  "drive": "Por poco tiempo y con suavidad, si el motor no hace ruidos ni se apaga. Muchas veces la causa es el aceite: revisa el nivel enseguida. Si oyes golpeteo o traqueteo metálico, no sigas manejando.",

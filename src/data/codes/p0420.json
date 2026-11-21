@@ -2,6 +2,7 @@
  "code": "P0420",
  "sae": "Catalyst System Efficiency Below Threshold (Bank 1)",
  "title": "Eficiencia del catalizador por debajo del umbral (banco 1)",
+ "short": "catalizador (banco 1)",
  "system": "catalizador",
  "severity": "medium",
  "drive": "Por lo general sí, a corto plazo, si el motor funciona con normalidad y la luz de check engine no parpadea. No es una avería inmediata, pero el auto contamina más, puede no pasar la verificación vehicular o la ITV y, si la causa es una falla de encendido, el catalizador se seguirá dañando.",

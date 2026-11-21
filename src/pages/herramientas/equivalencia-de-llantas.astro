@@ -5,7 +5,7 @@ import { DEFAULT_TOLERANCE } from '../../lib/tires.js';
 import TireTool from '../../components/TireTool.astro';
 
 const title = 'Calculadora de equivalencias de llantas';
-const description = 'Compara dos medidas de llanta (neumático): diámetro, altura del flanco, diferencia en porcentaje y velocidad real con el velocímetro. Lista de medidas equivalentes.';
+const description = 'Compara dos medidas de llanta: diámetro, flanco, diferencia en % y velocidad real en el velocímetro, con dibujo a escala y medidas equivalentes.';
 const faq = [
   { q: '¿Qué diferencia de diámetro se considera aceptable?', a: `Un margen práctico muy usado es ±${DEFAULT_TOLERANCE} % del diámetro original. Aun así, la medida debe caber sin rozar, tener índices de carga y velocidad iguales o mayores, y en algunos países figurar en la ficha técnica u homologación del auto.` },
   { q: '¿Si pongo llantas más grandes el velocímetro marca menos?', a: 'Sí. Con una llanta de mayor diámetro el auto avanza más por cada vuelta, así que el velocímetro marca menos de la velocidad real. Con una más pequeña, marca de más.' },

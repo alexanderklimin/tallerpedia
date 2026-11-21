@@ -8,6 +8,7 @@ test('article has author, publisher logo and sane dates', () => {
   assert.equal(a.dateModified, '2026-12-01');
   assert.equal(a.publisher.logo.url, 'https://tallerpedia.com/logo.png');
   assert.equal(publisher().name, 'Tallerpedia');
+  assert.equal(a.image, 'https://tallerpedia.com/og-default.png');
 });
 
 test('faq page', () => {

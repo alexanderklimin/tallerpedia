@@ -2,6 +2,7 @@
  "code": "P0304",
  "sae": "Cylinder 4 Misfire Detected",
  "title": "Falla de encendido en el cilindro 4",
+ "short": "falla de encendido cilindro 4",
  "system": "encendido",
  "severity": "high",
  "drive": "Si la luz de check engine parpadea, no: reduce la velocidad y llévalo al taller, porque el combustible sin quemar puede sobrecalentar el catalizador. Con la luz fija y una vibración leve, puedes ir con suavidad hasta el taller, sin velocidad alta ni carga.",

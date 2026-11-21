@@ -2,6 +2,7 @@
  "code": "P0172",
  "sae": "System Too Rich (Bank 1)",
  "title": "Mezcla demasiado rica (banco 1)",
+ "short": "mezcla rica (banco 1)",
  "system": "mezcla",
  "severity": "medium",
  "drive": "Por poco tiempo, sí, si el motor funciona sin tirones. Una mezcla rica gasta más combustible, ensucia bujías y, con el tiempo, daña el catalizador. Si sale humo negro abundante, hay olor fuerte a gasolina o la luz parpadea, no sigas manejando.",

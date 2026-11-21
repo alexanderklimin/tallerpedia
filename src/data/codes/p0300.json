@@ -2,6 +2,7 @@
  "code": "P0300",
  "sae": "Random/Multiple Cylinder Misfire Detected",
  "title": "Falla de encendido aleatoria o en varios cilindros",
+ "short": "falla de encendido múltiple",
  "system": "encendido",
  "severity": "high",
  "drive": "Con la luz de check engine parpadeando, no: reduce la velocidad y llévalo al taller lo antes posible, porque el combustible sin quemar sobrecalienta el catalizador. Si la luz está fija y el motor solo tiembla un poco, puedes manejar con suavidad hasta el taller, sin cargas ni velocidad alta.",

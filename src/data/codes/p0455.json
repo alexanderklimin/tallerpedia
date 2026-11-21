@@ -2,6 +2,7 @@
  "code": "P0455",
  "sae": "Evaporative Emission System Leak Detected (large leak/no flow)",
  "title": "Fuga grande en el sistema EVAP",
+ "short": "fuga grande EVAP",
  "system": "evap",
  "severity": "low",
  "drive": "Sí. El sistema EVAP solo recoge los vapores del tanque de gasolina; una fuga no afecta el funcionamiento del motor. Pero revisa enseguida la tapa del tanque y, si hay olor a gasolina, no sigas usando el auto.",

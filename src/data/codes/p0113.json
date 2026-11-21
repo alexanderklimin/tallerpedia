@@ -2,6 +2,7 @@
  "code": "P0113",
  "sae": "Intake Air Temperature Sensor 1 Circuit High",
  "title": "Sensor de temperatura del aire de admisión: señal alta",
+ "short": "sensor IAT, señal alta",
  "system": "sensores",
  "severity": "low",
  "drive": "Normalmente sí. La computadora usa un valor de reserva y el motor sigue funcionando, aunque puede consumir un poco más o arrancar peor en frío. Repáralo cuando puedas.",

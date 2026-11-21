@@ -2,6 +2,7 @@
  "code": "P0335",
  "sae": "Crankshaft Position Sensor \"A\" Circuit",
  "title": "Sensor de posición del cigüeñal «A»: falla de circuito",
+ "short": "sensor del cigüeñal",
  "system": "sensores",
  "severity": "high",
  "drive": "No es recomendable. Sin la señal del cigüeñal, el motor puede apagarse en marcha o no arrancar. Si se apaga en carretera, perderás la asistencia de la dirección y del freno. Lleva el auto al taller cuanto antes o usa grúa.",

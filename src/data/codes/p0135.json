@@ -2,6 +2,7 @@
  "code": "P0135",
  "sae": "O2 Sensor Heater Circuit (Bank 1 Sensor 1)",
  "title": "Circuito del calefactor de la sonda de oxígeno (banco 1, sensor 1)",
+ "short": "calefactor de la sonda O2",
  "system": "catalizador",
  "severity": "low",
  "drive": "Sí. La sonda tardará más en funcionar después de arrancar en frío, lo que puede subir un poco el consumo y las emisiones, pero no daña el motor a corto plazo.",

@@ -2,6 +2,7 @@
  "code": "P0171",
  "sae": "System Too Lean (Bank 1)",
  "title": "Mezcla demasiado pobre (banco 1)",
+ "short": "mezcla pobre (banco 1)",
  "system": "mezcla",
  "severity": "medium",
  "drive": "Sí, con precaución y por poco tiempo si el motor no tironea ni pierde potencia. Una mezcla pobre prolongada calienta más la combustión y puede provocar fallas de encendido. Si el motor jalonea o la luz de check engine parpadea, no sigas manejando.",

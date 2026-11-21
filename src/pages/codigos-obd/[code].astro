@@ -19,11 +19,11 @@ const known = new Set(all.map((e) => e.data.code));
 const related = c.related.filter((code) => known.has(code)).map((code) => ({ code, entry: all.find((e) => e.data.code === code)! }));
 const sameSystem = all.filter((e) => e.data.system === c.system && e.data.code !== c.code && !c.related.includes(e.data.code)).slice(0, 6);
 
-const title = `Código ${c.code}: ${c.title}`;
+const title = `Código ${c.code}: ${c.short}, causas y qué revisar`;
 const description = c.summary.length > 155 ? c.summary.slice(0, c.summary.lastIndexOf(' ', 152)) + '…' : c.summary;
 const url = absolute(codePath(c.code));
 const jsonLd = [
-  article({ headline: title, description, url, reviewed: c.reviewed, citation: c.sources.map((s) => s.name) }),
+  article({ headline: `Código ${c.code}: ${c.title}`, description, url, reviewed: c.reviewed, citation: c.sources.map((s) => s.name) }),
   faqPage(c.faq),
 ].filter(Boolean) as Record<string, unknown>[];
 const crumbs = [{ name: 'Inicio', path: '/' }, { name: 'Códigos OBD', path: '/codigos-obd/' }, { name: c.code, path: codePath(c.code) }];

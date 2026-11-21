@@ -12,7 +12,7 @@ export const publisher = () => ({
   logo: { '@type': 'ImageObject', url: absolute('/logo.png'), width: 512, height: 512 },
 });
 
-export function article({ headline, description, url, reviewed, published = LAUNCH_DATE, about, citation }) {
+export function article({ headline, description, url, reviewed, published = LAUNCH_DATE, about, citation, image = absolute('/og-default.png') }) {
   return {
     '@context': 'https://schema.org',
     '@type': 'Article',
@@ -23,6 +23,7 @@ export function article({ headline, description, url, reviewed, published = LAUN
     dateModified: reviewed,
     mainEntityOfPage: url,
     url,
+    image,
     ...(about ? { about } : {}),
     author: { '@type': 'Organization', name: 'Equipo de Tallerpedia', url: absolute('/sobre-tallerpedia/') },
     publisher: publisher(),
