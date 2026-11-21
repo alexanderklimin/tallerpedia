@@ -25,7 +25,7 @@ const lights = [
       {ticks.map((a, i) => (
         <line x1="0" y1="-66" x2="0" y2={i % 2 ? -60 : -56} stroke={i > 8 && g.cls === 'n1' ? '#ff4d3d' : '#9fb3cc'} stroke-width={i % 2 ? 1.5 : 2.5} transform={`rotate(${a})`} />
       ))}
-      <text y="40" text-anchor="middle" fill="#6f87a6" font-size="9" font-family="system-ui, sans-serif">{g.label}</text>
+      <text y="40" text-anchor="middle" fill="#9db2cc" font-size="10" font-family="system-ui, sans-serif">{g.label}</text>
       <g class={`needle ${g.cls}`}>
         <path d="M-2.2 6 L0 -60 L2.2 6 Z" fill="#ffb020" filter="url(#glow)" />
       </g>
